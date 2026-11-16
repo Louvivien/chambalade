@@ -2,7 +2,7 @@
 
 ## Étape 3 — Design system et gabarit — 2026-11-16
 
-Branche : `etape-3-gabarit` · Pull request : à ouvrir après commit.
+Branche : `etape-3-gabarit` · Pull request : [#2](https://github.com/Louvivien/chambalade/pull/2).
 Base : `audit/etapes-1-2` (PR #1), sans fusion de cette branche dans main.
 
 Fait :
@@ -27,7 +27,7 @@ vérifiées, 0 cassée sur les 2 spécimens. Inventaire des marqueurs éditoriau
 ou rapport brut `.audit/` dans le commit. `git diff --check` propre.
 
 Lighthouse mobile (perf / a11y / BP / SEO), Chrome headless, simulation mobile par
- défaut, serveur statique local, mesures séquentielles du 16 novembre 2026 :
+défaut, serveur statique local, mesures séquentielles du 16 novembre 2026 :
 
 | Spécimen | Performance | Accessibilité | Bonnes pratiques | SEO |
 | --- | --- | --- | --- | --- |
@@ -65,7 +65,7 @@ Points non conformes et décision :
 
 Nouveaux TODO(amaelle) : marqueurs FR/EN de contact et logo dans
 `src/content/interface/`, repris dans `docs/todo-contenus.md` ; les besoins étaient
- déjà identifiés dans le brief. Aucun nouveau fait métier à valider.
+déjà identifiés dans le brief. Aucun nouveau fait métier à valider.
 À vérifier visuellement par Vivien : choix typographique, rythme des espacements,
 logo provisoire et navigation mobile toujours visible. Les sections vides des
 spécimens sont des ancres de test, pas des pages de contenu terminées.
