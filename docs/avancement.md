@@ -4,7 +4,36 @@ Le dernier état est en haut. À chaque reprise, lire ce fichier, `git log -5` e
 `git status`, puis reprendre la première tranche non cochée. Chaque tranche
 terminée donne lieu à un commit après un build sans erreur ni avertissement.
 
-## Étape en cours : 13 — SEO, accessibilité, performance — 2026-11-16
+## Étape en cours : 14 — Déploiement — 2026-11-16
+
+Branche : `etape-14-deploiement` · Base : `etape-13-seo`.
+Statut : plan écrit, aucune tranche terminée.
+Périmètre (`docs/etapes.md` étape 14) : préparer le déploiement sur Cloudflare Pages (commande de
+build, dossier `dist`, base D1 de production, secrets, Cloudflare Access sur `/admin/`) et écrire
+dans `README.md` les étapes pour brancher le domaine chambalade.fr.
+
+Limite à garder en tête : **je ne peux pas déployer** (aucun accès à un compte Cloudflare, Resend ou
+au domaine, et je n’en demande pas). L’étape prépare tout ce qui peut l’être et le vérifie : le dépôt, la
+configuration, un guide pas à pas, des contrôles avant et après la mise en ligne. Les actions sur les
+comptes sont faites par Vivien en suivant le guide, puis contrôlées par le script de vérification.
+
+Principes : aucun secret ni identifiant réel dans le dépôt ; ce qui dépend d’un compte reste une
+variable ; les commandes du guide sont celles que le dépôt sait vérifier ; les points qu’on ne peut pas
+tester ici sont écrits comme tels.
+
+- [ ] Tranche 1 — Préparation du dépôt : `wrangler.toml` prêt pour la production, version de Node,
+  script `npm run deploiement:verifier` (contrôles avant mise en ligne : build, configuration des
+  fonctions, absence de clés de test et de secrets dans `dist`, `database_id` à remplacer, migrations),
+  tests.
+- [ ] Tranche 2 — Guide `docs/deploiement.md` (Cloudflare Pages, D1, migrations, Turnstile, Resend,
+  Access, variables, domaine chambalade.fr, statistiques) et section du `README.md`.
+- [ ] Tranche 3 — Données personnelles en production : effacement/anonymisation d’une demande et purge
+  périodique (SQL testé sur SQLite, script `scripts/rgpd.mjs`), texte de confidentialité mis à jour.
+- [ ] Tranche 4 — Contrôle après mise en ligne : `npm run deploiement:smoke -- <url>` (pages, hreflang,
+  robots, sitemap, en-têtes, administration fermée, API), essai contre `wrangler pages dev`, recette
+  mise à jour, rapport, `docs/rapports/etape-14.json`.
+
+## Étape précédente : 13 — SEO, accessibilité, performance — 2026-11-16
 
 Branche : `etape-13-seo` · Base : `etape-12-en`.
 Statut : tranches 1 à 3 terminées ; étape prête pour revue, sans fusion.
