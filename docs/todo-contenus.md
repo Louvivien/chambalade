@@ -40,7 +40,7 @@ conditions pratiques, identité légale. Les sources ci-dessous font autorité.
 | `docs/etapes.md:38` | > avec les TODO(amaelle)), les migrations D1, et une bibliothèque pure (sans accès réseau) qui |
 | `docs/initialisation.md:50` | des routes de contrôle séparées via `npm run dev:audit`. Aucun nouveau `TODO(amaelle)` à cette étape ; les |
 | `docs/journal-audit.md:10` | alternatifs traduits), prix en euros (« €76.50 »), `TODO(amaelle)` repris à l’identique en anglais. |
-| `docs/journal-audit.md:25` | internes, 0 cassée · configuration des fonctions et inventaire des `TODO(amaelle)` à jour (197 lignes) · secrets : rien. |
+| `docs/journal-audit.md:25` | internes, 0 cassée · configuration des fonctions et inventaire des `TODO(amaelle)` à jour (202 lignes) · secrets : rien. |
 | `docs/journal-audit.md:26` | Parité FR/EN testée : mêmes clés, mêmes types, mêmes tailles de listes, mêmes images, autant de `TODO(amaelle)` ; une page anglaise oubliée casse le test. |
 | `docs/journal-audit.md:41` | Nouveaux TODO(amaelle) : aucun nouveau point métier (les `TODO` français ont leur pendant anglais). |
 | `docs/journal-audit.md:68` | étape 9) · liens : 234 références internes, 0 cassée · inventaire des `TODO(amaelle)` à jour (142 lignes) · |
