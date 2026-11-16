@@ -1,102 +1,71 @@
-# Journal d'audit
+# Journal d’audit
 
-## Situation au 16 novembre 2026
+## Étape 2 — Photos — 2026-11-16
 
-Branche de travail : `audit/etapes-1-2`, créée depuis `main` au commit `0e4d626`.
-Les contrôles ci-dessous sont préliminaires. Ils ne constituent pas une validation
-selon `docs/audit.md` : ce fichier est absent du dépôt local et de `origin/main`
-après `git fetch origin`. Aucune autre branche distante n'est présente.
-Son emplacement et celui de la version mise à jour d'`AGENTS.md` ont été demandés.
+Branche : `audit/etapes-1-2` · Pull request : à ouvrir après commit des corrections.
 
-Consignes effectivement lues : `AGENTS.md` à la racine, `docs/etapes.md`,
-`docs/photos.md`. Les critères de l'audit demandé restent à lire dès réception.
+Fait :
+- Audit rétrospectif du script et des 14 JPEG issus du tableau.
+- Correction du logo : sa cible PNG est conservée, avec transparence, dans
+  `src/assets/logo/` ; son original manque toujours et est signalé sans arrêter le lot.
+- Tests réels sur orientation EXIF, suppression des métadonnées, redimensionnement,
+  absence d’agrandissement, PNG transparent, fichiers absents, sources corrompues,
+  conservation des originaux et de l’ancienne sortie en cas d’échec.
 
-## Étape 1 — Initialisation
+Contrôles automatiques : build OK sans avertissement · 6 tests OK · `check` :
+0 erreur / 0 avertissement · secrets : aucune valeur réelle, seulement consignes
+et noms de dépendances · liens : non applicables (0 page construite).
 
-**Statut : contrôles techniques réussis ; audit demandé en attente de sa grille.**
+`npm run photos` : 14 conversions, 1 original manquant (logo), 0 erreur.
+Vérification indépendante des 14 sorties : JPEG, grand côté ≤ 2560 px,
+aucune métadonnée EXIF/ICC/IPTC/XMP, orientation ou commentaire.
+Les fichiers sans cible sont ignorés. Aucun original, `.env` ou `dist/` suivi
+par Git ; `git status --ignored` vérifié. Les marqueurs éditoriaux sont recensés
+par `npm run audit:todos` dans `docs/todo-contenus.md` (index hors auto-collecte).
 
-### Constats et preuves
+Lighthouse mobile (perf / a11y / BP / SEO) : non applicable, étape sans page.
+Contenu : aucune page touchée. Les quatre photos dont le statut n’est pas strictement
+« À utiliser » restent préparées conformément à la demande de conversion de toutes
+les cibles ; elles ne sont référencées par aucune page. Leur publication reste exclue
+jusqu’à validation. La projection nécessitera sa légende si elle est utilisée.
+Points non conformes et décision : incompatibilité du logo corrigée ; logo manquant,
+qualité des originaux et nature de la projection restent ouverts dans `docs/photos.md`.
+Nouveaux TODO(amaelle) : aucun ; inventaire des points existants créé.
+À vérifier visuellement par Vivien : couleurs, orientation, netteté, recadrages à
+réaliser aux étapes des pages. Ces critères ne sont pas validés par les tests.
 
-- `astro.config.mjs` configure une sortie statique, `fr` par défaut sans préfixe
-  et `en` comme seconde langue. Aucune page n'est encore créée ; les routes
-  effectives et le sélecteur de langue seront vérifiables avec le gabarit/pages.
-- Lora et Nunito Sans sont installées via Fontsource et importées dans
-  `src/styles/global.css`. Leur chargement dans un navigateur reste à vérifier
-  après création du gabarit qui importera ce fichier.
-- Les répertoires `src/content`, `src/data`, `src/assets`, `src/styles` et le
-  fichier `.env.example` existent. Les commandes `dev`, `build`, `preview`,
-  `check` et `photos` sont déclarées.
-- `npm run check` : 0 erreur, 0 avertissement, 0 indication.
-- `npm run build` : succès sans avertissement, 0 page générée, conformément
-  au périmètre de l'étape 1. Vérifications exécutées avec Node 24 via Homebrew.
-- `.env`, `node_modules/`, `dist/` et `.astro/` sont ignorés par Git.
+## Étape 1 — Initialisation — 2026-11-16
 
-### Correction effectuée
+Branche : `audit/etapes-1-2` · Pull request : à ouvrir après commit des corrections.
 
-`AGENTS.md` référence `docs/reservation.md`, absent à la racine mais présent dans
-`chambalade-starter/docs/reservation.md`. Une copie strictement identique a été
-ajoutée à l'emplacement attendu, sans modifier l'original.
+Fait :
+- Lecture de l’AGENTS actualisé et de la grille fournie dans
+  `chambalade-starter/docs/audit.md`, intégrée à `docs/audit.md`.
+- Alignement du brief et de l’ordre des 14 étapes avec les documents actualisés.
+- Copie du cahier des charges réservation à l’emplacement référencé par AGENTS.
+- Retrait de l’ancienne variable de formulaire externe ; le statique ne nécessite
+  aucune variable, et les secrets de réservation seront configurés dans Cloudflare.
+- Ajout de `npm test` (Vitest), d’un inventaire vérifiable des marqueurs éditoriaux
+  et d’un contrôleur de liens internes/fichiers/ancres du build.
+- Correction des prérequis du README (Node 24, ImageMagick pour les tests photos).
 
-### Points à résoudre après lecture de la grille
+Contrôles automatiques : build OK sans avertissement · 6 tests OK dans la suite
+commune · `check` : 0 erreur / 0 avertissement · secrets : aucune valeur réelle ·
+liens : non applicables (0 page construite). `npm audit` : 0 vulnérabilité.
+`npm run audit:todos` vérifie la correspondance de l’inventaire avec toutes les
+occurrences dans les sources suivies, copies starter et consignes comprises.
+Les fichiers ignorés ont été contrôlés et ne figurent pas dans le commit.
 
-- `docs/etapes.md` (étape 7), `.env.example`, `src/env.d.ts` et
-  `docs/initialisation.md` décrivent encore un service de formulaire externe,
-  alors qu'`AGENTS.md` prévoit désormais un module de réservation Cloudflare.
-  La version actualisée des consignes doit permettre de mettre ces documents
-  en cohérence sans inventer de nouvelles étapes ni de paramètres.
-- `npm test` et Vitest, cités dans les consignes de réservation, ne sont pas
-  configurés. Aucune logique de réservation n'existe à ce stade ; leur mise
-  en place doit être située dans les étapes actualisées.
-- Aucun nouveau `TODO(amaelle)` ajouté. Les informations métier manquantes
-  restent listées dans les documents de référence.
-- Validation visuelle : différée jusqu'au gabarit, aucune page existante.
+Lighthouse mobile (perf / a11y / BP / SEO) : non applicable, aucune page.
+Contenu : configuration statique et i18n FR sans préfixe / EN sous `/en/` conformes.
+Lora et Nunito Sans sont locales via Fontsource ; le chargement effectif sera
+contrôlé avec le gabarit à l’étape 3. Structure demandée et scripts présents.
+Points non conformes et décision : absence de tests, inventaire et contrôle de
+liens corrigée ; références obsolètes au formulaire externe corrigées.
+Le dernier Astro stable reste celui installé lors de l’initialisation (7.4.12).
+Nouveaux TODO(amaelle) : aucun ; les inconnues métier restent dans les sources.
+À vérifier visuellement par Vivien : rien pour cette étape sans page.
 
-## Étape 2 — Conversion des photos
-
-**Statut : sorties vérifiées ; audit demandé en attente de sa grille.**
-
-### Constats et preuves
-
-- `scripts/convertir-photos.mjs` lit les noms cibles depuis `docs/photos.md`.
-  Les lignes sans cible sont ignorées. La commande npm `photos` est disponible.
-- Les 14 JPEG présents correspondent exactement aux 14 cibles JPEG du tableau.
-- Vérification indépendante des fichiers avec `sharp.metadata()` : format JPEG,
-  largeur et hauteur au plus égales à 2560 px, absence d'EXIF, ICC, IPTC, XMP,
-  orientation et commentaires. Les coordonnées GPS EXIF sont donc absentes.
-- `git ls-files photos-originales` ne retourne aucun fichier ; le dossier
-  des originaux est bien ignoré par Git.
-- Le script applique l'orientation avant la suppression des métadonnées,
-  réduit sans agrandir et conserve l'ancienne sortie si la conversion échoue.
-  Il utilise ImageMagick 7 avec support HEIC, documenté dans le README.
-- Aucune modification des images n'a été nécessaire lors de ces contrôles.
-
-### Limites et points ouverts
-
-- Le logo source est absent. Sa cible `logo/chambalade.png` n'est pas une cible
-  JPEG : le script la signalerait comme incompatible si l'original était ajouté.
-  Cette exception est documentée dans `docs/conversion-photos.md` ; son traitement
-  doit être confronté à la grille d'audit.
-- Quatre images converties n'ont pas le statut strict « À utiliser » :
-  `pres-de-la-trappe.jpg`, `piscine-et-table.jpg`, `carriere.jpg` et
-  `projection-gite.jpg`. La conversion avait été demandée pour les lignes avec
-  une cible ; aucune page ne les utilise. Leur présence dans les assets et leur
-  éventuelle mise à l'écart doivent être évaluées selon la grille manquante.
-- La nature de `projection-gite.jpg` reste à confirmer ; une éventuelle
-  publication devra porter la légende « Projection » prévue dans les consignes.
-- Validation visuelle restante : orientation, couleurs, netteté et recadrages
-  prévus par le tableau. Les contrôles automatisés ne valident pas ces aspects.
-- Aucun nouveau `TODO(amaelle)` ; demandes d'originaux et validations déjà
-  décrites dans `docs/photos.md`.
-
-## Étape suivante — Design system et gabarit
-
-**Statut : non commencée, en attente de `docs/audit.md`.**
-
-L'étape 3 est la suivante dans le document actuellement disponible. La direction
-visuelle devra être annoncée avant le code. Dès que les consignes actualisées
-seront accessibles, compléter les audits des étapes 1 et 2, corriger les écarts,
-puis réaliser l'étape 3 et ajouter son rapport selon la même grille.
-
-Chaque rapport devra distinguer les contrôles réellement exécutés, les écarts,
-les corrections, les points non applicables et les vérifications restant à faire.
-Aucune étape n'est déclarée conforme sur la seule base d'un build réussi.
+Les corrections rétrospectives des étapes 1 et 2 partagent une branche et une PR,
+conformément à la demande explicite. Les étapes suivantes auront chacune leur
+branche, leur PR et leur rapport. Aucune fusion n’est effectuée par l’agent.

@@ -30,7 +30,7 @@ pas définitifs : les mettre en ligne avec un `TODO(amaelle)`.
 | Accueil | `/` | `/en/` | Bandeau, Chambalade en quelques mots, trois activités, pourquoi venir, les Chambarans, appel à réserver |
 | Le gîte | `/gite/` | `/en/guesthouse/` | Chambres et tarifs, votre cheval, repas, espaces communs, infos pratiques |
 | Le lieu | `/le-lieu/` | `/en/the-place/` | Vue du ciel annotée, équipements (carrière, PTV, paddocks), les chevaux, les alentours, accès |
-| Réserver | `/reserver/` | `/en/book/` | Formulaire de demande de séjour, coordonnées, carte |
+| Réserver | `/reserver/` | `/en/book/` | Module de pré-réservation (voir `docs/reservation.md`), coordonnées, carte |
 | Légal | `/mentions-legales/`, `/confidentialite/` | `/en/legal/`, `/en/privacy/` | Brouillons à faire valider |
 
 Phase 2 (ne pas construire maintenant) : `/balades/`, `/pension/`. Sur l'accueil, ces deux
@@ -69,7 +69,7 @@ Hébergement (12 personnes) :
 Votre cheval : hébergement en paddock, foin compris. Infos pratiques à prévoir : accès van et
 camion, documents demandés (vaccins à jour), balade possible avec Sylvie (phase 2).
 
-## Tarifs (src/data/tarifs.yaml) — à valider
+## Tarifs (src/data/reservation.yaml) — à valider
 
 | Prestation | Prix | Remarque |
 | --- | --- | --- |

@@ -27,34 +27,49 @@ Chaque étape se lance avec le prompt indiqué. Attendre la fin, vérifier en lo
 > foret-chambaran.jpg sur mobile.
 
 ## Étape 5 — Le gîte (FR)
-> Construis la page Le gîte. Tarifs lus depuis src/data/tarifs.yaml. Les valeurs à valider
+> Construis la page Le gîte. Tarifs lus depuis src/data/reservation.yaml. Les valeurs à valider
 > restent visibles avec TODO(amaelle) et sont listées dans docs/todo-contenus.md.
 
 ## Étape 6 — Le lieu (FR)
 > Construis la page Le lieu : vue du ciel avec repères, équipements, chevaux, alentours, accès.
 
-## Étape 7 — Réserver et formulaire
-> Construis la page Réserver avec le formulaire de demande de séjour (dates, nombre de personnes,
-> nombre de chevaux, type d'hébergement souhaité, repas, message, coordonnées, consentement),
-> envoi vers PUBLIC_FORM_ENDPOINT, honeypot, messages de succès et d'erreur.
+## Étape 7 — Réservation : données et règles
+> Lis docs/reservation.md. Crée src/data/reservation.yaml (unités, capacités, prix, règles,
+> avec les TODO(amaelle)), les migrations D1, et une bibliothèque pure (sans accès réseau) qui
+> calcule disponibilités et devis, avec ses tests Vitest. Pas d'interface à cette étape.
 
-## Étape 8 — Pages légales
-> Rédige des brouillons de mentions légales et de politique de confidentialité, marqués
-> « à faire valider », sans inventer d'information.
+## Étape 8 — Réservation : API
+> Crée les Pages Functions de l'API : disponibilités, devis, création de demande (transaction,
+> Turnstile, limitation par IP), et les actions d'administration. Configure wrangler pour un D1
+> local avec des données de démonstration.
 
-## Étape 9 — Version anglaise
+## Étape 9 — Réservation : parcours client
+> Construis la page Réserver (FR) selon la section 7 de docs/reservation.md : calendrier,
+> composition du séjour, devis en direct, coordonnées, confirmation.
+
+## Étape 10 — Réservation : administration et e-mails
+> Construis /admin/ (demandes, fiche, calendrier, blocages) et les modèles d'e-mails FR/EN.
+> Documente la protection par Cloudflare Access et la configuration du service d'e-mail.
+> Rédige docs/recette-reservation.md.
+
+## Étape 11 — Pages légales
+> Rédige des brouillons de mentions légales, de politique de confidentialité (incluant les
+> données de réservation) et de conditions de réservation, marqués « à faire valider », sans
+> inventer d'information.
+
+## Étape 12 — Version anglaise
 > Traduis toutes les pages et contenus en anglais sous /en/, avec hreflang et sélecteur de langue.
 
-## Étape 10 — SEO, accessibilité, performance
+## Étape 13 — SEO, accessibilité, performance
 > Ajoute title/description, Open Graph, sitemap, robots.txt, données structurées
 > LodgingBusiness. Vérifie les contrastes et le clavier. Vise Lighthouse mobile ≥ 90 partout
 > et liste ce qui reste à corriger.
 
-## Étape 11 — Déploiement
-> Prépare le déploiement sur Cloudflare Pages (commande de build, dossier dist, variables
-> d'environnement) et écris dans README.md les étapes pour brancher le domaine chambalade.fr.
+## Étape 14 — Déploiement
+> Prépare le déploiement sur Cloudflare Pages (commande de build, dossier dist, base D1 de
+> production, secrets, Cloudflare Access sur /admin/) et écris dans README.md les étapes pour brancher le domaine chambalade.fr.
 
 ## Plus tard
 - Outil d'édition pour Amaëlle (Decap ou Sveltia CMS, connexion GitHub).
 - Phase 2 : pages Balades et Pension.
-- Moteur de réservation, si le volume le justifie.
+- Réservation v2 : acompte en ligne par Stripe. v3 : synchronisation iCal (Airbnb, Booking).
