@@ -35,7 +35,7 @@ sections:
     title: Combien de temps nous les gardons
     paragraphs:
       - 'TODO(amaelle): confirmer la durée de conservation. Proposition de docs/reservation.md : suppression ou anonymisation des demandes 3 ans après le séjour, ou 3 ans après la demande si elle n’a pas abouti.'
-      - 'TODO(amaelle): le site ne supprime pas les demandes tout seul ; l’anonymisation se lance à la main, avec une commande documentée. Décider qui la lance et à quel rythme (proposition : une fois par an).'
+      - 'TODO(amaelle): le site ne supprime pas les demandes tout seul ; l’anonymisation se lance à la main, avec une commande documentée. Décider qui la lance et à quel rythme (proposition : une fois par an).'
   - id: destinataires
     title: Qui y a accès
     paragraphs:
