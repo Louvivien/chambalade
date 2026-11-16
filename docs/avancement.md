@@ -4,7 +4,33 @@ Le dernier état est en haut. À chaque reprise, lire ce fichier, `git log -5` e
 `git status`, puis reprendre la première tranche non cochée. Chaque tranche
 terminée donne lieu à un commit après un build sans erreur ni avertissement.
 
-## Étape en cours : 11 — Pages légales (FR) — 2026-11-16
+## Étape en cours : 12 — Version anglaise — 2026-11-16
+
+Branche : `etape-12-en` · Base : `etape-11-legal`.
+Statut : plan écrit, aucune tranche terminée.
+Périmètre (`docs/etapes.md` étape 12) : toutes les pages publiques en anglais sous `/en/`
+(`/en/`, `/en/guesthouse/`, `/en/the-place/`, `/en/book/`, `/en/legal/`, `/en/privacy/`,
+`/en/booking-terms/`), `hreflang`, sélecteur de langue. Traduction naturelle, mêmes informations,
+prix en €. `/admin/` reste en français (usage d’Amaëlle seule). Les `TODO(amaelle)` sont repris
+à l’identique dans les contenus anglais.
+
+Principes : mêmes composants pour les deux langues (les pages deviennent des « vues » qui
+reçoivent la langue), aucune route ni aucun texte en dur ; table de routes unique
+`src/lib/routes.ts` ; la langue de la demande (`langue`) part à l’API et pilote l’e-mail à la
+cliente ; formats de dates et de montants selon la langue.
+
+- [ ] Tranche 1 — Fondations : table de routes, `hreflang`/`lang` dans `BaseLayout`, en-tête,
+  pied de page, interface EN complète, pages converties en vues paramétrées par la langue
+  (le français ne change pas) ; tests des routes.
+- [ ] Tranche 2 — Accueil et gîte en anglais (`en.md`, tarifs en €).
+- [ ] Tranche 3 — Le lieu en anglais.
+- [ ] Tranche 4 — Réserver en anglais : formulaire, calendrier, devis, messages d’erreur du
+  serveur, langue envoyée à l’API ; tests.
+- [ ] Tranche 5 — Pages légales en anglais.
+- [ ] Tranche 6 — Audit : hreflang réciproques, parité FR/EN des contenus (tests), navigateur,
+  Lighthouse, rapport, `docs/rapports/etape-12.json`.
+
+## Étape précédente : 11 — Pages légales (FR) — 2026-11-16
 
 Branche : `etape-11-legal` · Base : `etape-10-admin`.
 Statut : tranches 1 à 3 terminées ; étape prête pour revue, sans fusion.
