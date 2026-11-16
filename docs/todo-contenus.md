@@ -22,13 +22,13 @@ conditions pratiques, identité légale. Les sources ci-dessous font autorité.
 | `docs/audit.md:71` | - [ ] Liste finale des `TODO(amaelle)` restants, classés : bloquant / non bloquant. |
 | `docs/audit.md:87` | Nouveaux TODO(amaelle) : … |
 | `docs/avancement.md:14` | prix en €. `/admin/` reste en français (usage d’Amaëlle seule). Les `TODO(amaelle)` sont repris |
-| `docs/avancement.md:48` | manque est `TODO(amaelle)` visible. Les textes décrivent ce que le site fait réellement |
-| `docs/avancement.md:78` | dans un objet ou un en-tête d’e-mail. Informations inconnues = `TODO(amaelle)` visibles. |
-| `docs/avancement.md:142` | navigateur : tout passe par l’API de l’étape 8. Informations inconnues = `TODO(amaelle)` |
-| `docs/avancement.md:147` | l’accueil, du gîte et du lieu raccordés, `.env.example`, `TODO(amaelle)`. |
-| `docs/avancement.md:231` | inventaire des `TODO(amaelle)`, rapport dans `docs/journal-audit.md`, PR. |
-| `docs/avancement.md:248` | Principe sur les inconnues : toute valeur `TODO(amaelle)` reste `null` dans le YAML. La |
-| `docs/avancement.md:277` | des `TODO(amaelle)`, rapport dans `docs/journal-audit.md`, PR. |
+| `docs/avancement.md:50` | manque est `TODO(amaelle)` visible. Les textes décrivent ce que le site fait réellement |
+| `docs/avancement.md:80` | dans un objet ou un en-tête d’e-mail. Informations inconnues = `TODO(amaelle)` visibles. |
+| `docs/avancement.md:144` | navigateur : tout passe par l’API de l’étape 8. Informations inconnues = `TODO(amaelle)` |
+| `docs/avancement.md:149` | l’accueil, du gîte et du lieu raccordés, `.env.example`, `TODO(amaelle)`. |
+| `docs/avancement.md:233` | inventaire des `TODO(amaelle)`, rapport dans `docs/journal-audit.md`, PR. |
+| `docs/avancement.md:250` | Principe sur les inconnues : toute valeur `TODO(amaelle)` reste `null` dans le YAML. La |
+| `docs/avancement.md:279` | des `TODO(amaelle)`, rapport dans `docs/journal-audit.md`, PR. |
 | `docs/brief.md:5` | pas définitifs : les mettre en ligne avec un `TODO(amaelle)`. |
 | `docs/brief.md:22` | - Téléphone : TODO(amaelle). E-mail de contact : TODO(amaelle). |
 | `docs/brief.md:53` | TODO(amaelle) (environ 1 h, à vérifier). |
@@ -144,6 +144,12 @@ conditions pratiques, identité légale. Les sources ci-dessous font autorité.
 | `src/content/legal/fr/mentions.md:26` | - 'TODO(amaelle): adresse complète de l’hébergeur, à reprendre de son site avant publication.' |
 | `src/content/legal/fr/mentions.md:31` | - 'TODO(amaelle): confirmer l’origine des photographies et indiquer les crédits photographiques à afficher.' |
 | `src/content/legal/fr/mentions.md:44` | - 'TODO(amaelle): indiquer le médiateur de la consommation auquel vous pouvez recourir en cas de litige, avec ses coordonnées.' |
+| `src/content/lieu/en.md:96` | <!-- TODO(amaelle): validate the proposed texts of The place page. --> |
+| `src/content/lieu/en.md:97` | <!-- TODO(amaelle): specify the conditions for using the arena and the varied-terrain course, and for hosting horses in the paddocks. --> |
+| `src/content/lieu/en.md:98` | <!-- TODO(amaelle): provide the portraits of Quinoa, Guiness and Saphir and the horse descriptions; no breed, personality or ridden service is invented. --> |
+| `src/content/lieu/en.md:99` | <!-- TODO(amaelle): confirm the distance and horseback access to the Roybon waterfall, and provide recommended routes around Dionay. --> |
+| `src/content/lieu/en.md:100` | <!-- TODO(amaelle): confirm distances and journey times from Lyon, Grenoble and Valence. --> |
+| `src/content/lieu/en.md:101` | <!-- TODO(amaelle): provide directions for arriving by car, van and lorry, and the parking arrangements. --> |
 | `src/content/lieu/fr.md:96` | <!-- TODO(amaelle): valider les textes proposés de la page Le lieu. --> |
 | `src/content/lieu/fr.md:97` | <!-- TODO(amaelle): préciser les conditions d’utilisation de la carrière et du PTV, et les conditions d’accueil dans les paddocks. --> |
 | `src/content/lieu/fr.md:98` | <!-- TODO(amaelle): fournir les portraits de Quinoa, Guiness et Saphir et les présentations des chevaux ; aucune race, personnalité ou prestation montée n’est inventée. --> |

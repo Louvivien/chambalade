@@ -29,7 +29,8 @@ cliente ; formats de dates et de montants selon la langue.
 - [x] Tranche 2 — Accueil et gîte en anglais (`en.md`, tarifs en €).
   Fait : `accueil/en.md`, `gite/en.md`, pages `/en/` et `/en/guesthouse/`, montants « €76.50 » (`formatEuros(cents, locale)`),
   test de parité FR/EN (`tests/parite.test.ts` : mêmes clés, mêmes images, mêmes TODO).
-- [ ] Tranche 3 — Le lieu en anglais.
+- [x] Tranche 3 — Le lieu en anglais.
+  Fait : `lieu/en.md`, page `/en/the-place/` ; repères G / A / M (guesthouse, arena, meadows) ; parité vérifiée par test.
 - [ ] Tranche 4 — Réserver en anglais : formulaire, calendrier, devis, messages d’erreur du
   serveur, langue envoyée à l’API ; tests.
 - [ ] Tranche 5 — Pages légales en anglais.
