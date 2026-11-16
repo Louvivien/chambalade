@@ -39,11 +39,15 @@ const ids = ['gite', 'carriere', 'pres'] as const;
   .aerial-image { position: relative; }
   .aerial-image :global(img) { display: block; width: 100%; height: auto; }
   .markers { margin: 0; padding: 0; list-style: none; }
-  .marker { position: absolute; transform: translate(-50%, -50%); display: inline-flex; align-items: center; justify-content: center; gap: .5rem; min-height: 44px; min-width: 44px; padding: .35rem .6rem; border: 2px solid var(--foret); border-radius: 3px; background: var(--creme); color: var(--foret); text-decoration: none; font-size: var(--texte-petit); font-weight: 700; white-space: nowrap; }
-  .marker:hover { background: var(--foret); color: var(--creme); }
-  .marker:focus-visible { outline: 3px solid var(--creme); outline-offset: 0; box-shadow: 0 0 0 6px var(--foret); z-index: 1; }
-  .symbol { display: inline-flex; justify-content: center; align-items: center; font-weight: 700; min-width: 1.3em; }
-  .marker-name { display: none; }
+  /* La zone cliquable fait 44 px, mais seul un petit rond se voit : le repère ne doit pas masquer ce qu'il désigne. */
+  .marker { position: absolute; transform: translate(-50%, -50%); display: flex; align-items: center; justify-content: center; width: 44px; height: 44px; color: var(--foret); text-decoration: none; font-size: var(--texte-petit); font-weight: 700; }
+  .symbol { display: inline-flex; justify-content: center; align-items: center; width: 22px; height: 22px; border: 2px solid var(--foret); border-radius: 50%; background: var(--creme); font-size: .75rem; line-height: 1; font-weight: 700; }
+  .marker:hover .symbol, .marker:hover .marker-name { background: var(--foret); color: var(--creme); }
+  .marker:focus-visible { outline: none; z-index: 1; }
+  .marker:focus-visible .symbol { outline: 3px solid var(--creme); box-shadow: 0 0 0 6px var(--foret); }
+  .legend .symbol { flex: none; }
+  /* Le nom est décalé sur le côté du rond, jamais par-dessus la zone désignée. */
+  .marker-name { display: none; position: absolute; left: calc(50% + 16px); top: 50%; transform: translateY(-50%); padding: .15rem .5rem; border-radius: 3px; background: var(--creme); white-space: nowrap; }
   figcaption { font-size: var(--texte-petit); margin-top: var(--espace-3); }
   .legend { list-style: none; margin: var(--espace-8) 0 0; padding: 0; display: grid; gap: var(--espace-6); }
   .legend li { border-top: 1px solid var(--chene); padding-top: var(--espace-3); }

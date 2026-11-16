@@ -73,7 +73,7 @@ try {
     const links = await page.locator('a[href]').evaluateAll(items => items.map(link => ({ href: link.getAttribute('href'), name: link.getAttribute('aria-label') || link.textContent.trim() })));
     for (const link of links) {
       await page.keyboard.press('Tab');
-      const focus = await page.locator(':focus').evaluate(el => ({ href: el.getAttribute('href'), name: el.getAttribute('aria-label') || el.textContent.trim(), outline: getComputedStyle(el).outlineStyle, shadow: getComputedStyle(el).boxShadow, width: el.getBoundingClientRect().width }));
+      const focus = await page.locator(':focus').evaluate(el => ({ href: el.getAttribute('href'), name: el.getAttribute('aria-label') || el.textContent.trim(), outline: getComputedStyle(el.matches('[data-marker]') ? el.querySelector('.symbol') : el).outlineStyle, shadow: getComputedStyle(el.matches('[data-marker]') ? el.querySelector('.symbol') : el).boxShadow, width: el.getBoundingClientRect().width }));
       assert.equal(focus.href, link.href);
       assert.equal(focus.name, link.name);
       assert(focus.width > 0);
