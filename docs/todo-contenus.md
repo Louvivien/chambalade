@@ -20,8 +20,8 @@ conditions pratiques, identité légale. Les sources ci-dessous font autorité.
 | `docs/audit.md:29` | `docs/brief.md` ou `src/data/reservation.yaml`. Sinon : `TODO(amaelle)`, jamais une invention. |
 | `docs/audit.md:71` | - [ ] Liste finale des `TODO(amaelle)` restants, classés : bloquant / non bloquant. |
 | `docs/audit.md:87` | Nouveaux TODO(amaelle) : … |
-| `docs/avancement.md:15` | Principe sur les inconnues : toute valeur `TODO(amaelle)` reste `null` dans le YAML. La |
-| `docs/avancement.md:34` | des `TODO(amaelle)`, rapport dans `docs/journal-audit.md`, PR. |
+| `docs/avancement.md:16` | Principe sur les inconnues : toute valeur `TODO(amaelle)` reste `null` dans le YAML. La |
+| `docs/avancement.md:45` | des `TODO(amaelle)`, rapport dans `docs/journal-audit.md`, PR. |
 | `docs/brief.md:5` | pas définitifs : les mettre en ligne avec un `TODO(amaelle)`. |
 | `docs/brief.md:22` | - Téléphone : TODO(amaelle). E-mail de contact : TODO(amaelle). |
 | `docs/brief.md:53` | TODO(amaelle) (environ 1 h, à vérifier). |
@@ -32,14 +32,17 @@ conditions pratiques, identité légale. Les sources ci-dessous font autorité.
 | `docs/etapes.md:31` | > restent visibles avec TODO(amaelle) et sont listées dans docs/todo-contenus.md. |
 | `docs/etapes.md:38` | > avec les TODO(amaelle)), les migrations D1, et une bibliothèque pure (sans accès réseau) qui |
 | `docs/initialisation.md:50` | des routes de contrôle séparées via `npm run dev:audit`. Aucun nouveau `TODO(amaelle)` à cette étape ; les |
-| `docs/journal-audit.md:20` | inventaire des `TODO(amaelle)` à jour (75 lignes) · secrets : aucune valeur réelle |
-| `docs/journal-audit.md:42` | Nouveaux TODO(amaelle) (6, déjà dans `docs/todo-contenus.md`) : validation des textes ; |
-| `docs/journal-audit.md:86` | Nouveaux TODO(amaelle) : aucun point métier ajouté. |
-| `docs/journal-audit.md:164` | Nouveaux TODO(amaelle) : validation des dix lignes tarifaires, bases de calcul des |
-| `docs/journal-audit.md:237` | Nouveaux TODO(amaelle) : quatre notes dans le contenu — validation des textes, |
-| `docs/journal-audit.md:309` | Nouveaux TODO(amaelle) : marqueurs FR/EN de contact et logo dans |
-| `docs/journal-audit.md:346` | Nouveaux TODO(amaelle) : aucun ; inventaire des points existants créé. |
-| `docs/journal-audit.md:379` | Nouveaux TODO(amaelle) : aucun ; les inconnues métier restent dans les sources. |
+| `docs/journal-audit.md:9` | blocage (48 h, 7 jours), règles de devis. Toute valeur `TODO(amaelle)` reste `null`. |
+| `docs/journal-audit.md:22` | 0 cassée · inventaire des `TODO(amaelle)` à jour (89 lignes) · secrets : aucune valeur réelle · |
+| `docs/journal-audit.md:51` | Nouveaux TODO(amaelle) : aucun nouveau sujet ; les unités et règles inconnues sont |
+| `docs/journal-audit.md:77` | inventaire des `TODO(amaelle)` à jour (75 lignes) · secrets : aucune valeur réelle |
+| `docs/journal-audit.md:99` | Nouveaux TODO(amaelle) (6, déjà dans `docs/todo-contenus.md`) : validation des textes ; |
+| `docs/journal-audit.md:143` | Nouveaux TODO(amaelle) : aucun point métier ajouté. |
+| `docs/journal-audit.md:221` | Nouveaux TODO(amaelle) : validation des dix lignes tarifaires, bases de calcul des |
+| `docs/journal-audit.md:294` | Nouveaux TODO(amaelle) : quatre notes dans le contenu — validation des textes, |
+| `docs/journal-audit.md:366` | Nouveaux TODO(amaelle) : marqueurs FR/EN de contact et logo dans |
+| `docs/journal-audit.md:403` | Nouveaux TODO(amaelle) : aucun ; inventaire des points existants créé. |
+| `docs/journal-audit.md:436` | Nouveaux TODO(amaelle) : aucun ; les inconnues métier restent dans les sources. |
 | `docs/photos.md:22` | \| cascade de Roybon.HEIC \| cascade-roybon.jpg \| Le lieu, les alentours \| Distance et accès à cheval : TODO(amaelle) \| Cascade de Roybon dans un sous-bois \| À utiliser \| |
 | `docs/reservation.md:4` | étapes 7 à 10). Les valeurs marquées `TODO(amaelle)` sont des paramètres à obtenir : le code doit |
 | `docs/reservation.md:33` | Cloudflare. Expéditeur : adresse sur le domaine chambalade.fr, TODO(amaelle). |

@@ -7,7 +7,8 @@ terminée donne lieu à un commit après un build sans erreur ni avertissement.
 ## Étape en cours : 7 — Réservation : données et règles — 2026-11-16
 
 Branche : `etape-7-reservation` · Base : `etape-6-lieu` (étape 6 prête, PR ouverte par Vivien).
-Statut : tranches 1 à 4 terminées ; tranche 5 (audit et livraison) à faire. Une PR dédiée en fin d’étape, sans fusion.
+Statut : tranches 1 à 5 terminées ; étape prête pour revue, sans fusion.
+PR à créer sur GitHub (base `etape-6-lieu`) : l’outil `gh` n’est pas installé ici. Une PR dédiée en fin d’étape, sans fusion.
 Périmètre (`docs/etapes.md`, étape 7) : configuration, migrations D1 et bibliothèque pure
 (sans réseau ni interface) pour disponibilités et devis, avec tests Vitest. Pas d’API
 (étape 8), pas d’interface (étape 9).
@@ -40,8 +41,15 @@ configuration de test complète, distincte de la configuration réelle.
   Fait : `devis.ts` (lignes en centimes, « à confirmer » pour les inconnues, devis figé et gelé),
   `demande.ts` (`preparerDemande`, occupations), contraintes de repas, de couchages et de
   personnes par chambre ; 108 tests au total. Suite : audit et PR.
-- [ ] Tranche 5 (15–30 min) — Audit et livraison : build, types, tests, liens, inventaire
+- [x] Tranche 5 (15–30 min) — Audit et livraison : build, types, tests, liens, inventaire
   des `TODO(amaelle)`, rapport dans `docs/journal-audit.md`, PR.
+  Fait : 108 tests, build et types sans alerte, 170 liens, inventaire à jour, rapport en tête
+  de `docs/journal-audit.md`, résumé `docs/rapports/etape-7.json`. Reste : ouverture de la PR.
+
+Dernière action : tranche 5 terminée (audit et rapport).
+Prochaine action : ouvrir la PR (base `etape-6-lieu`), relecture par Vivien, aucune fusion
+automatique. Étape 8 (API) non commencée ; voir le point d’attention sur les batchs D1 dans
+le journal d’audit.
 
 ## Étape 6 — Le lieu (FR), prête pour revue — 2026-11-16
 
