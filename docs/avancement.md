@@ -7,8 +7,8 @@ terminée donne lieu à un commit après un build sans erreur ni avertissement.
 ## Étape en cours : 5 — Le gîte (FR) — 2026-11-16
 
 Branche : `etape-5-gite` · [PR #4](https://github.com/Louvivien/chambalade/pull/4)
-Base : `etape-4-accueil`. Statut : réalisation terminée ; reprise documentaire
-après la réorganisation `09509cf`, puis clôture technique de l’étape.
+Base : `etape-4-accueil`. Statut : réalisation et reprise documentaire terminées ;
+étape prête pour revue, sans fusion. Réorganisation prise en compte : `09509cf`.
 
 ### Déjà réalisé
 
@@ -29,15 +29,17 @@ Implémentation : `856ea77` ; liaison du rapport à la PR : `0e97118`.
 
 ### Tranche de reprise — prévue pour 15 à 30 minutes
 
-- [ ] Tranche 5 — Synchronisation après réorganisation et clôture : examiner les
-  références au starter supprimé, corriger le texte du générateur d’inventaire,
-  régénérer `docs/todo-contenus.md`, vérifier build, tests, types, liens et fichiers
-  suivis, puis consigner le résultat dans le journal. Statut : à faire.
+- [x] Tranche 5 — Synchronisation après réorganisation et clôture : générateur et
+  documentation corrigés, inventaire régénéré, build/types/tests/liens vérifiés,
+  reprise consignée dans le journal. Suite : relecture de la PR #4 par Vivien.
 
-Dernière action : lecture des nouvelles consignes, des cinq derniers commits et
-des rapports ; `npm run audit:todos` confirme que l’inventaire est désynchronisé.
-Prochaine action : committer cet état, puis commencer la tranche 5. La terminer
-par `wip(etape-5): tranche 5 — synchroniser le suivi après réorganisation`.
+Dernière action : plan committé dans `fc92233`, puis tranche 5 terminée ; build
+sans avertissement, 17 tests réussis, aucun diagnostic Astro, 87 références
+internes sans lien cassé. Les pages et leurs assets sont inchangés depuis `0e97118`.
+Prochaine action : revue de l’étape 5. Aucune tranche de réalisation restante dans
+cette étape ; les réponses métier ci-dessous restent à fournir avant publication.
+Commit de reprise à retrouver dans `git log` :
+`wip(etape-5): tranche 5 — synchroniser le suivi après réorganisation`.
 
 ### Points en suspens
 

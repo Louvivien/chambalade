@@ -1,5 +1,37 @@
 # Journal d’audit
 
+## Étape 5 — Reprise par tranches après réorganisation — 2026-11-16
+
+Branche : `etape-5-gite` · Pull request : [#4](https://github.com/Louvivien/chambalade/pull/4).
+
+Fait : état réel et découpage des travaux consignés dans `docs/avancement.md`,
+plan committé dans `fc92233` avant la tranche de reprise. Le découpage des travaux
+antérieurs est explicitement rétrospectif. Tranche 5 : mise à jour du générateur
+d’inventaire et de la documentation d’initialisation après la suppression du
+starter par Vivien (`09509cf`), régénération de l’inventaire et clôture du suivi.
+Les rapports historiques ci-dessous gardent les résultats de leur date de rédaction.
+
+Contrôles automatiques : build OK sans erreur ni avertissement · 17 tests OK ·
+types : 0 erreur, 0 avertissement, 0 indication · liens : 87 références internes,
+0 cassée sur 2 pages · inventaire synchronisé avec les fichiers encore suivis.
+Secrets : aucune valeur réelle ; occurrences de documentation, tokens CSS et noms
+de dépendances uniquement. Aucun original, `.env`, build ou rapport brut ajouté.
+Diff vérifié sans erreur d’espacement.
+
+Contenu et qualité front : aucune modification des sources du site, des assets,
+de sa configuration ou de ses dépendances depuis `0e97118` (comparaison Git).
+Les contrôles visuels et Lighthouse de la livraison de l’étape 5 ci-dessous
+restent les derniers résultats mesurés ; ils ne sont pas présentés comme rejoués
+pendant cette reprise documentaire.
+
+Écart corrigé : l’ancien inventaire référençait encore les fichiers du starter
+supprimés. Les sources métier à la racine sont conservées ; aucune réponse ni
+validation n’est déduite de la suppression de ces doublons.
+Nouveaux TODO(amaelle) : aucun point métier ajouté.
+À vérifier par Vivien : relecture de la PR et des points de validation déjà
+signalés. Étape 5 techniquement terminée ; aucune tranche de réalisation restante,
+aucune fusion ni publication. L’étape 6 n’est pas engagée par cette reprise.
+
 ## Étape 5 — Le gîte français — 2026-11-16
 
 Branche : `etape-5-gite` · Pull request : [#4](https://github.com/Louvivien/chambalade/pull/4).

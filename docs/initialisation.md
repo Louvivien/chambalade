@@ -1,8 +1,10 @@
 # Initialisation — étape 1
 
-Le projet npm est à la racine du dépôt. Les documents de `chambalade-starter/`
-ont été copiés à la racine sans modifier les originaux. Les consignes de travail
-sont désormais dans `AGENTS.md` et `docs/` à la racine.
+Le projet npm est à la racine du dépôt. Les consignes de travail sont dans
+`AGENTS.md` et `docs/`. Les documents du starter y avaient été copiés lors de
+l’initialisation ; le dossier de copie et son archive ont ensuite été supprimés
+par Vivien lors de la réorganisation `09509cf`. Pour reprendre le travail, lire
+`docs/avancement.md`, `git log -5` et `git status`.
 
 ## Démarrer
 
