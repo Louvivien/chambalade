@@ -7,7 +7,7 @@ terminée donne lieu à un commit après un build sans erreur ni avertissement.
 ## Étape en cours : 7 — Réservation : données et règles — 2026-11-16
 
 Branche : `etape-7-reservation` · Base : `etape-6-lieu` (étape 6 prête, PR ouverte par Vivien).
-Statut : plan committé ; tranche 1 à faire. Une PR dédiée en fin d’étape, sans fusion.
+Statut : tranche 1 terminée ; tranche 2 à faire. Une PR dédiée en fin d’étape, sans fusion.
 Périmètre (`docs/etapes.md`, étape 7) : configuration, migrations D1 et bibliothèque pure
 (sans réseau ni interface) pour disponibilités et devis, avec tests Vitest. Pas d’API
 (étape 8), pas d’interface (étape 9).
@@ -17,9 +17,11 @@ bibliothèque ne la remplace jamais par une valeur inventée ; la ligne de devis
 est marquée « à confirmer » et le devis « incomplet ». Les tests utilisent une
 configuration de test complète, distincte de la configuration réelle.
 
-- [ ] Tranche 1 (15–30 min) — Configuration et schéma : unités, capacités, règles de séjour,
+- [x] Tranche 1 (15–30 min) — Configuration et schéma : unités, capacités, règles de séjour,
   délais, acompte et taxe dans `src/data/reservation.yaml` (inconnues à `null`), schéma
   Zod dans `src/lib/reservation/config.ts`, tests ; page du gîte inchangée.
+  Fait : YAML étendu, schéma avec contrôle de la capacité totale (12), configuration de
+  test `tests/reservation/config-test.ts`, 10 nouveaux tests (27 au total). Suite : migrations.
 - [ ] Tranche 2 (15–30 min) — Migrations D1 : `migrations/0001_*.sql` (`demandes`,
   `occupations`, `blocages`, `journal`, index, contraintes), vérifiées par un test sur une
   base SQLite en mémoire.
