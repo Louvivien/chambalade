@@ -31,6 +31,9 @@
     "api:migrer": "npx --yes wrangler@4.156.1 d1 migrations apply chambalade --local",
     "api:demo": "npx --yes wrangler@4.156.1 d1 execute chambalade --local --file=seed/demo.sql",
     "api:dev": "npm run config:generer && astro build && npx --yes wrangler@4.156.1 pages dev",
+    "deploiement:smoke": "node scripts/verifier-site.mjs",
+    "deploiement:verifier": "node scripts/verifier-deploiement.mjs",
+    "rgpd": "node scripts/rgpd.mjs",
     "config:generer": "node scripts/generer-config.mjs",
     "config:verifier": "node scripts/generer-config.mjs --verifier"
   },

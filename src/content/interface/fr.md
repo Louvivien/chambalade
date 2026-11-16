@@ -20,5 +20,9 @@ legal:
   - { key: mentions, label: Mentions légales }
   - { key: confidentialite, label: Confidentialité }
   - { key: conditions, label: Conditions de réservation }
+notFound:
+  title: Page introuvable
+  text: Cette page n’existe pas ou a changé d’adresse. Vous pouvez revenir à l’accueil, ou préparer votre séjour depuis la page Réserver.
+  link: Retour à l’accueil
 directoryLabel: Tourisme équestre en Isère — CDTE
 ---

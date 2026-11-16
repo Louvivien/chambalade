@@ -80,15 +80,18 @@ adresse e-mail en majuscules. Le journal d’une demande indique chaque envoi (`
 | E2 | Envoyer sans cocher le consentement. | Refus clair, rien n’est enregistré. | |
 | E3 | Vérifier une URL de l’administration et les journaux Cloudflare. | Aucune adresse e-mail, aucun nom dans les URL ni les journaux. | |
 | E4 | Anti-robot : rejouer un envoi avec un jeton déjà utilisé. | Refus (« vérification échouée ») ; la page propose de recommencer. | |
-| E5 | Contrôler `robots.txt` (étape 13) et l’en-tête de `/admin/`. | `/admin/` n’est pas indexable (`X-Robots-Tag: noindex`). | |
+| E5 | Contrôler `robots.txt` et l’en-tête de `/admin/`. | `/admin/` n’est pas indexable (`X-Robots-Tag: noindex`). | |
 
 ## F. Avant la mise en production (liste de reprise)
 
 - [ ] Réponses d’Amaëlle reçues (`docs/todo-contenus.md` : prix des chambres, paddocks, draps, taxe, acompte, première nuit, enfants) et `src/data/reservation.yaml` mis à jour ; tests relancés.
-- [ ] Base D1 de production créée, migrations `0001` à `0003` appliquées, `database_id` réel dans `wrangler.toml`.
+- [ ] Base D1 de production créée, migrations `0001` à `0003` appliquées, `database_id` réel dans `wrangler.toml` (guide : `docs/deploiement.md`, étape 3).
 - [ ] Secrets et variables définis (`docs/api.md`) : Turnstile (secret + `PUBLIC_TURNSTILE_SITE_KEY` à la construction), Access, e-mail, virement.
 - [ ] `ENVIRONMENT` et `ACCESS_DEV_EMAIL` **non** définis en production.
 - [ ] Application Access en place sur `/admin/*` et `/api/admin/*` (aperçus compris).
 - [ ] Domaine d’expédition vérifié chez le service d’e-mail ; e-mails d’essai reçus.
 - [ ] Mentions légales, confidentialité, conditions de réservation validées (étape 11), lien de confidentialité ajouté au formulaire.
+- [ ] `npm run build && npm run deploiement:verifier -- --strict` : aucun point bloquant.
+- [ ] `npm run deploiement:smoke -- <adresse de prévisualisation>` : tous les contrôles réussis (administration fermée comprise).
+- [ ] Procédure d’effacement des données essayée sur la prévisualisation (`docs/deploiement.md`, étape 13) ; durée de conservation décidée par Amaëlle.
 - [ ] Ce document déroulé en entier sur la prévisualisation, tous les `OK`.

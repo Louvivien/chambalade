@@ -1,0 +1,22 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { getInterface } from '../lib/interface';
+import { routes } from '../lib/routes';
+// Une seule page 404 pour tout le site (Cloudflare Pages la sert pour toute adresse inconnue) : les deux langues, l’une sous l’autre.
+const textes = { fr: await getInterface('fr'), en: await getInterface('en') };
+---
+<BaseLayout locale="fr" title={`${textes.fr.notFound.title} — ${textes.fr.name}`} description={textes.fr.notFound.text} currentPage="home" translations={{}}>
+  <Fragment slot="head"><meta name="robots" content="noindex" /></Fragment>
+  <div class="container perdu">
+    {(['fr', 'en'] as const).map(langue => <section lang={langue} aria-labelledby={`perdu-${langue}`}>
+      {langue === 'fr' ? <h1 id="perdu-fr">{textes.fr.notFound.title}</h1> : <h2 id="perdu-en">{textes.en.notFound.title}</h2>}
+      <p>{textes[langue].notFound.text}</p>
+      <a class="button" href={routes[langue].home}>{textes[langue].notFound.link}</a>
+    </section>)}
+  </div>
+</BaseLayout>
+<style>
+  .perdu { display: grid; gap: var(--espace-12); max-width: 46rem; }
+  section + section { padding-top: var(--espace-8); border-top: 1px solid var(--chene); }
+  h1, h2 { font-size: var(--titre-2); margin-top: 0; }
+</style>

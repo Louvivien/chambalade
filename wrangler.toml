@@ -7,7 +7,8 @@ compatibility_date = "2026-11-01"
 binding = "DB"
 database_name = "chambalade"
 # Identifiant de test : il ne sert qu’au mode local (--local), qui ne contacte pas Cloudflare.
-# TODO(étape 14) : remplacer par l’identifiant de la vraie base créée sur Cloudflare.
+# AVANT LA MISE EN LIGNE : le remplacer par l’identifiant de la vraie base créée sur Cloudflare
+# (docs/deploiement.md, étape 3). Ce n’est pas un secret. `npm run deploiement:verifier` le contrôle.
 database_id = "00000000-0000-0000-0000-000000000000"
 migrations_dir = "migrations"
 
