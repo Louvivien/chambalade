@@ -36,20 +36,20 @@ conditions pratiques, identité légale. Les sources ci-dessous font autorité.
 | `docs/etapes.md:38` | > avec les TODO(amaelle)), les migrations D1, et une bibliothèque pure (sans accès réseau) qui |
 | `docs/initialisation.md:50` | des routes de contrôle séparées via `npm run dev:audit`. Aucun nouveau `TODO(amaelle)` à cette étape ; les |
 | `docs/journal-audit.md:24` | 0 indication · liens : 181 références internes, 0 cassée · inventaire des `TODO(amaelle)` à jour · |
-| `docs/journal-audit.md:78` | Nouveaux TODO(amaelle) : valider les textes de la page ; confirmer la réponse sous 48 h et le |
-| `docs/journal-audit.md:106` | 0 cassée · inventaire des `TODO(amaelle)` à jour (95 lignes) · configuration des fonctions |
-| `docs/journal-audit.md:153` | Nouveaux TODO(amaelle) : aucun. À vérifier par Vivien : les décisions ci-dessus, en particulier |
-| `docs/journal-audit.md:162` | blocage (48 h, 7 jours), règles de devis. Toute valeur `TODO(amaelle)` reste `null`. |
-| `docs/journal-audit.md:175` | 0 cassée · inventaire des `TODO(amaelle)` à jour (92 lignes) · secrets : aucune valeur réelle · |
-| `docs/journal-audit.md:204` | Nouveaux TODO(amaelle) : aucun nouveau sujet ; les unités et règles inconnues sont |
-| `docs/journal-audit.md:230` | inventaire des `TODO(amaelle)` à jour (75 lignes) · secrets : aucune valeur réelle |
-| `docs/journal-audit.md:252` | Nouveaux TODO(amaelle) (6, déjà dans `docs/todo-contenus.md`) : validation des textes ; |
-| `docs/journal-audit.md:296` | Nouveaux TODO(amaelle) : aucun point métier ajouté. |
-| `docs/journal-audit.md:374` | Nouveaux TODO(amaelle) : validation des dix lignes tarifaires, bases de calcul des |
-| `docs/journal-audit.md:447` | Nouveaux TODO(amaelle) : quatre notes dans le contenu — validation des textes, |
-| `docs/journal-audit.md:519` | Nouveaux TODO(amaelle) : marqueurs FR/EN de contact et logo dans |
-| `docs/journal-audit.md:556` | Nouveaux TODO(amaelle) : aucun ; inventaire des points existants créé. |
-| `docs/journal-audit.md:589` | Nouveaux TODO(amaelle) : aucun ; les inconnues métier restent dans les sources. |
+| `docs/journal-audit.md:89` | Nouveaux TODO(amaelle) : valider les textes de la page ; confirmer la réponse sous 48 h et le |
+| `docs/journal-audit.md:117` | 0 cassée · inventaire des `TODO(amaelle)` à jour (95 lignes) · configuration des fonctions |
+| `docs/journal-audit.md:164` | Nouveaux TODO(amaelle) : aucun. À vérifier par Vivien : les décisions ci-dessus, en particulier |
+| `docs/journal-audit.md:173` | blocage (48 h, 7 jours), règles de devis. Toute valeur `TODO(amaelle)` reste `null`. |
+| `docs/journal-audit.md:186` | 0 cassée · inventaire des `TODO(amaelle)` à jour (92 lignes) · secrets : aucune valeur réelle · |
+| `docs/journal-audit.md:215` | Nouveaux TODO(amaelle) : aucun nouveau sujet ; les unités et règles inconnues sont |
+| `docs/journal-audit.md:241` | inventaire des `TODO(amaelle)` à jour (75 lignes) · secrets : aucune valeur réelle |
+| `docs/journal-audit.md:263` | Nouveaux TODO(amaelle) (6, déjà dans `docs/todo-contenus.md`) : validation des textes ; |
+| `docs/journal-audit.md:307` | Nouveaux TODO(amaelle) : aucun point métier ajouté. |
+| `docs/journal-audit.md:385` | Nouveaux TODO(amaelle) : validation des dix lignes tarifaires, bases de calcul des |
+| `docs/journal-audit.md:458` | Nouveaux TODO(amaelle) : quatre notes dans le contenu — validation des textes, |
+| `docs/journal-audit.md:530` | Nouveaux TODO(amaelle) : marqueurs FR/EN de contact et logo dans |
+| `docs/journal-audit.md:567` | Nouveaux TODO(amaelle) : aucun ; inventaire des points existants créé. |
+| `docs/journal-audit.md:600` | Nouveaux TODO(amaelle) : aucun ; les inconnues métier restent dans les sources. |
 | `docs/photos.md:22` | \| cascade de Roybon.HEIC \| cascade-roybon.jpg \| Le lieu, les alentours \| Distance et accès à cheval : TODO(amaelle) \| Cascade de Roybon dans un sous-bois \| À utiliser \| |
 | `docs/reservation.md:4` | étapes 7 à 10). Les valeurs marquées `TODO(amaelle)` sont des paramètres à obtenir : le code doit |
 | `docs/reservation.md:33` | Cloudflare. Expéditeur : adresse sur le domaine chambalade.fr, TODO(amaelle). |
@@ -100,11 +100,11 @@ conditions pratiques, identité légale. Les sources ci-dessous font autorité.
 | `src/content/lieu/fr.md:100` | <!-- TODO(amaelle): confirmer les distances et temps de trajet depuis Lyon, Grenoble et Valence. --> |
 | `src/content/lieu/fr.md:101` | <!-- TODO(amaelle): fournir les indications d’arrivée en voiture, van et camion, ainsi que les modalités de stationnement. --> |
 | `src/content/reserver/fr.md:10` | contact: 'TODO(amaelle): fournir le téléphone et l’adresse e-mail de contact.' |
-| `src/content/reserver/fr.md:46` | childrenHint: 'TODO(amaelle): préciser si les enfants sont accueillis et à quel tarif.' |
-| `src/content/reserver/fr.md:48` | horsesHint: 'TODO(amaelle): préciser le nombre de chevaux accueillis en même temps. Tant qu’il est inconnu, les demandes avec un cheval ne peuvent pas être envoyées.' |
-| `src/content/reserver/fr.md:74` | consentPrivacy: 'TODO(amaelle): lier ici la politique de confidentialité une fois rédigée et validée (étape 11).' |
-| `src/content/reserver/fr.md:129` | <!-- TODO(amaelle): valider les textes proposés de la page Réserver. --> |
-| `src/content/reserver/fr.md:130` | <!-- TODO(amaelle): confirmer que la réponse sous 48 h et le blocage provisoire des dates conviennent. --> |
+| `src/content/reserver/fr.md:48` | childrenHint: 'TODO(amaelle): préciser si les enfants sont accueillis et à quel tarif.' |
+| `src/content/reserver/fr.md:50` | horsesHint: 'TODO(amaelle): préciser le nombre de chevaux accueillis en même temps. Tant qu’il est inconnu, les demandes avec un cheval ne peuvent pas être envoyées.' |
+| `src/content/reserver/fr.md:76` | consentPrivacy: 'TODO(amaelle): lier ici la politique de confidentialité une fois rédigée et validée (étape 11).' |
+| `src/content/reserver/fr.md:131` | <!-- TODO(amaelle): valider les textes proposés de la page Réserver. --> |
+| `src/content/reserver/fr.md:132` | <!-- TODO(amaelle): confirmer que la réponse sous 48 h et le blocage provisoire des dates conviennent. --> |
 | `src/data/reservation.yaml:3` | # Toute valeur TODO(amaelle) reste null : le code ne la remplace jamais par une valeur inventée. |
 | `src/data/reservation.yaml:30` | privatisable: null # TODO(amaelle): le dortoir est-il privatisable en entier, et à quel prix ? |
 | `src/data/reservation.yaml:34` | capacity_horses: null # TODO(amaelle): nombre de chevaux accueillis en même temps. |

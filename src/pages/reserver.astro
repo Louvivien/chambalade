@@ -207,7 +207,9 @@ const chambres = ['chambre_privee', 'chambre_2', 'chambre_3'] as const;
   .cal-grille th { font-size: var(--texte-petit); font-weight: 700; padding-block: var(--espace-2); }
   .cal-grille td { padding: 0; }
   .cal-jour { width: 100%; min-height: 44px; aspect-ratio: 1; padding: 0; border: 1px solid transparent; border-radius: 3px; background: color-mix(in srgb, var(--creme) 55%, white); color: var(--foret); font-weight: 700; cursor: pointer; }
-  .cal-jour:hover:not([aria-disabled="true"]) { border-color: var(--foret); }
+  .cal-jour.libre, .cal-jour.depart-possible { border-color: color-mix(in srgb, var(--foret) 45%, transparent); }
+  .cal-jour:hover:not([aria-disabled="true"]) { border-color: var(--foret); background: var(--horizon); }
+  .cal-erreur { border: 2px solid var(--erreur); padding: var(--espace-4); margin-bottom: var(--espace-4); display: grid; gap: var(--espace-2); justify-items: start; font-weight: 700; }
   .cal-jour:focus-visible { outline: 3px solid var(--foret); outline-offset: 2px; z-index: 1; position: relative; }
   .cal-jour[aria-disabled="true"] { cursor: not-allowed; color: color-mix(in srgb, var(--foret) 65%, var(--creme)); font-weight: 400; }
   .cal-jour.complet { background: repeating-linear-gradient(135deg, transparent 0 4px, color-mix(in srgb, var(--foret) 55%, transparent) 4px 5px), var(--creme); text-decoration: line-through; }

@@ -9,6 +9,10 @@ Cloudflare Pages. Les instructions pour l'agent de développement sont dans `AGE
 2. Télécharger les photos du dossier Drive « Biblio Photos » dans `photos-originales/`.
 3. `npm install`, puis `npm run photos`, puis `npm run dev`.
 
+`npm run dev` sert le site seul : la page Réserver n’y trouve pas l’API, donc aucune date n’est
+choisissable (un message l’indique). Pour la tester, lancer `npm run api:dev` et ouvrir
+http://localhost:8788/reserver/ (préparation dans `docs/api.md`, section « Travailler en local »).
+
 ## Documents
 
 - `docs/brief.md` : marque, textes, tarifs, questions ouvertes.

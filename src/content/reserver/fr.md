@@ -35,7 +35,9 @@ dates:
   selectedArrival: 'Arrivée choisie le {date}.'
   selectedStay: 'Séjour du {arrivee} au {depart}, {nuits}.'
   loading: Chargement des disponibilités…
-  loadError: Les disponibilités ne se sont pas chargées. Rechargez la page ou réessayez dans un instant.
+  loadError: Les disponibilités ne se sont pas chargées, vous ne pouvez donc pas choisir vos dates pour le moment.
+  loadErrorDev: 'Développement local : l’API de réservation doit tourner. Lancez npm run api:dev et ouvrez http://localhost:8788/reserver/ (voir docs/api.md).'
+  retry: Réessayer
   pickDeparture: Choisissez maintenant votre jour de départ.
   tooEarly: Cette date n’est pas encore ouverte aux séjours.
   weekdays: [lun., mar., mer., jeu., ven., sam., dim.]

@@ -5,7 +5,7 @@ import type { EtatFormulaire, LibresParNuit, Regles, StatutNuit } from '../lib/r
 import { el, vider } from './dom';
 
 export interface TextesCalendrier {
-  calendarLabel: string; previousMonth: string; nextMonth: string; weekdays: string[]; loading: string; loadError: string;
+  calendarLabel: string; loadErrorDev: string; retry: string; previousMonth: string; nextMonth: string; weekdays: string[]; loading: string; loadError: string;
   stateAvailable: string; full: string; stateClosed: string; stateUnknown: string; stateArrival: string; stateDeparture: string; stateInStay: string;
   stateDeparturePossible: string; stateDepartureImpossible: string; pickDeparture: string; tooEarly: string; selectedArrival: string;
 }
@@ -85,6 +85,10 @@ export function creerCalendrier(o: OptionsCalendrier) {
   const titre = el('p', { class: 'cal-titre', id: 'cal-titre', 'aria-live': 'polite' });
   const precedent = el('button', { type: 'button', class: 'cal-nav', 'aria-label': t.previousMonth }, ['‹']);
   const suivant = el('button', { type: 'button', class: 'cal-nav', 'aria-label': t.nextMonth }, ['›']);
+  const messageErreur = el('p');
+  const reessayer = el('button', { type: 'button', class: 'lien' }, [t.retry]);
+  const blocErreur = el('div', { class: 'cal-erreur', role: 'alert', hidden: true }, [messageErreur, reessayer]);
+  const enLocal = ['localhost', '127.0.0.1'].includes(location.hostname);
   const grille = el('table', { class: 'cal-grille', role: 'grid', 'aria-labelledby': 'cal-titre' });
 
   let moisConstruit = '';
@@ -131,7 +135,10 @@ export function creerCalendrier(o: OptionsCalendrier) {
       grille.append(entete, corps);
     }
     majJours();
-    statutRegion.textContent = chargement > 0 ? t.loading : erreurChargement ? t.loadError : statutRegion.dataset.message ?? '';
+    statutRegion.textContent = chargement > 0 ? t.loading : statutRegion.dataset.message ?? '';
+    // Une erreur de chargement doit se voir : sans disponibilités, aucun jour ne peut être choisi.
+    blocErreur.hidden = chargement > 0 || !erreurChargement;
+    messageErreur.textContent = enLocal ? `${t.loadError} ${t.loadErrorDev}` : t.loadError;
     racine.dataset.etat = chargement > 0 ? 'chargement' : erreurChargement ? 'erreur' : 'pret';
     if (redonnerFocus) grille.querySelector<HTMLButtonElement>(`[data-date="${focus}"]`)?.focus();
   }
@@ -193,7 +200,8 @@ export function creerCalendrier(o: OptionsCalendrier) {
   vider(racine);
   racine.setAttribute('role', 'group');
   racine.setAttribute('aria-label', t.calendarLabel);
-  racine.append(el('div', { class: 'cal-entete' }, [precedent, titre, suivant]), grille, statutRegion);
+  reessayer.addEventListener('click', () => { erreurChargement = false; mois.clear(); void afficherMois(affiche.annee, affiche.mois); });
+  racine.append(blocErreur, el('div', { class: 'cal-entete' }, [precedent, titre, suivant]), grille, statutRegion);
   void afficherMois(affiche.annee, affiche.mois);
 
   return {

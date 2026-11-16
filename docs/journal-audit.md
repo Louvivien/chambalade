@@ -56,6 +56,17 @@ Défauts trouvés et corrigés pendant l’étape (vérifiés dans un vrai navig
 - le résumé d’erreurs restait affiché après correction : il suit les corrections ;
 - sur le gîte, deux liens « Demander un séjour » menaient à deux endroits : tous deux vont à `/reserver/`.
 
+Correction après premier essai de Vivien (« les dates ne paraissent pas sélectionnables ») :
+- Sans l’API (cas de `npm run dev`, qui sert le site seul), aucune disponibilité ne se charge et
+  aucun jour n’est choisissable ; seul indice : une ligne discrète sous la grille. Un bloc d’erreur
+  visible (avec « Réessayer » et, en local, la commande à lancer : `npm run api:dev`) l’explique
+  maintenant ; le README le précise.
+- Les jours libres se distinguaient à peine d’une case vide : ils ont désormais un cadre net
+  (et un survol), les jours passés ou fermés restent en pointillés grisés.
+- Rappel : tant que la « première nuit réservable » n’est pas fournie par Amaëlle
+  (`stay.first_night` à `null`), le calendrier s’ouvre sur le mois en cours et accepte toute date
+  à partir de demain, alors que le gîte ouvre au printemps 2027.
+
 Décisions de conception à valider (aucune ne tranche une question métier) :
 - Calendrier sur mesure (grille de boutons) plutôt que deux champs date natifs, pour griser les
   nuits complètes. Il est testé au clavier ; **pas testé avec un lecteur d’écran**.
