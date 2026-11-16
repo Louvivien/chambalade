@@ -87,6 +87,8 @@ const reserver = defineCollection({
       arrival: z.string(), departure: z.string(), none: z.string(), nightsOne: z.string(), nightsMany: z.string(), clear: z.string(),
       keyAvailable: z.string(), keyFull: z.string(), keyChosen: z.string(), full: z.string(), loading: z.string(), loadError: z.string(),
       pickDeparture: z.string(), tooEarly: z.string(), weekdays: z.array(z.string()).length(7),
+      stateAvailable: z.string(), stateClosed: z.string(), stateUnknown: z.string(), stateArrival: z.string(), stateDeparture: z.string(), stateInStay: z.string(),
+      stateDeparturePossible: z.string(), stateDepartureImpossible: z.string(), selectedArrival: z.string(), selectedStay: z.string(),
     }),
     group: z.object({ legend: z.string(), adults: z.string(), children: z.string(), childrenHint: z.string().startsWith('TODO(amaelle)'), horses: z.string(), horsesHint: z.string().startsWith('TODO(amaelle)') }),
     lodging: z.object({

@@ -2,7 +2,7 @@ import { describe, expect, it } from 'vitest';
 import { lignesVue, nomCourt, type DevisApi } from '../../src/lib/reserver/devis';
 import { corpsDemande, messagesDErreur, validerFormulaire, type TextesErreurs } from '../../src/lib/reserver/envoi';
 import { dateComplete, euros, libelleNuits, remplir } from '../../src/lib/reserver/formats';
-import { etatInitial } from '../../src/lib/reserver/types';
+import { etatInitial, type EtatFormulaire } from '../../src/lib/reserver/types';
 
 const t: TextesErreurs = {
   required: '{champ} est à renseigner.', email: 'Adresse invalide.', noDates: 'Choisissez vos dates.', noLodging: 'Choisissez un hébergement.',
@@ -10,7 +10,7 @@ const t: TextesErreurs = {
 };
 const libelles = { nom: 'Le nom', prenom: 'Le prénom', email: 'L’adresse e-mail' };
 const contact = { nom: 'Martin', prenom: 'Claire', email: 'claire@example.invalid', telephone: '', message: '' };
-const valide = { ...etatInitial(), arrivee: '2027-05-10', depart: '2027-05-12', chambres: ['chambre_2' as const] };
+const valide: EtatFormulaire = { ...etatInitial(), arrivee: '2027-05-10', depart: '2027-05-12', chambres: ['chambre_2'] };
 
 describe('formats', () => {
   it('remplace les {clés} et laisse visibles celles qui manquent', () => {

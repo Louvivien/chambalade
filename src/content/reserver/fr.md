@@ -24,6 +24,16 @@ dates:
   keyFull: Complet
   keyChosen: Votre séjour
   full: complet
+  stateAvailable: disponible
+  stateClosed: pas encore ouvert à la réservation
+  stateUnknown: disponibilité inconnue
+  stateArrival: arrivée
+  stateDeparture: départ
+  stateInStay: dans votre séjour
+  stateDeparturePossible: départ possible
+  stateDepartureImpossible: départ impossible
+  selectedArrival: 'Arrivée choisie le {date}.'
+  selectedStay: 'Séjour du {arrivee} au {depart}, {nuits}.'
   loading: Chargement des disponibilités…
   loadError: Les disponibilités ne se sont pas chargées. Rechargez la page ou réessayez dans un instant.
   pickDeparture: Choisissez maintenant votre jour de départ.

@@ -7,7 +7,7 @@ terminée donne lieu à un commit après un build sans erreur ni avertissement.
 ## Étape en cours : 9 — Réservation : parcours client — 2026-11-16
 
 Branche : `etape-9-reserver` · Base : `etape-8-api` (PR en attente de création par Vivien).
-Statut : tranches 1 et 2 terminées ; tranche 3 à faire. Une PR dédiée en fin d’étape, sans fusion.
+Statut : tranches 1 à 3 terminées ; tranche 4 à faire. Une PR dédiée en fin d’étape, sans fusion.
 Périmètre (`docs/etapes.md` étape 9, `docs/reservation.md` section 7) : page `/reserver/`
 en français : calendrier, composition du séjour, devis en direct, coordonnées, confirmation.
 Pas d’administration ni d’e-mails (étape 10), pas de version anglaise (étape 12).
@@ -32,8 +32,13 @@ visibles. Turnstile : clé publique en variable `PUBLIC_TURNSTILE_SITE_KEY`.
   Fait : `src/lib/reserver/{types,formats,sejour,calendrier,devis,envoi}.ts`, 61 tests (315 au total).
   Hypothèse signalée : la répartition des personnes par chambre (utile seulement si le prix de la
   chambre est « par personne ») est calculée, pas demandée. Suite : calendrier accessible.
-- [ ] Tranche 3 (15–30 min) — Calendrier accessible : grille mensuelle au clavier, choix
+- [x] Tranche 3 (15–30 min) — Calendrier accessible : grille mensuelle au clavier, choix
   arrivée/départ, nuits complètes grisées d’après `/api/disponibilites`.
+  Fait : `src/scripts/{dom,calendrier,reserver}.ts`, grille ARIA au clavier (flèches, Début/Fin,
+  Page haut/bas), nuits complètes hachurées et annoncées, départ possible/impossible, repas par jour.
+  Vérifié dans un vrai navigateur sur `wrangler pages dev`. Défaut trouvé et corrigé : un clic sur un
+  jour était perdu quand un champ numérique avait le focus (la grille était reconstruite entre
+  l’appui et le relâchement) ; la grille se met maintenant à jour sur place. Suite : devis et envoi.
 - [ ] Tranche 4 (15–30 min) — Devis en direct, validation, Turnstile, envoi, erreurs
   précises, écran de confirmation avec référence.
 - [ ] Tranche 5 (15–30 min) — Audit : parcours complet dans un vrai navigateur sur

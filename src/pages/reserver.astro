@@ -196,6 +196,27 @@ const chambres = ['chambre_privee', 'chambre_2', 'chambre_3'] as const;
   .pastille.complet { background: repeating-linear-gradient(135deg, transparent 0 3px, var(--foret) 3px 4px); }
   .pastille.choisi { background: var(--kaki-fonce); }
 
+  /* Calendrier */
+  .calendrier { max-width: 28rem; }
+  .cal-entete { display: flex; align-items: center; justify-content: space-between; gap: var(--espace-4); margin-bottom: var(--espace-3); }
+  .cal-titre { font-family: var(--font-texte); font-size: 1.125rem; text-transform: capitalize; }
+  .cal-nav { width: 48px; height: 48px; font-size: 1.6rem; line-height: 1; background: transparent; border: 1px solid var(--foret); border-radius: 3px; color: var(--foret); cursor: pointer; }
+  .cal-nav:hover:not(:disabled) { background: var(--foret); color: var(--creme); }
+  .cal-nav:disabled { opacity: 0.35; cursor: not-allowed; }
+  .cal-grille { width: 100%; border-collapse: separate; border-spacing: 2px; table-layout: fixed; }
+  .cal-grille th { font-size: var(--texte-petit); font-weight: 700; padding-block: var(--espace-2); }
+  .cal-grille td { padding: 0; }
+  .cal-jour { width: 100%; min-height: 44px; aspect-ratio: 1; padding: 0; border: 1px solid transparent; border-radius: 3px; background: color-mix(in srgb, var(--creme) 55%, white); color: var(--foret); font-weight: 700; cursor: pointer; }
+  .cal-jour:hover:not([aria-disabled="true"]) { border-color: var(--foret); }
+  .cal-jour:focus-visible { outline: 3px solid var(--foret); outline-offset: 2px; z-index: 1; position: relative; }
+  .cal-jour[aria-disabled="true"] { cursor: not-allowed; color: color-mix(in srgb, var(--foret) 65%, var(--creme)); font-weight: 400; }
+  .cal-jour.complet { background: repeating-linear-gradient(135deg, transparent 0 4px, color-mix(in srgb, var(--foret) 55%, transparent) 4px 5px), var(--creme); text-decoration: line-through; }
+  .cal-jour.ferme, .cal-jour.inconnu { background: transparent; border-color: color-mix(in srgb, var(--foret) 25%, transparent); border-style: dashed; }
+  .cal-jour.impossible { background: transparent; border-style: dashed; border-color: color-mix(in srgb, var(--foret) 25%, transparent); }
+  .cal-jour.dedans { background: var(--horizon); }
+  .cal-jour.arrivee, .cal-jour.depart { background: var(--kaki-fonce); color: var(--creme); border-color: var(--kaki-fonce); text-decoration: none; font-weight: 700; }
+  .calendrier-statut { min-height: 1.5em; margin-top: var(--espace-3); font-size: var(--texte-petit); }
+
   .repas { display: grid; gap: var(--espace-1); }
   .repas-jour { display: grid; gap: var(--espace-1); border-top: 1px solid color-mix(in srgb, var(--chene) 55%, transparent); padding-block: var(--espace-3); }
 
