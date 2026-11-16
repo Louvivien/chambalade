@@ -4,7 +4,36 @@ Le dernier état est en haut. À chaque reprise, lire ce fichier, `git log -5` e
 `git status`, puis reprendre la première tranche non cochée. Chaque tranche
 terminée donne lieu à un commit après un build sans erreur ni avertissement.
 
-## Étape en cours : 5 — Le gîte (FR) — 2026-11-16
+## Étape en cours : 6 — Le lieu (FR) — 2026-11-16
+
+Branche : `etape-6-lieu` · Base : `etape-5-gite` (PR #4).
+Statut : plan à committer avant réalisation. Une PR dédiée sera créée en fin d’étape.
+
+- [ ] Tranche 1 (15–30 min) — Contenus et repères : textes Markdown à partir du
+  brief et du tableau des photos, données des repères de la vue aérienne,
+  informations inconnues identifiées. Statut : à faire.
+- [ ] Tranche 2 (15–30 min) — Page et intégration : vue aérienne accessible,
+  équipements, chevaux, alentours et accès, photos optimisées, navigation des
+  trois pages vers `/le-lieu/`, vérification des liens. Statut : à faire.
+- [ ] Tranche 3 (15–30 min) — Audit et livraison : contrôles automatiques, clavier,
+  rendus 375/768/1280, Lighthouse des pages touchées, inventaire, rapport et PR.
+  Statut : à faire.
+
+Dernière action : lecture des consignes, de l’historique et des sources ; examen
+de la vue aérienne et du changement préexistant de `package-lock.json`.
+Prochaine action : committer ce plan après build, puis commencer la tranche 1.
+
+Points en suspens : confirmation demandée à Vivien pour les emplacements du gîte
+(grand bâtiment central), de la carrière (rectangle clair à droite) et des prés
+(premier plan). Sans confirmation, ne pas attribuer une fonction incertaine à un
+bâtiment : conserver des repères descriptifs et documenter les positions manquantes.
+Distances, accès en van/camion et portraits des chevaux manquants restent à confirmer.
+
+Modification locale préexistante : `package-lock.json` contient uniquement le
+retrait de drapeaux `dev` sur des dépendances Sharp. Conserver ce changement intact
+et hors des commits de cette étape ; ne pas réinstaller les dépendances.
+
+## Étape 5 — Le gîte (FR) — terminée le 2026-11-16
 
 Branche : `etape-5-gite` · [PR #4](https://github.com/Louvivien/chambalade/pull/4)
 Base : `etape-4-accueil`. Statut : réalisation et reprise documentaire terminées ;
