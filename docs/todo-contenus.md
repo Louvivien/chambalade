@@ -22,13 +22,13 @@ conditions pratiques, identité légale. Les sources ci-dessous font autorité.
 | `docs/audit.md:71` | - [ ] Liste finale des `TODO(amaelle)` restants, classés : bloquant / non bloquant. |
 | `docs/audit.md:87` | Nouveaux TODO(amaelle) : … |
 | `docs/avancement.md:14` | prix en €. `/admin/` reste en français (usage d’Amaëlle seule). Les `TODO(amaelle)` sont repris |
-| `docs/avancement.md:44` | manque est `TODO(amaelle)` visible. Les textes décrivent ce que le site fait réellement |
-| `docs/avancement.md:74` | dans un objet ou un en-tête d’e-mail. Informations inconnues = `TODO(amaelle)` visibles. |
-| `docs/avancement.md:138` | navigateur : tout passe par l’API de l’étape 8. Informations inconnues = `TODO(amaelle)` |
-| `docs/avancement.md:143` | l’accueil, du gîte et du lieu raccordés, `.env.example`, `TODO(amaelle)`. |
-| `docs/avancement.md:227` | inventaire des `TODO(amaelle)`, rapport dans `docs/journal-audit.md`, PR. |
-| `docs/avancement.md:244` | Principe sur les inconnues : toute valeur `TODO(amaelle)` reste `null` dans le YAML. La |
-| `docs/avancement.md:273` | des `TODO(amaelle)`, rapport dans `docs/journal-audit.md`, PR. |
+| `docs/avancement.md:48` | manque est `TODO(amaelle)` visible. Les textes décrivent ce que le site fait réellement |
+| `docs/avancement.md:78` | dans un objet ou un en-tête d’e-mail. Informations inconnues = `TODO(amaelle)` visibles. |
+| `docs/avancement.md:142` | navigateur : tout passe par l’API de l’étape 8. Informations inconnues = `TODO(amaelle)` |
+| `docs/avancement.md:147` | l’accueil, du gîte et du lieu raccordés, `.env.example`, `TODO(amaelle)`. |
+| `docs/avancement.md:231` | inventaire des `TODO(amaelle)`, rapport dans `docs/journal-audit.md`, PR. |
+| `docs/avancement.md:248` | Principe sur les inconnues : toute valeur `TODO(amaelle)` reste `null` dans le YAML. La |
+| `docs/avancement.md:277` | des `TODO(amaelle)`, rapport dans `docs/journal-audit.md`, PR. |
 | `docs/brief.md:5` | pas définitifs : les mettre en ligne avec un `TODO(amaelle)`. |
 | `docs/brief.md:22` | - Téléphone : TODO(amaelle). E-mail de contact : TODO(amaelle). |
 | `docs/brief.md:53` | TODO(amaelle) (environ 1 h, à vérifier). |
@@ -76,12 +76,34 @@ conditions pratiques, identité légale. Les sources ci-dessous font autorité.
 | `src/content.config.ts:51` | items: z.record(z.enum(priceIds), z.object({ label: z.string(), pending: z.string().startsWith('TODO(amaelle)').optional() })), |
 | `src/content.config.ts:93` | group: z.object({ legend: z.string(), adults: z.string(), children: z.string(), childrenHint: z.string().startsWith('TODO(amaelle)'), horses: z.string(), horsesHint: z.string().startsWith('TODO(amaelle)') }), |
 | `src/content.config.ts:130` | messageLabel: texte, messageHint: texte, depositLabel: texte, depositHint: texte.startsWith('TODO(amaelle)'), extendLabel: texte, extendOptions: dico, confirm: texte, working: texte, depositInvalid: texte, done: texte, email: dico, journalActions: dico, journalBy: dico, |
+| `src/content/accueil/en.md:58` | <!-- TODO(amaelle): validate the proposed home page texts, taken from the brief. --> |
+| `src/content/accueil/en.md:59` | <!-- TODO(amaelle): provide a phone number and email address to reach Chambalade outside the booking form. --> |
+| `src/content/accueil/en.md:60` | <!-- TODO(amaelle): confirm the distances from Lyon, Grenoble and Valence; no travel time is published until then. --> |
+| `src/content/accueil/en.md:61` | <!-- TODO(amaelle): confirm what "paddock and hay included" covers; the horse rate is separate from the guest accommodation in the brief. --> |
 | `src/content/accueil/fr.md:58` | <!-- TODO(amaelle): valider les textes proposés de l’accueil, issus du brief. --> |
 | `src/content/accueil/fr.md:59` | <!-- TODO(amaelle): fournir téléphone et e-mail de contact pour joindre Chambalade en dehors du formulaire de réservation. --> |
 | `src/content/accueil/fr.md:60` | <!-- TODO(amaelle): confirmer les distances depuis Lyon, Grenoble et Valence ; aucune durée publiée en attendant. --> |
 | `src/content/accueil/fr.md:61` | <!-- TODO(amaelle): confirmer la portée de « paddock et foin compris » ; le tarif cheval est distinct de l’hébergement humain dans le brief. --> |
 | `src/content/admin/fr.md:126` | depositHint: 'TODO(amaelle): confirmer le pourcentage d’acompte. En attendant, saisissez le montant à la main ; vide, l’e-mail ne chiffre rien.' |
 | `src/content/admin/fr.md:211` | <!-- TODO(amaelle): valider les textes de l’administration (vocabulaire, libellés des actions). --> |
+| `src/content/gite/en.md:45` | pending: 'TODO(amaelle): validate the rate, breakfast included.' |
+| `src/content/gite/en.md:48` | pending: 'TODO(amaelle): validate the rate and specify whether it applies per bed per stay, or per night.' |
+| `src/content/gite/en.md:51` | pending: 'TODO(amaelle): validate the rate per night, breakfast included. Specify per room or per person, and the price for one person.' |
+| `src/content/gite/en.md:54` | pending: 'TODO(amaelle): validate the rate per night, breakfast included. Specify per room or per person, and the price for one person.' |
+| `src/content/gite/en.md:57` | pending: 'TODO(amaelle): confirm that it is included in all accommodation.' |
+| `src/content/gite/en.md:60` | pending: 'TODO(amaelle): validate the meal rate.' |
+| `src/content/gite/en.md:63` | pending: 'TODO(amaelle): validate the meal rate.' |
+| `src/content/gite/en.md:66` | pending: 'TODO(amaelle): validate the rate for the horse’s accommodation, separate from the rider’s bed.' |
+| `src/content/gite/en.md:69` | pending: 'TODO(amaelle): validate the rate and define what is included. This package will not be offered for booking until its content is defined.' |
+| `src/content/gite/en.md:72` | pending: 'TODO(amaelle): provide the applicable amount. It is not yet included in the rates shown.' |
+| `src/content/gite/en.md:86` | pending: 'TODO(amaelle): specify arrival and departure times and the exact opening date.' |
+| `src/content/gite/en.md:88` | pending: 'TODO(amaelle): provide directions and arrival arrangements for a vehicle carrying a horse.' |
+| `src/content/gite/en.md:90` | pending: 'TODO(amaelle): specify the linen provided in the rooms and the arrangements for the dormitory.' |
+| `src/content/gite/en.md:92` | pending: 'TODO(amaelle): specify the conditions for bringing pets.' |
+| `src/content/gite/en.md:94` | pending: 'TODO(amaelle): specify the documents to show as proof of up-to-date vaccinations.' |
+| `src/content/gite/en.md:96` | pending: 'TODO(amaelle): confirm the deposit amount, its payment deadline and the cancellation conditions. The deposit is paid by bank transfer.' |
+| `src/content/gite/en.md:103` | <!-- TODO(amaelle): validate the guesthouse page texts and provide photos of the rooms, the dormitory and the shared areas after renovation. --> |
+| `src/content/gite/en.md:104` | <!-- TODO(amaelle): confirm that the "Chez Amaëlle" sign visible on the gate is consistent with the Chambalade brand. --> |
 | `src/content/gite/fr.md:45` | pending: 'TODO(amaelle) : valider le tarif, petit-déjeuner compris.' |
 | `src/content/gite/fr.md:48` | pending: 'TODO(amaelle) : valider le tarif et préciser s’il s’applique par lit et par séjour, ou par nuit.' |
 | `src/content/gite/fr.md:51` | pending: 'TODO(amaelle) : valider le tarif par nuit, petit-déjeuner compris. Préciser par chambre ou par personne, et le prix pour une personne seule.' |

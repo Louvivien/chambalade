@@ -26,7 +26,9 @@ cliente ; formats de dates et de montants selon la langue.
   contenus légaux déplacés dans `src/content/legal/fr/`, 5 tests de routes (501 au total). Les pages `/en/*` sont créées avec leur contenu
   dans les tranches suivantes : en attendant, le sélecteur de langue pointe vers des pages anglaises pas encore construites.
   Défaut des audits corrigé : une requête abandonnée par une navigation (`ERR_ABORTED`) était comptée comme panne.
-- [ ] Tranche 2 — Accueil et gîte en anglais (`en.md`, tarifs en €).
+- [x] Tranche 2 — Accueil et gîte en anglais (`en.md`, tarifs en €).
+  Fait : `accueil/en.md`, `gite/en.md`, pages `/en/` et `/en/guesthouse/`, montants « €76.50 » (`formatEuros(cents, locale)`),
+  test de parité FR/EN (`tests/parite.test.ts` : mêmes clés, mêmes images, mêmes TODO).
 - [ ] Tranche 3 — Le lieu en anglais.
 - [ ] Tranche 4 — Réserver en anglais : formulaire, calendrier, devis, messages d’erreur du
   serveur, langue envoyée à l’API ; tests.

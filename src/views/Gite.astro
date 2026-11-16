@@ -66,7 +66,7 @@ for (const id of priceIds) {
         return <div class="price-row" data-price-id={id}>
           <dt>{copy.label}</dt>
           <dd class="price">
-            <span class="amount">{price.amount_cents === null ? text.rates.unknown : price.unit === 'included' ? text.rates.included : formatEuros(price.amount_cents)}</span>
+            <span class="amount">{price.amount_cents === null ? text.rates.unknown : price.unit === 'included' ? text.rates.included : formatEuros(price.amount_cents, locale)}</span>
             {price.unit && <span class="unit">{text.rates.units[price.unit]}</span>}
           </dd>
           {!price.validated && <dd class="pending">{copy.pending}</dd>}

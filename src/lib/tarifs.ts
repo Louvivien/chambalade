@@ -22,8 +22,8 @@ export const reservationPresentationSchema = z.object({
   prices: z.record(z.enum(priceIds), priceSchema),
 });
 
-export function formatEuros(cents: number) {
-  // Deux décimales ou aucune : « 76,50 € », jamais « 76,5 € ».
+export function formatEuros(cents: number, locale: 'fr' | 'en' = 'fr') {
+  // Deux décimales ou aucune : « 76,50 € » / « €76.50 », jamais « 76,5 € ».
   const decimales = cents % 100 === 0 ? 0 : 2;
-  return new Intl.NumberFormat('fr-FR', { style: 'currency', currency: 'EUR', minimumFractionDigits: decimales, maximumFractionDigits: decimales }).format(cents / 100);
+  return new Intl.NumberFormat(locale === 'en' ? 'en-GB' : 'fr-FR', { style: 'currency', currency: 'EUR', minimumFractionDigits: decimales, maximumFractionDigits: decimales }).format(cents / 100);
 }
