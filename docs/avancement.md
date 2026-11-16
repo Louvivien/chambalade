@@ -31,8 +31,10 @@ tester ici sont écrits comme tels.
 - [x] Tranche 2 — Guide `docs/deploiement.md` (Cloudflare Pages, D1, migrations, Turnstile, Resend,
   Access, variables, domaine chambalade.fr, statistiques) et section du `README.md`.
   Fait : `docs/deploiement.md` (12 étapes ; les points non vérifiables sans compte sont marqués « à vérifier »), section « Mettre en ligne » du README.
-- [ ] Tranche 3 — Données personnelles en production : effacement/anonymisation d’une demande et purge
+- [x] Tranche 3 — Données personnelles en production : effacement/anonymisation d’une demande et purge
   périodique (SQL testé sur SQLite, script `scripts/rgpd.mjs`), texte de confidentialité mis à jour.
+  Fait : `scripts/rgpd/sql.mjs` + `scripts/rgpd.mjs` (`npm run rgpd -- anonymiser|supprimer|apercu|purger`, affichage seul sans `--executer`, base locale
+  sans `--remote`), 10 tests sur SQLite, essai réel sur la D1 locale, section 13 du guide, politique de confidentialité FR/EN mise à jour.
 - [ ] Tranche 4 — Contrôle après mise en ligne : `npm run deploiement:smoke -- <url>` (pages, hreflang,
   robots, sitemap, en-têtes, administration fermée, API), essai contre `wrangler pages dev`, recette
   mise à jour, rapport, `docs/rapports/etape-14.json`.

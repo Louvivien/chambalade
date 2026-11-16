@@ -21,14 +21,14 @@ conditions pratiques, identité légale. Les sources ci-dessous font autorité.
 | `docs/audit.md:29` | `docs/brief.md` ou `src/data/reservation.yaml`. Sinon : `TODO(amaelle)`, jamais une invention. |
 | `docs/audit.md:71` | - [ ] Liste finale des `TODO(amaelle)` restants, classés : bloquant / non bloquant. |
 | `docs/audit.md:87` | Nouveaux TODO(amaelle) : … |
-| `docs/avancement.md:78` | prix en €. `/admin/` reste en français (usage d’Amaëlle seule). Les `TODO(amaelle)` sont repris |
-| `docs/avancement.md:121` | manque est `TODO(amaelle)` visible. Les textes décrivent ce que le site fait réellement |
-| `docs/avancement.md:151` | dans un objet ou un en-tête d’e-mail. Informations inconnues = `TODO(amaelle)` visibles. |
-| `docs/avancement.md:215` | navigateur : tout passe par l’API de l’étape 8. Informations inconnues = `TODO(amaelle)` |
-| `docs/avancement.md:220` | l’accueil, du gîte et du lieu raccordés, `.env.example`, `TODO(amaelle)`. |
-| `docs/avancement.md:304` | inventaire des `TODO(amaelle)`, rapport dans `docs/journal-audit.md`, PR. |
-| `docs/avancement.md:321` | Principe sur les inconnues : toute valeur `TODO(amaelle)` reste `null` dans le YAML. La |
-| `docs/avancement.md:350` | des `TODO(amaelle)`, rapport dans `docs/journal-audit.md`, PR. |
+| `docs/avancement.md:80` | prix en €. `/admin/` reste en français (usage d’Amaëlle seule). Les `TODO(amaelle)` sont repris |
+| `docs/avancement.md:123` | manque est `TODO(amaelle)` visible. Les textes décrivent ce que le site fait réellement |
+| `docs/avancement.md:153` | dans un objet ou un en-tête d’e-mail. Informations inconnues = `TODO(amaelle)` visibles. |
+| `docs/avancement.md:217` | navigateur : tout passe par l’API de l’étape 8. Informations inconnues = `TODO(amaelle)` |
+| `docs/avancement.md:222` | l’accueil, du gîte et du lieu raccordés, `.env.example`, `TODO(amaelle)`. |
+| `docs/avancement.md:306` | inventaire des `TODO(amaelle)`, rapport dans `docs/journal-audit.md`, PR. |
+| `docs/avancement.md:323` | Principe sur les inconnues : toute valeur `TODO(amaelle)` reste `null` dans le YAML. La |
+| `docs/avancement.md:352` | des `TODO(amaelle)`, rapport dans `docs/journal-audit.md`, PR. |
 | `docs/brief.md:5` | pas définitifs : les mettre en ligne avec un `TODO(amaelle)`. |
 | `docs/brief.md:22` | - Téléphone : TODO(amaelle). E-mail de contact : TODO(amaelle). |
 | `docs/brief.md:53` | TODO(amaelle) (environ 1 h, à vérifier). |
@@ -141,7 +141,7 @@ conditions pratiques, identité légale. Les sources ci-dessous font autorité.
 | `src/content/legal/en/confidentialite.md:15` | - 'TODO(amaelle): email address for exercising your rights.' |
 | `src/content/legal/en/confidentialite.md:33` | - 'TODO(amaelle): have the legal basis validated. Proposal: pre-contractual steps taken at your request, together with the box you tick before sending the form.' |
 | `src/content/legal/en/confidentialite.md:37` | - 'TODO(amaelle): confirm the retention period. Proposal from docs/reservation.md: deletion or anonymisation of requests 3 years after the stay, or 3 years after the request if it did not go through.' |
-| `src/content/legal/en/confidentialite.md:38` | - 'TODO(amaelle): the website does not yet delete requests automatically. Plan the procedure (deletion on request, periodic purge) before opening.' |
+| `src/content/legal/en/confidentialite.md:38` | - 'TODO(amaelle): the website does not delete requests by itself; anonymisation is run by hand, with a documented command. Decide who runs it and how often (proposal: once a year).' |
 | `src/content/legal/en/confidentialite.md:45` | - 'an email-sending service (Resend, provisional choice), to write to you and to notify Amaëlle. TODO(amaelle): confirm the provider chosen.' |
 | `src/content/legal/en/confidentialite.md:47` | - 'TODO(amaelle): check whether these providers process data outside the European Union and state the safeguards that apply.' |
 | `src/content/legal/en/confidentialite.md:56` | - 'Visits will be measured with Cloudflare Web Analytics, which sets no cookie and does not identify visitors. TODO(amaelle): this service is not yet active; confirm this paragraph when it is switched on, as well as the absence of a cookie from the anti-robot check.' |
@@ -159,7 +159,7 @@ conditions pratiques, identité légale. Les sources ci-dessous font autorité.
 | `src/content/legal/fr/confidentialite.md:15` | - 'TODO(amaelle): adresse e-mail à laquelle exercer vos droits.' |
 | `src/content/legal/fr/confidentialite.md:33` | - 'TODO(amaelle): faire valider la base légale. Proposition : les mesures précontractuelles prises à votre demande, complétées par la case que vous cochez avant d’envoyer le formulaire.' |
 | `src/content/legal/fr/confidentialite.md:37` | - 'TODO(amaelle): confirmer la durée de conservation. Proposition de docs/reservation.md : suppression ou anonymisation des demandes 3 ans après le séjour, ou 3 ans après la demande si elle n’a pas abouti.' |
-| `src/content/legal/fr/confidentialite.md:38` | - 'TODO(amaelle): le site ne supprime pas encore les demandes automatiquement. Prévoir la procédure (suppression à la demande, purge périodique) avant l’ouverture.' |
+| `src/content/legal/fr/confidentialite.md:38` | - 'TODO(amaelle): le site ne supprime pas les demandes tout seul ; l’anonymisation se lance à la main, avec une commande documentée. Décider qui la lance et à quel rythme (proposition : une fois par an).' |
 | `src/content/legal/fr/confidentialite.md:45` | - 'un service d’envoi d’e-mails (Resend, choix provisoire), pour vous écrire et pour prévenir Amaëlle. TODO(amaelle): confirmer le prestataire retenu.' |
 | `src/content/legal/fr/confidentialite.md:47` | - 'TODO(amaelle): vérifier si ces prestataires traitent des données hors de l’Union européenne et indiquer les garanties applicables.' |
 | `src/content/legal/fr/confidentialite.md:56` | - 'La fréquentation sera mesurée avec Cloudflare Web Analytics, qui ne dépose pas de cookie et n’identifie pas les visiteurs. TODO(amaelle): ce service n’est pas encore activé ; confirmer ce paragraphe à l’activation, ainsi que l’absence de cookie de la vérification anti-robot.' |

@@ -35,7 +35,7 @@ sections:
     title: How long we keep it
     paragraphs:
       - 'TODO(amaelle): confirm the retention period. Proposal from docs/reservation.md: deletion or anonymisation of requests 3 years after the stay, or 3 years after the request if it did not go through.'
-      - 'TODO(amaelle): the website does not yet delete requests automatically. Plan the procedure (deletion on request, periodic purge) before opening.'
+      - 'TODO(amaelle): the website does not delete requests by itself; anonymisation is run by hand, with a documented command. Decide who runs it and how often (proposal: once a year).'
   - id: destinataires
     title: Who can access it
     paragraphs:

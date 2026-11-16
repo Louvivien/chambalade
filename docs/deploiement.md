@@ -227,3 +227,24 @@ des « OK ». Concrètement :
 - **Retour arrière** : Pages garde l’historique des déploiements ; « Rollback » sur un déploiement précédent
   remet le site statique et les fonctions d’avant. Les migrations de base ne se « défont » pas : écrire une
   migration corrective.
+
+## 13. Données personnelles en production
+
+Le site ne supprime **rien tout seul**. L’effacement d’une demande et la purge périodique se font à la main, avec
+`scripts/rgpd.mjs` (requêtes testées sur SQLite et sur la D1 locale). Par défaut, le script **affiche** les requêtes
+sans rien exécuter ; il vise la base locale tant qu’on n’ajoute pas `--remote`.
+
+| Besoin | Commande (ajouter `--executer`, et `--remote` pour la production) |
+| --- | --- |
+| Effacer les données personnelles d’une demande (nom, e-mail, téléphone, message), en gardant dates et devis | `npm run rgpd -- anonymiser CHB-2027-0001` |
+| Supprimer une demande entièrement | `npm run rgpd -- supprimer CHB-2027-0001` |
+| Voir ce qu’une purge toucherait (aucune donnée personnelle affichée) | `npm run rgpd -- apercu --avant 2024-12-31` |
+| Anonymiser toutes les demandes terminées plus anciennes qu’une date | `npm run rgpd -- purger --avant 2024-12-31` |
+
+Règles : une demande **active** (en attente, acceptée, ou confirmée pour un séjour à venir) n’est jamais touchée : la
+refuser ou l’annuler d’abord dans l’administration. Les nuits restent bloquées après anonymisation. Chaque opération
+laisse une ligne dans le journal (`anonymisee` ou `supprimee`), sans donnée personnelle. La durée de conservation
+(proposition : 3 ans) et le rythme de la purge sont à décider par Amaëlle (voir la politique de confidentialité).
+
+Demande d’une cliente : l’identifier par sa référence (affichée dans l’administration et dans ses e-mails), vérifier
+que la demande vient bien de la personne concernée, répondre dans le mois, puis noter la date de traitement.
