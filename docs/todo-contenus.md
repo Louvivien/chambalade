@@ -16,15 +16,17 @@ conditions pratiques, identité légale. Les sources ci-dessous font autorité.
 | --- | --- |
 | `AGENTS.md:85` | Une information absente de `docs/brief.md` devient un `TODO(amaelle): …` visible dans le |
 | `AGENTS.md:128` | `TODO(amaelle)`, ce qu'il faut vérifier visuellement). |
+| `docs/api.md:91` | \| `EMAIL_FROM` \| variable Cloudflare \| Expéditeur, par ex. `Chambalade <reservation@chambalade.fr>` ; le domaine doit être vérifié chez Resend. TODO(amaelle) : adresse d’expédition. \| |
 | `docs/audit.md:21` | \| Contenus manquants \| `git grep -n "TODO(amaelle)"` \| chaque occurrence listée dans `docs/todo-contenus.md`, et inversement \| |
 | `docs/audit.md:29` | `docs/brief.md` ou `src/data/reservation.yaml`. Sinon : `TODO(amaelle)`, jamais une invention. |
 | `docs/audit.md:71` | - [ ] Liste finale des `TODO(amaelle)` restants, classés : bloquant / non bloquant. |
 | `docs/audit.md:87` | Nouveaux TODO(amaelle) : … |
-| `docs/avancement.md:21` | navigateur : tout passe par l’API de l’étape 8. Informations inconnues = `TODO(amaelle)` |
-| `docs/avancement.md:26` | l’accueil, du gîte et du lieu raccordés, `.env.example`, `TODO(amaelle)`. |
-| `docs/avancement.md:110` | inventaire des `TODO(amaelle)`, rapport dans `docs/journal-audit.md`, PR. |
-| `docs/avancement.md:127` | Principe sur les inconnues : toute valeur `TODO(amaelle)` reste `null` dans le YAML. La |
-| `docs/avancement.md:156` | des `TODO(amaelle)`, rapport dans `docs/journal-audit.md`, PR. |
+| `docs/avancement.md:20` | dans un objet ou un en-tête d’e-mail. Informations inconnues = `TODO(amaelle)` visibles. |
+| `docs/avancement.md:78` | navigateur : tout passe par l’API de l’étape 8. Informations inconnues = `TODO(amaelle)` |
+| `docs/avancement.md:83` | l’accueil, du gîte et du lieu raccordés, `.env.example`, `TODO(amaelle)`. |
+| `docs/avancement.md:167` | inventaire des `TODO(amaelle)`, rapport dans `docs/journal-audit.md`, PR. |
+| `docs/avancement.md:184` | Principe sur les inconnues : toute valeur `TODO(amaelle)` reste `null` dans le YAML. La |
+| `docs/avancement.md:213` | des `TODO(amaelle)`, rapport dans `docs/journal-audit.md`, PR. |
 | `docs/brief.md:5` | pas définitifs : les mettre en ligne avec un `TODO(amaelle)`. |
 | `docs/brief.md:22` | - Téléphone : TODO(amaelle). E-mail de contact : TODO(amaelle). |
 | `docs/brief.md:53` | TODO(amaelle) (environ 1 h, à vérifier). |
@@ -67,10 +69,13 @@ conditions pratiques, identité légale. Les sources ci-dessous font autorité.
 | `src/content.config.ts:51` | items: z.record(z.enum(priceIds), z.object({ label: z.string(), pending: z.string().startsWith('TODO(amaelle)').optional() })), |
 | `src/content.config.ts:93` | group: z.object({ legend: z.string(), adults: z.string(), children: z.string(), childrenHint: z.string().startsWith('TODO(amaelle)'), horses: z.string(), horsesHint: z.string().startsWith('TODO(amaelle)') }), |
 | `src/content.config.ts:102` | messageHint: z.string(), consent: z.string(), consentPrivacy: z.string().startsWith('TODO(amaelle)'), antiRobot: z.string(), |
+| `src/content.config.ts:130` | messageLabel: texte, messageHint: texte, depositLabel: texte, depositHint: texte.startsWith('TODO(amaelle)'), extendLabel: texte, extendOptions: dico, confirm: texte, working: texte, depositInvalid: texte, done: texte, email: dico, journalActions: dico, journalBy: dico, |
 | `src/content/accueil/fr.md:58` | <!-- TODO(amaelle): valider les textes proposés de l’accueil, issus du brief. --> |
 | `src/content/accueil/fr.md:59` | <!-- TODO(amaelle): fournir téléphone et e-mail de contact pour joindre Chambalade en dehors du formulaire de réservation. --> |
 | `src/content/accueil/fr.md:60` | <!-- TODO(amaelle): confirmer les distances depuis Lyon, Grenoble et Valence ; aucune durée publiée en attendant. --> |
 | `src/content/accueil/fr.md:61` | <!-- TODO(amaelle): confirmer la portée de « paddock et foin compris » ; le tarif cheval est distinct de l’hébergement humain dans le brief. --> |
+| `src/content/admin/fr.md:126` | depositHint: 'TODO(amaelle): confirmer le pourcentage d’acompte. En attendant, saisissez le montant à la main ; vide, l’e-mail ne chiffre rien.' |
+| `src/content/admin/fr.md:211` | <!-- TODO(amaelle): valider les textes de l’administration (vocabulaire, libellés des actions). --> |
 | `src/content/gite/fr.md:45` | pending: 'TODO(amaelle) : valider le tarif, petit-déjeuner compris.' |
 | `src/content/gite/fr.md:48` | pending: 'TODO(amaelle) : valider le tarif et préciser s’il s’applique par lit et par séjour, ou par nuit.' |
 | `src/content/gite/fr.md:51` | pending: 'TODO(amaelle) : valider le tarif par nuit, petit-déjeuner compris. Préciser par chambre ou par personne, et le prix pour une personne seule.' |
@@ -105,6 +110,7 @@ conditions pratiques, identité légale. Les sources ci-dessous font autorité.
 | `src/content/reserver/fr.md:76` | consentPrivacy: 'TODO(amaelle): lier ici la politique de confidentialité une fois rédigée et validée (étape 11).' |
 | `src/content/reserver/fr.md:131` | <!-- TODO(amaelle): valider les textes proposés de la page Réserver. --> |
 | `src/content/reserver/fr.md:132` | <!-- TODO(amaelle): confirmer que la réponse sous 48 h et le blocage provisoire des dates conviennent. --> |
+| `src/data/emails.yaml:4` | # Ces textes sont des propositions à faire valider : TODO(amaelle) relire le ton et les formulations. |
 | `src/data/reservation.yaml:3` | # Toute valeur TODO(amaelle) reste null : le code ne la remplace jamais par une valeur inventée. |
 | `src/data/reservation.yaml:30` | privatisable: null # TODO(amaelle): le dortoir est-il privatisable en entier, et à quel prix ? |
 | `src/data/reservation.yaml:34` | capacity_horses: null # TODO(amaelle): nombre de chevaux accueillis en même temps. |

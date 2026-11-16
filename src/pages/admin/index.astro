@@ -54,6 +54,7 @@ const vues = ['demandes', 'fiche', 'calendrier', 'blocages'] as const;
   .admin-onglets a { display: inline-flex; align-items: center; min-height: 44px; padding: 0 var(--espace-4); color: var(--creme); font-weight: 700; text-decoration: none; border-bottom: 3px solid transparent; }
   .admin-onglets a[aria-current="page"] { border-bottom-color: var(--chene); }
   .admin-onglets a:hover { text-decoration: underline; }
+  @media (max-width: 47.99rem) { .admin-onglets { gap: 0; } .admin-onglets a { padding: 0 var(--espace-3); } }
   .admin-entete :focus-visible { outline-color: var(--creme); }
   .admin { width: min(100% - 2 * var(--gouttiere), var(--largeur-page)); margin-inline: auto; padding-block: var(--espace-8) var(--espace-16); }
   .admin h1 { font-size: var(--titre-2); margin: 0 0 var(--espace-6); }
