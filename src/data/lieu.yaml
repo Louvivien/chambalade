@@ -1,0 +1,7 @@
+# Positions relatives à vue-du-ciel.jpg, non recadrée : pourcentage depuis le coin haut gauche.
+# Attribution des trois emplacements confirmée par Vivien le 16 novembre 2026.
+# Ce sont des repères visuels, pas des coordonnées GPS ni des limites de propriété.
+markers:
+  gite: { x: 49, y: 39 }
+  carriere: { x: 64, y: 43 }
+  pres: { x: 47, y: 68 }

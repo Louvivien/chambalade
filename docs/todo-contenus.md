@@ -77,6 +77,12 @@ conditions pratiques, identité légale. Les sources ci-dessous font autorité.
 | `src/content/interface/en.md:10` | logoPending: 'TODO(amaelle): provide a transparent logo; temporary typographic name.' |
 | `src/content/interface/fr.md:9` | contactPending: 'TODO(amaelle): fournir le téléphone et l’adresse e-mail de contact.' |
 | `src/content/interface/fr.md:10` | logoPending: 'TODO(amaelle): fournir le logo transparent ; nom typographique provisoire.' |
+| `src/content/lieu/fr.md:96` | <!-- TODO(amaelle): valider les textes proposés de la page Le lieu. --> |
+| `src/content/lieu/fr.md:97` | <!-- TODO(amaelle): préciser les conditions d’utilisation de la carrière et du PTV, et les conditions d’accueil dans les paddocks. --> |
+| `src/content/lieu/fr.md:98` | <!-- TODO(amaelle): fournir les portraits de Quinoa, Guiness et Saphir et les présentations des chevaux ; aucune race, personnalité ou prestation montée n’est inventée. --> |
+| `src/content/lieu/fr.md:99` | <!-- TODO(amaelle): confirmer la distance et l’accès à cheval pour la cascade de Roybon, et fournir les itinéraires conseillés autour de Dionay. --> |
+| `src/content/lieu/fr.md:100` | <!-- TODO(amaelle): confirmer les distances et temps de trajet depuis Lyon, Grenoble et Valence. --> |
+| `src/content/lieu/fr.md:101` | <!-- TODO(amaelle): fournir les indications d’arrivée en voiture, van et camion, ainsi que les modalités de stationnement. --> |
 | `src/data/reservation.yaml:5` | # TODO(amaelle): valider l’ensemble des tarifs proposés avant publication. |
 | `src/data/reservation.yaml:13` | unit: null # TODO(amaelle): par lit et par séjour ou par nuit ? |
 | `src/data/reservation.yaml:17` | unit: null # TODO(amaelle): par chambre ou par personne et par nuit ; prix en occupation seule ? |

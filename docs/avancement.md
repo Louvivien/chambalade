@@ -7,11 +7,13 @@ terminée donne lieu à un commit après un build sans erreur ni avertissement.
 ## Étape en cours : 6 — Le lieu (FR) — 2026-11-16
 
 Branche : `etape-6-lieu` · Base : `etape-5-gite` (PR #4).
-Statut : plan à committer avant réalisation. Une PR dédiée sera créée en fin d’étape.
+Statut : plan committé dans `f340f60` ; tranche 1 terminée.
+Une PR dédiée sera créée en fin d’étape.
 
-- [ ] Tranche 1 (15–30 min) — Contenus et repères : textes Markdown à partir du
+- [x] Tranche 1 (15–30 min) — Contenus et repères : textes Markdown à partir du
   brief et du tableau des photos, données des repères de la vue aérienne,
-  informations inconnues identifiées. Statut : à faire.
+  informations inconnues identifiées. Fait : collection typée, six notes de
+  validation, positions confirmées en YAML. Suite : page et navigation.
 - [ ] Tranche 2 (15–30 min) — Page et intégration : vue aérienne accessible,
   équipements, chevaux, alentours et accès, photos optimisées, navigation des
   trois pages vers `/le-lieu/`, vérification des liens. Statut : à faire.
@@ -19,15 +21,13 @@ Statut : plan à committer avant réalisation. Une PR dédiée sera créée en f
   rendus 375/768/1280, Lighthouse des pages touchées, inventaire, rapport et PR.
   Statut : à faire.
 
-Dernière action : lecture des consignes, de l’historique et des sources ; examen
-de la vue aérienne et du changement préexistant de `package-lock.json`.
-Prochaine action : committer ce plan après build, puis commencer la tranche 1.
+Dernière action : contenus et repères préparés ; build et vérification Astro
+réussis pour la tranche 1. Les deux pages existantes restent les seules routes.
+Prochaine action : tranche 2, construire `/le-lieu/` et raccorder la navigation.
 
-Points en suspens : confirmation demandée à Vivien pour les emplacements du gîte
-(grand bâtiment central), de la carrière (rectangle clair à droite) et des prés
-(premier plan). Sans confirmation, ne pas attribuer une fonction incertaine à un
-bâtiment : conserver des repères descriptifs et documenter les positions manquantes.
-Distances, accès en van/camion et portraits des chevaux manquants restent à confirmer.
+Repères confirmés par Vivien : gîte sur le grand bâtiment central, carrière sur
+le rectangle clair à droite, prés au premier plan. Distances, accès en van/camion
+et portraits des chevaux manquants restent à confirmer.
 
 Modification locale préexistante : `package-lock.json` contient uniquement le
 retrait de drapeaux `dev` sur des dépendances Sharp. Conserver ce changement intact
