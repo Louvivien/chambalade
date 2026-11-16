@@ -23,7 +23,9 @@
     "audit:front": "node scripts/audit-front.mjs",
     "audit:accueil": "node scripts/audit-accueil.mjs",
     "audit:gite": "node scripts/audit-gite.mjs",
-    "audit:lieu": "node scripts/audit-lieu.mjs"
+    "audit:lieu": "node scripts/audit-lieu.mjs",
+    "config:generer": "node scripts/generer-config.mjs",
+    "config:verifier": "node scripts/generer-config.mjs --verifier"
   },
   "dependencies": {
     "@fontsource/lora": "^5.3.0",

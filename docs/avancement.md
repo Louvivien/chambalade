@@ -7,7 +7,7 @@ terminée donne lieu à un commit après un build sans erreur ni avertissement.
 ## Étape en cours : 8 — Réservation : API — 2026-11-16
 
 Branche : `etape-8-api` · Base : `etape-7-reservation` (déjà fusionnée dans `etape-6-lieu`, PR #5).
-Statut : plan committé ; tranche 1 à faire. Une PR dédiée en fin d’étape, sans fusion.
+Statut : tranche 1 terminée ; tranche 2 à faire. Une PR dédiée en fin d’étape, sans fusion.
 Périmètre (`docs/etapes.md`, étape 8) : Pages Functions de l’API (disponibilités, devis,
 création de demande avec transaction, Turnstile et limitation par IP, actions
 d’administration) et wrangler avec un D1 local et des données de démonstration. Pas
@@ -19,10 +19,13 @@ adaptateurs. Les tests passent par une vraie base SQLite en mémoire derrière u
 compatible D1, pour exercer le SQL réel. Aucun secret dans le dépôt ; la protection de
 `/admin/` est vérifiée aussi dans les fonctions (jeton Cloudflare Access).
 
-- [ ] Tranche 1 (15–30 min) — Fondations : types, façade D1 de test (SQLite en mémoire),
+- [x] Tranche 1 (15–30 min) — Fondations : types, façade D1 de test (SQLite en mémoire),
   configuration exportée pour les fonctions avec test de dérive, utilitaires HTTP (JSON,
   origine, type de contenu, taille), migration `0002` de limitation par IP, paramètres
   d’API dans le YAML.
+  Fait : `src/lib/api/{types,http}.ts`, `tests/api/d1.ts` (façade SQLite), `src/generated/reservation.json`
+  (`npm run config:generer` / `config:verifier`), `migrations/0002_limites.sql`, bloc `api` du YAML ;
+  121 tests au total. Suite : disponibilités et devis.
 - [ ] Tranche 2 (15–30 min) — API publique en lecture : `GET /api/disponibilites`,
   `POST /api/devis`, chargement de l’instantané depuis la base, adaptateurs `functions/`.
 - [ ] Tranche 3 (15–30 min) — Création de demande : validation stricte, Turnstile,
