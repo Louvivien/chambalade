@@ -1,0 +1,13 @@
+# Copier ce fichier en .dev.vars (ignoré par Git) pour travailler en local avec `npm run api:dev`.
+# Rien de réel ici : ce sont des valeurs de développement.
+
+# Autorise ACCESS_DEV_EMAIL à la place de Cloudflare Access, uniquement depuis localhost.
+ENVIRONMENT=development
+ACCESS_DEV_EMAIL=dev@example.invalid
+
+# Clé de test publique de Cloudflare Turnstile : la vérification réussit toujours.
+# Valeur à contrôler dans la documentation Cloudflare (« Turnstile testing »).
+TURNSTILE_SECRET=1x0000000000000000000000000000000AA
+
+# Sel quelconque pour condenser les adresses IP de la limitation.
+RATE_LIMIT_SALT=sel-local-quelconque

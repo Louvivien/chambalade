@@ -1,0 +1,15 @@
+# Configuration Cloudflare Pages (étape 8). Le site statique est dans dist/, les fonctions dans functions/.
+name = "chambalade"
+pages_build_output_dir = "dist"
+compatibility_date = "2026-11-01"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "chambalade"
+# Identifiant de test : il ne sert qu’au mode local (--local), qui ne contacte pas Cloudflare.
+# TODO(étape 14) : remplacer par l’identifiant de la vraie base créée sur Cloudflare.
+database_id = "00000000-0000-0000-0000-000000000000"
+migrations_dir = "migrations"
+
+# Variables non secrètes : aucune. Les secrets (TURNSTILE_SECRET, RATE_LIMIT_SALT, ACCESS_*, ADMIN_EMAILS)
+# se règlent dans Cloudflare, jamais ici ; en local, voir .dev.vars.example.

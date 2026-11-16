@@ -7,7 +7,7 @@ terminée donne lieu à un commit après un build sans erreur ni avertissement.
 ## Étape en cours : 8 — Réservation : API — 2026-11-16
 
 Branche : `etape-8-api` · Base : `etape-7-reservation` (déjà fusionnée dans `etape-6-lieu`, PR #5).
-Statut : tranches 1 à 4 terminées ; tranche 5 à faire. Une PR dédiée en fin d’étape, sans fusion.
+Statut : tranches 1 à 5 terminées ; tranche 6 (audit et livraison) à faire. Une PR dédiée en fin d’étape, sans fusion.
 Périmètre (`docs/etapes.md`, étape 8) : Pages Functions de l’API (disponibilités, devis,
 création de demande avec transaction, Turnstile et limitation par IP, actions
 d’administration) et wrangler avec un D1 local et des données de démonstration. Pas
@@ -45,9 +45,12 @@ compatible D1, pour exercer le SQL réel. Aucun secret dans le dépôt ; la prot
   contournement local limité à localhost), `admin.ts` (point d’entrée unique qui authentifie
   avant toute route : demandes, fiche, actions gardées, calendrier, blocages),
   `functions/api/admin/[[chemin]].ts` ; 76 tests (250 au total). Suite : wrangler et démo.
-- [ ] Tranche 5 (15–30 min) — wrangler et démonstration : `wrangler.toml`, scripts D1
+- [x] Tranche 5 (15–30 min) — wrangler et démonstration : `wrangler.toml`, scripts D1
   local, données de démonstration, `.dev.vars.example`, vérification du bundle des
   fonctions, documentation.
+  Fait : `wrangler.toml`, `seed/demo.sql`, `.dev.vars.example`, scripts `api:*` (wrangler épinglé
+  en 4.156.1), `docs/api.md`, 4 tests de démo (254 au total). Vérifié sur `wrangler pages dev` :
+  migrations, devis, création, concurrence réelle (201 + 409), administration, refus hors localhost.
 - [ ] Tranche 6 (15–30 min) — Audit et livraison : build, types, tests, secrets, liens,
   inventaire des `TODO(amaelle)`, rapport dans `docs/journal-audit.md`, PR.
 
