@@ -7,7 +7,7 @@ terminée donne lieu à un commit après un build sans erreur ni avertissement.
 ## Étape en cours : 8 — Réservation : API — 2026-11-16
 
 Branche : `etape-8-api` · Base : `etape-7-reservation` (déjà fusionnée dans `etape-6-lieu`, PR #5).
-Statut : tranches 1 à 3 terminées ; tranche 4 à faire. Une PR dédiée en fin d’étape, sans fusion.
+Statut : tranches 1 à 4 terminées ; tranche 5 à faire. Une PR dédiée en fin d’étape, sans fusion.
 Périmètre (`docs/etapes.md`, étape 8) : Pages Functions de l’API (disponibilités, devis,
 création de demande avec transaction, Turnstile et limitation par IP, actions
 d’administration) et wrangler avec un D1 local et des données de démonstration. Pas
@@ -38,9 +38,13 @@ compatible D1, pour exercer le SQL réel. Aucun secret dans le dépôt ; la prot
   insertion gardée en un seul `batch` (lignes passées en JSON pour rester sous les 100 paramètres
   de D1, `changes()` pour n’écrire que si la demande a été insérée) ; 30 tests (174 au total).
   À confirmer sur wrangler local (tranche 5) : `changes()` et `json_each` dans un batch D1.
-- [ ] Tranche 4 (15–30 min) — Administration : vérification du jeton Cloudflare Access,
+- [x] Tranche 4 (15–30 min) — Administration : vérification du jeton Cloudflare Access,
   liste et fiche des demandes, actions (accepter, refuser, confirmer, annuler, prolonger),
   calendrier, blocages ; journal ; tests.
+  Fait : `access.ts` (RS256, audience, émetteur, expiration, liste blanche, 503 si non configuré,
+  contournement local limité à localhost), `admin.ts` (point d’entrée unique qui authentifie
+  avant toute route : demandes, fiche, actions gardées, calendrier, blocages),
+  `functions/api/admin/[[chemin]].ts` ; 76 tests (250 au total). Suite : wrangler et démo.
 - [ ] Tranche 5 (15–30 min) — wrangler et démonstration : `wrangler.toml`, scripts D1
   local, données de démonstration, `.dev.vars.example`, vérification du bundle des
   fonctions, documentation.
