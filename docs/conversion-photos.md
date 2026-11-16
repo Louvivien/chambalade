@@ -31,10 +31,10 @@ les autres conversions. Une erreur de conversion provoque un code de sortie 1.
 ## Cas particulier du logo
 
 La ligne `Chambalade Pony Garden Logo.png` cible `logo/chambalade.png` et l'original
-est absent. Le script signale ce manque. Si ce fichier est ajouté, la cible PNG
-sera signalée comme incompatible avec cette conversion JPEG : le logo transparent
-doit être préparé séparément dans `src/assets/logo/`, conformément à `AGENTS.md`.
-Le script ne modifie pas le tableau et ne crée pas de JPEG avec une extension PNG.
+est absent. Le script signale ce manque. Si ce fichier est ajouté, il sera traité
+en PNG dans `src/assets/logo/chambalade.png`, sans métadonnées, en conservant la
+transparence éventuelle et avec le même plafond de dimensions. Cette exception
+respecte le format du tableau et l'emplacement prévu par `AGENTS.md`.
 
 ## Validation avant publication
 

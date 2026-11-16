@@ -19,11 +19,16 @@ par Sylvie, pension des chevaux.
 Sources de vérité, à consulter avant d'écrire du contenu :
 - `docs/brief.md` : marque, textes validés ou proposés, tarifs, infos pratiques, questions ouvertes.
 - `docs/photos.md` : chaque photo, sa page, son traitement, son texte alternatif, son statut.
+- `docs/reservation.md` : cahier des charges du module de réservation (version 1).
 - `docs/etapes.md` : l'ordre de construction, étape par étape.
+- `docs/audit.md` : les contrôles à appliquer à la fin de chaque étape.
 
 ## Stack et contraintes techniques
 
-- Astro (dernière version stable), site 100 % statique, déployé sur Cloudflare Pages.
+- Astro (dernière version stable), pages statiques, déployé sur Cloudflare Pages.
+- Partie serveur limitée au module de réservation : Cloudflare Pages Functions (`functions/`),
+  base Cloudflare D1 (migrations dans `migrations/`), Turnstile, administration `/admin/`
+  protégée par Cloudflare Access. Tout est décrit dans `docs/reservation.md`.
 - CSS natif avec variables (pas de Tailwind, pas de framework UI). JavaScript côté client
   seulement s'il est indispensable (menu mobile, formulaire).
 - i18n natif d'Astro : français par défaut à la racine (`/`), anglais sous `/en/`.
@@ -35,12 +40,13 @@ Sources de vérité, à consulter avant d'écrire du contenu :
   `loading="lazy"` sauf l'image du bandeau). Sources dans `src/assets/photos/`.
 - Polices auto-hébergées via `@fontsource` (Lora pour les titres, Nunito Sans pour le texte).
   Aucun appel à Google Fonts ni à un CDN externe.
-- Formulaire de demande de séjour : envoi vers un service de formulaires (Web3Forms ou
-  Formspree), point de terminaison et clé en variable d'environnement (`PUBLIC_FORM_ENDPOINT`),
-  jamais en dur. Honeypot anti-spam, case de consentement RGPD, message de confirmation clair.
+- Réservation : module sur mesure décrit dans `docs/reservation.md` (pré-réservation, devis
+  automatique, validation par Amaëlle). Prix et règles lus depuis `src/data/reservation.yaml`.
+  Secrets (e-mail, Turnstile) en secrets Cloudflare, jamais dans le dépôt.
+- Tests : Vitest pour la logique de réservation (devis, disponibilités).
 - Statistiques : Cloudflare Web Analytics uniquement (sans cookie). Aucun autre traceur,
   donc pas de bandeau cookies.
-- Node LTS, npm. Commandes : `npm run dev`, `npm run build`, `npm run preview`.
+- Node LTS, npm. Commandes : `npm run dev`, `npm run build`, `npm run preview`, `npm test`.
 
 ## Design
 
@@ -82,7 +88,9 @@ Principes :
 
 ## Règles fermes
 
-- Pas de réservation ni de paiement en ligne en phase 1 : un formulaire de demande seulement.
+- Pas de paiement en ligne en version 1 : pré-réservation, puis acompte par virement.
+- La disponibilité et le devis sont toujours recalculés côté serveur ; le navigateur n'est
+  jamais cru sur un prix ou une place libre.
 - Une projection ou image de synthèse n'est jamais présentée comme une photo : légende
   « Projection » obligatoire.
 - N'utiliser que les photos au statut « À utiliser » dans `docs/photos.md`.
@@ -96,8 +104,10 @@ Principes :
 - Une étape de `docs/etapes.md` à la fois. Annoncer le plan avant de coder, puis le faire.
 - Petits commits clairs en français (`feat: page gîte`, `fix: contraste bouton`).
 - Avant chaque commit : `npm run build` sans erreur ni avertissement.
-- À la fin de chaque étape : résumer ce qui a été fait, ce qui reste en `TODO(amaelle)`,
-  et ce qu'il faut vérifier visuellement.
+- Une branche et une pull request par étape ; ne jamais fusionner soi-même.
+- À la fin de chaque étape : appliquer `docs/audit.md` et ajouter le rapport en haut de
+  `docs/journal-audit.md` (ce qui a été fait, résultats des contrôles, écarts, nouveaux
+  `TODO(amaelle)`, ce qu'il faut vérifier visuellement).
 - En cas de doute sur un contenu ou un choix de marque, poser la question plutôt que deviner.
 
 ## Définition de « terminé » pour la phase 1
@@ -107,5 +117,5 @@ Principes :
 - Lighthouse mobile ≥ 90 en performance, accessibilité, bonnes pratiques et SEO.
 - Balises title/description par page, Open Graph, `sitemap.xml`, `robots.txt`, `hreflang`,
   données structurées schema.org `LodgingBusiness`.
-- Formulaire testé de bout en bout.
+- Module de réservation v1 testé (tests unitaires + recette de `docs/recette-reservation.md`).
 - Déployé sur Cloudflare Pages, domaine chambalade.fr branché.

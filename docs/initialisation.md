@@ -50,7 +50,7 @@ questions de contenu restent dans `docs/brief.md` et `docs/photos.md`.
 
 ## Environnement
 
-Copier `.env.example` vers `.env` lorsque le service de formulaire sera choisi.
-`PUBLIC_FORM_ENDPOINT` est facultatif à cette étape et doit rester vide tant que
-le service n'est pas configuré. Toute variable `PUBLIC_` est publique.
+Aucune variable d'environnement n'est requise pour le site statique à cette étape.
+Le module de réservation utilisera les Pages Functions décrites dans
+`docs/reservation.md` ; ses secrets seront configurés dans Cloudflare.
 Les fichiers `.env`, les originaux photo et les fichiers générés sont ignorés par Git.

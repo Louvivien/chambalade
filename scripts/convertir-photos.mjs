@@ -6,11 +6,8 @@ import { promisify } from 'node:util';
 
 const execFileAsync = promisify(execFile);
 const root = fileURLToPath(new URL('../', import.meta.url));
-const sources = path.join(root, 'photos-originales');
-const destination = path.join(root, 'src/assets/photos');
-const manifest = path.join(root, 'docs/photos.md');
 
-function readPhotoTable(markdown) {
+export function readPhotoTable(markdown) {
   const lines = markdown.split(/\r?\n/);
   const cells = (line) => line.trim().slice(1, -1).split('|').map((cell) => cell.trim());
   const headerIndex = lines.findIndex((line) =>
@@ -34,7 +31,7 @@ function readPhotoTable(markdown) {
   return entries;
 }
 
-function resolveInside(directory, filename) {
+export function resolveInside(directory, filename) {
   const resolved = path.resolve(directory, filename);
   const relative = path.relative(directory, resolved);
   if (!relative || relative === '..' || relative.startsWith(`..${path.sep}`) || path.isAbsolute(relative)) {
@@ -43,7 +40,10 @@ function resolveInside(directory, filename) {
   return resolved;
 }
 
-async function main() {
+export async function convertPhotos(projectRoot = root) {
+  const sources = path.join(projectRoot, 'photos-originales');
+  const destination = path.join(projectRoot, 'src/assets/photos');
+  const manifest = path.join(projectRoot, 'docs/photos.md');
   const entries = readPhotoTable(await readFile(manifest, 'utf8'));
   try {
     await execFileAsync('magick', ['-version']);
@@ -60,7 +60,10 @@ async function main() {
     let temporaryDirectory;
     try {
       const input = resolveInside(sources, source);
-      const output = resolveInside(destination, target);
+      const isLogo = target === 'logo/chambalade.png';
+      const output = isLogo
+        ? resolveInside(path.join(projectRoot, 'src/assets'), target)
+        : resolveInside(destination, target);
       try {
         await access(input);
       } catch (error) {
@@ -72,14 +75,14 @@ async function main() {
       if (!/\.(heic|heif|jpe?g|png)$/i.test(source)) {
         throw new Error(`Format source non pris en charge : ${source}.`);
       }
-      if (!/\.jpe?g$/i.test(target)) {
-        throw new Error(`La cible « ${target} » n'est pas un JPEG. Le logo PNG doit être préparé séparément ; aucun JPEG ne sera écrit sous une extension PNG.`);
+      if (!isLogo && !/\.jpe?g$/i.test(target)) {
+        throw new Error(`La cible « ${target} » n'est pas un JPEG ni le logo PNG prévu.`);
       }
 
       await mkdir(path.dirname(output), { recursive: true });
       // Écriture temporaire sur le même volume : une erreur conserve la sortie précédente.
       temporaryDirectory = await mkdtemp(path.join(path.dirname(output), '.conversion-'));
-      const temporaryOutput = path.join(temporaryDirectory, 'photo.jpg');
+      const temporaryOutput = path.join(temporaryDirectory, isLogo ? 'logo.png' : 'photo.jpg');
       // execFile transmet les chemins avec espaces/accents sans interprétation par un shell.
       // [0] sélectionne seulement l'image principale d'un éventuel conteneur multi-image.
       const { stderr } = await execFileAsync('magick', [
@@ -87,12 +90,9 @@ async function main() {
         '-auto-orient',
         '-colorspace', 'sRGB',
         '-resize', '2560x2560>',
-        '-background', 'white',
-        '-alpha', 'remove',
-        '-alpha', 'off',
+        ...(isLogo ? [] : ['-background', 'white', '-alpha', 'remove', '-alpha', 'off']),
         '-strip',
-        '-interlace', 'Plane',
-        '-quality', '88',
+        ...(isLogo ? [] : ['-interlace', 'Plane', '-quality', '88']),
         temporaryOutput,
       ], { timeout: 120_000, maxBuffer: 1024 * 1024 });
       if (stderr.trim()) console.warn(`${source} : ${stderr.trim()}`);
@@ -108,10 +108,14 @@ async function main() {
   }
 
   console.log(`\n${converted} converti(s), ${missing} manquant(s), ${failed} erreur(s).`);
-  if (failed) process.exitCode = 1;
+  return { converted, missing, failed };
 }
 
-main().catch((error) => {
-  console.error(`ERREUR : ${error.message}`);
-  process.exitCode = 1;
-});
+if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
+  convertPhotos().then(({ failed }) => {
+    if (failed) process.exitCode = 1;
+  }).catch((error) => {
+    console.error(`ERREUR : ${error.message}`);
+    process.exitCode = 1;
+  });
+}
