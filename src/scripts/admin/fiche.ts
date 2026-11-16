@@ -6,7 +6,7 @@ import type { DevisApi } from '../../lib/reserver/devis';
 import { dateComplete, euros, remplir } from '../../lib/reserver/formats';
 import { dessinerDevis } from '../devis';
 import { el, trouver, vider } from '../dom';
-import type { ContexteAdmin, Montage } from './contexte';
+import type { Montage } from './contexte';
 
 interface Fiche {
   id: number; reference: string; statut: Statut; date_arrivee: string; date_depart: string; nb_adultes: number; nb_enfants: number; nb_chevaux: number;

@@ -1,0 +1,17 @@
+{
+  "step": 11,
+  "date": "2026-11-16",
+  "branch": "etape-11-legal",
+  "build": { "pages": 8, "errors": 0, "warnings": 0 },
+  "astroCheck": { "errors": 0, "warnings": 0, "hints": 1 },
+  "unitTests": { "passed": 496, "new": 19 },
+  "internalLinks": { "checked": 234, "broken": 0 },
+  "todoInventoryLines": 142,
+  "lighthouse": {
+    "/mentions-legales/": { "performance": 100, "accessibility": 100, "best-practices": 100, "seo": 60 },
+    "/confidentialite/": { "performance": 100, "accessibility": 100, "best-practices": 100, "seo": 60 },
+    "/conditions-de-reservation/": { "performance": 100, "accessibility": 100, "best-practices": 100, "seo": 60 },
+    "note": "SEO 60 voulu : noindex tant que src/data/legal.yaml a valide: false (seul is-crawlable échoue)."
+  },
+  "browserAudit": { "script": "scripts/audit-legal.mjs", "widths": [375, 768, 1280], "result": "ok" }
+}

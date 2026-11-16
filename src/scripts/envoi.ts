@@ -3,7 +3,7 @@ import { dateComplete } from '../lib/reserver/formats';
 import { nomCourt, type DevisApi } from '../lib/reserver/devis';
 import { sejourDepuisEtat } from '../lib/reserver/sejour';
 import type { Contact, EtatFormulaire, Regles } from '../lib/reserver/types';
-import { dessinerDevis, type TextesDevisDom } from './devis';
+import { dessinerDevis } from './devis';
 import { el, trouver, vider } from './dom';
 
 interface Turnstile { render(cible: string | HTMLElement, options: Record<string, unknown>): string; reset(id?: string): void }

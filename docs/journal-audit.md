@@ -1,5 +1,50 @@
 # Journal d’audit
 
+## Étape 11 — Pages légales (FR) — 2026-11-16
+
+Branche : `etape-11-legal` · Base : `etape-10-admin` · Pull request : à créer (voir `docs/avancement.md`).
+
+Fait :
+- Trois **brouillons** en français : `/mentions-legales/`, `/confidentialite/`, `/conditions-de-reservation/`.
+  Textes dans `src/content/legal/*.md`, identité de l’éditeur dans `src/data/legal.yaml` (tout ce qui est
+  inconnu reste `null` et s’affiche « à compléter » ; aucun SIRET, statut, hébergeur complet, durée ou
+  clause inventés). Gabarit commun `src/layouts/LegalLayout.astro`.
+- Le texte décrit ce que le site fait réellement : données du formulaire, devis, état de la demande,
+  sous-traitants (Cloudflare, service d’e-mail), vérification anti-robot, compteur d’envois par empreinte
+  d’adresse IP, aucune donnée bancaire, aucun cookie, droits et CNIL. Délais de blocage lus dans
+  `src/data/reservation.yaml` (48 h, 7 jours), pas écrits en dur.
+- **Interrupteur de validation** : `valide: false` dans `src/data/legal.yaml` = bandeau « Brouillon à faire
+  valider » et `noindex`. À passer à `true` après relecture (test qui garde `false` aujourd’hui).
+- Pied de page : liens vers les trois pages sur toutes les pages françaises (+ « Conditions de réservation »).
+  Formulaire Réserver : le TODO de consentement est remplacé par des liens vers la confidentialité et les conditions.
+- Liens de texte écrits `[texte](adresse)` rendus par un petit analyseur qui refuse `javascript:`, `data:`,
+  `//` et `http:` (testé) ; aucun HTML injecté.
+- Correction hors périmètre : trois imports inutilisés (indications `astro check` des étapes 8 à 10).
+
+Contrôles automatiques : build OK, 8 pages, sans erreur ni avertissement · 496 tests OK (19 nouveaux) ·
+types : 0 erreur, 0 avertissement, 1 indication (variable `erreurEnvoi` inutilisée dans `src/scripts/envoi.ts`,
+étape 9) · liens : 234 références internes, 0 cassée · inventaire des `TODO(amaelle)` à jour (142 lignes) ·
+secrets : rien · audit navigateur `npm run audit:legal` (3 pages × 375/768/1280 px, JavaScript désactivé) : OK
+(titres et sections, bandeau, noindex, liens résolus, clavier, aucun débordement, aucune requête externe).
+Lighthouse mobile (perf / a11y / BP / SEO) : mentions 100 / 100 / 100 / 60 · confidentialité 100 / 100 / 100 / 60 ·
+conditions 100 / 100 / 100 / 60. **SEO 60 voulu** : seul « page bloquée à l’indexation » échoue (`noindex` des brouillons) ;
+il remontera à 100 quand `valide` passera à `true`.
+Contenu : conforme aux règles de rédaction (vouvoiement, typographie vérifiée par test) · écarts : aucun.
+
+Points à connaître :
+- **Aucune suppression ni anonymisation n’existe dans le site** (ni dans l’administration). Le droit à l’effacement et la
+  durée de conservation sont donc à faire à la main dans la base ; le texte le dit en `TODO(amaelle)`. À traiter avant
+  l’ouverture (outil d’administration ou procédure documentée, étape 14).
+- Cloudflare Web Analytics n’est pas encore activé (étape 14) ; le texte le signale.
+- La version anglaise (`/en/legal/`, `/en/privacy/`) relève de l’étape 12 ; le pied de page anglais n’a pas encore ces liens.
+
+Nouveaux TODO(amaelle) : exploitante, statut, SIRET, responsable de publication, adresse de l’hébergeur, médiateur, crédits photo,
+e-mail pour les droits, base légale, durée de conservation et procédure de purge, transferts hors UE, prestataire d’e-mail retenu,
+cookies de Turnstile, acompte et coordonnées bancaires, taxe et solde, horaires, linge, animaux, enfants, documents du cheval,
+assurance, annulation/modification, mention sur la rétractation (à faire valider par un professionnel).
+À vérifier visuellement par Vivien : les trois pages sur téléphone (bandeau bleu, lignes « à compléter »), puis relire le fond
+avec Amaëlle ; je ne suis pas juriste, ces textes sont des brouillons de travail.
+
 ## Étape 10 — Réservation : administration et e-mails — 2026-11-16
 
 Branche : `etape-10-admin` · Base : `etape-9-reserver` · Pull request : à créer (voir `docs/avancement.md`).

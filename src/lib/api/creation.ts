@@ -11,7 +11,7 @@ import { adresseIp, compterTentative } from './limites';
 import { demandeSchema, messageDeValidation, sejourDe } from './schemas';
 import { notifier } from './notifications';
 import { verifierTurnstile } from './turnstile';
-import type { ApiDeps, D1Like } from './types';
+import type { ApiDeps } from './types';
 
 export interface Contact { nom: string; prenom: string; email: string; telephone?: string; message?: string }
 

@@ -4,7 +4,34 @@ Le dernier état est en haut. À chaque reprise, lire ce fichier, `git log -5` e
 `git status`, puis reprendre la première tranche non cochée. Chaque tranche
 terminée donne lieu à un commit après un build sans erreur ni avertissement.
 
-## Étape en cours : 10 — Réservation : administration et e-mails — 2026-11-16
+## Étape en cours : 11 — Pages légales (FR) — 2026-11-16
+
+Branche : `etape-11-legal` · Base : `etape-10-admin`.
+Statut : tranches 1 à 3 terminées ; étape prête pour revue, sans fusion.
+PR à créer sur GitHub (base `etape-10-admin`).
+Périmètre (`docs/etapes.md` étape 11) : brouillons de mentions légales, de politique de
+confidentialité (données de réservation incluses) et de conditions de réservation, marqués
+« à faire valider », sans inventer d’information. La version anglaise relève de l’étape 12
+(`/en/legal/`, `/en/privacy/`).
+
+Principes : aucun SIRET, statut juridique, hébergeur, durée ou clause inventés ; tout ce qui
+manque est `TODO(amaelle)` visible. Les textes décrivent ce que le site fait réellement
+(données collectées par le formulaire, sous-traitants effectivement utilisés : Cloudflare,
+service d’e-mail). Chaque page affiche un bandeau « Brouillon à faire valider » et reste
+`noindex` tant qu’elle n’est pas validée. Textes en Markdown/YAML, pas en dur dans les composants.
+
+- [x] Tranche 1 (15–30 min) — Contenus : collection `legal` (mentions, confidentialité, conditions),
+  `src/data/legal.yaml` (identité de l’éditeur, valeurs inconnues à `null`), schéma, tests.
+- [x] Tranche 2 (15–30 min) — Pages `/mentions-legales/`, `/confidentialite/`,
+  `/conditions-de-reservation/`, gabarit commun, bandeau « à faire valider », pied de page
+  et lien de consentement du formulaire Réserver.
+  Fait : tranches 1 et 2 committées ensemble (`5e1bb10`) ; `valide: false` dans `src/data/legal.yaml` = bandeau + noindex.
+- [x] Tranche 3 (15–30 min) — Audit navigateur (375/768/1280 px, clavier, sans JS), liens,
+  inventaire des TODO, rapport, `docs/rapports/etape-11.json`, avancement.
+  Fait : `npm run audit:legal`, Lighthouse, rapport. Points en suspens : aucune suppression/anonymisation des demandes n’existe encore
+  (à traiter avant l’ouverture) ; étape 12 = versions anglaises ; étape 13 = passer `valide` à true après validation.
+
+## Étape précédente : 10 — Réservation : administration et e-mails — 2026-11-16
 
 Branche : `etape-10-admin` · Base : `etape-9-reserver` (PR vers `etape-8-api`).
 Statut : tranches 1 à 7 terminées ; étape prête pour revue, sans fusion.

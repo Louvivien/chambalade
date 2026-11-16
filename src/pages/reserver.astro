@@ -2,6 +2,7 @@
 import { getEntry } from 'astro:content';
 import { parse } from 'yaml';
 import BaseLayout from '../layouts/BaseLayout.astro';
+import Texte from '../components/Texte.astro';
 import rawReservation from '../data/reservation.yaml?raw';
 import { parseReservationConfig } from '../lib/reservation/config';
 import { site } from '../lib/interface';
@@ -133,7 +134,7 @@ const chambres = ['chambre_privee', 'chambre_2', 'chambre_3'] as const;
         <div class="champ"><label for="telephone">{text.contact.phone}</label><input id="telephone" name="telephone" type="tel" autocomplete="tel" maxlength="30" /></div>
         <div class="champ"><label for="message">{text.contact.message}</label><textarea id="message" name="message" rows="4" maxlength="2000" aria-describedby="message-aide"></textarea><p class="aide" id="message-aide">{text.contact.messageHint}</p></div>
         <label class="case consentement"><input id="consentement" name="consentement" type="checkbox" required aria-describedby="consentement-aide" /><span>{text.contact.consent}</span></label>
-        <p class="aide pending" id="consentement-aide">{text.contact.consentPrivacy}</p>
+        <p class="aide" id="consentement-aide"><Texte texte={text.contact.consentPrivacy} /></p>
         <p class="erreur" id="erreur-consentement" hidden></p>
         <div class="anti-robot">
           <p class="aide" id="anti-robot-label">{text.contact.antiRobot}</p>
