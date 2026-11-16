@@ -12,6 +12,7 @@ const interfaceContent = defineCollection({
     nav: z.array(z.object({ key: z.enum(['home', 'gite', 'lieu', 'reserver']), label: z.string() })),
     legal: z.array(z.object({ key: z.enum(['mentions', 'confidentialite', 'conditions']), label: z.string() })),
     directoryLabel: z.string(),
+    notFound: z.object({ title: z.string(), text: z.string(), link: z.string() }),
     languages: z.array(z.object({ code: z.enum(['fr', 'en']), label: z.string() })),
   }),
 });

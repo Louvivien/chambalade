@@ -21,10 +21,13 @@ Principes : aucun secret ni identifiant réel dans le dépôt ; ce qui dépend d
 variable ; les commandes du guide sont celles que le dépôt sait vérifier ; les points qu’on ne peut pas
 tester ici sont écrits comme tels.
 
-- [ ] Tranche 1 — Préparation du dépôt : `wrangler.toml` prêt pour la production, version de Node,
+- [x] Tranche 1 — Préparation du dépôt : `wrangler.toml` prêt pour la production, version de Node,
   script `npm run deploiement:verifier` (contrôles avant mise en ligne : build, configuration des
   fonctions, absence de clés de test et de secrets dans `dist`, `database_id` à remplacer, migrations),
   tests.
+  Fait : `scripts/deploiement/controles.mjs` + `scripts/verifier-deploiement.mjs` (`npm run deploiement:verifier [-- --strict --ouverture]`),
+  13 tests ; page `404.html` ajoutée (il n’y en avait pas : Cloudflare Pages en sert une pour toute adresse inconnue). Résultat actuel :
+  3 points bloquants attendus (identifiant D1 de test, clés Turnstile de test) et 5 points avant ouverture.
 - [ ] Tranche 2 — Guide `docs/deploiement.md` (Cloudflare Pages, D1, migrations, Turnstile, Resend,
   Access, variables, domaine chambalade.fr, statistiques) et section du `README.md`.
 - [ ] Tranche 3 — Données personnelles en production : effacement/anonymisation d’une demande et purge

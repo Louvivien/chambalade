@@ -20,5 +20,9 @@ legal:
   - { key: mentions, label: Legal notice }
   - { key: confidentialite, label: Privacy }
   - { key: conditions, label: Booking terms }
+notFound:
+  title: Page not found
+  text: This page does not exist or has moved. You can go back to the home page, or plan your stay from the Book page.
+  link: Back to the home page
 directoryLabel: Horse riding in Isère — CDTE
 ---
