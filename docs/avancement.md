@@ -7,7 +7,7 @@ terminée donne lieu à un commit après un build sans erreur ni avertissement.
 ## Étape en cours : 9 — Réservation : parcours client — 2026-11-16
 
 Branche : `etape-9-reserver` · Base : `etape-8-api` (PR en attente de création par Vivien).
-Statut : tranche 1 terminée ; tranche 2 à faire. Une PR dédiée en fin d’étape, sans fusion.
+Statut : tranches 1 et 2 terminées ; tranche 3 à faire. Une PR dédiée en fin d’étape, sans fusion.
 Périmètre (`docs/etapes.md` étape 9, `docs/reservation.md` section 7) : page `/reserver/`
 en français : calendrier, composition du séjour, devis en direct, coordonnées, confirmation.
 Pas d’administration ni d’e-mails (étape 10), pas de version anglaise (étape 12).
@@ -27,8 +27,11 @@ visibles. Turnstile : clé publique en variable `PUBLIC_TURNSTILE_SITE_KEY`.
   erreurs, devis, confirmation, message sans JavaScript), liens de l’accueil, du gîte et du lieu
   raccordés à `/reserver/`, audits d’accueil et du gîte adaptés, `.env.example`, jeton `--erreur`.
   Le script `src/scripts/reserver.ts` est provisoire (affiche le formulaire). Suite : logique pure.
-- [ ] Tranche 2 (15–30 min) — Logique pure : état du formulaire, requête `sejour`
+- [x] Tranche 2 (15–30 min) — Logique pure : état du formulaire, requête `sejour`
   (dont personnes par chambre dérivées), statut des nuits, formatage, messages ; tests.
+  Fait : `src/lib/reserver/{types,formats,sejour,calendrier,devis,envoi}.ts`, 61 tests (315 au total).
+  Hypothèse signalée : la répartition des personnes par chambre (utile seulement si le prix de la
+  chambre est « par personne ») est calculée, pas demandée. Suite : calendrier accessible.
 - [ ] Tranche 3 (15–30 min) — Calendrier accessible : grille mensuelle au clavier, choix
   arrivée/départ, nuits complètes grisées d’après `/api/disponibilites`.
 - [ ] Tranche 4 (15–30 min) — Devis en direct, validation, Turnstile, envoi, erreurs
