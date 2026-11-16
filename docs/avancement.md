@@ -4,7 +4,29 @@ Le dernier état est en haut. À chaque reprise, lire ce fichier, `git log -5` e
 `git status`, puis reprendre la première tranche non cochée. Chaque tranche
 terminée donne lieu à un commit après un build sans erreur ni avertissement.
 
-## Étape en cours : 12 — Version anglaise — 2026-11-16
+## Étape en cours : 13 — SEO, accessibilité, performance — 2026-11-16
+
+Branche : `etape-13-seo` · Base : `etape-12-en`.
+Statut : plan écrit, aucune tranche terminée.
+Périmètre (`docs/etapes.md` étape 13) : title/description (déjà posés par page), Open Graph,
+sitemap, `robots.txt`, données structurées `LodgingBusiness`, contrastes et clavier, Lighthouse
+mobile ≥ 90 partout, liste de ce qui reste à corriger.
+
+Principes : rien d’inventé dans les données structurées (pas de téléphone, de prix, de note, de
+coordonnées GPS ni d’horaires tant qu’ils sont inconnus) ; le sitemap et le `robots.txt` sont
+générés depuis la table de routes (`src/lib/routes.ts`), pas écrits à la main ; les pages légales
+restent hors du sitemap et en `noindex` tant que `valide: false` (`src/data/legal.yaml`) ;
+`/admin/` et `/api/` interdits aux robots ; aucune nouvelle dépendance.
+
+- [ ] Tranche 1 — Balises de tête : canonical, Open Graph et Twitter par page (titre, description,
+  langue, alternatives de langue, image 1200×630 issue d’une photo « À utiliser »), tests.
+- [ ] Tranche 2 — `sitemap.xml` (avec alternatives de langue), `robots.txt`, JSON-LD
+  `LodgingBusiness` (FR/EN) ; tests de cohérence avec la table de routes.
+- [ ] Tranche 3 — Accessibilité et performance : contrastes mesurés pour tous les couples de
+  couleurs utilisés, clavier, Lighthouse mobile sur toutes les pages publiques, liste des restes
+  à corriger, rapport, `docs/rapports/etape-13.json`.
+
+## Étape précédente : 12 — Version anglaise — 2026-11-16
 
 Branche : `etape-12-en` · Base : `etape-11-legal`.
 Statut : tranches 1 à 6 terminées ; étape prête pour revue, sans fusion.
