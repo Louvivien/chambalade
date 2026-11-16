@@ -101,6 +101,24 @@ Principes :
 
 ## Façon de travailler
 
+### Travailler par tranches (le travail peut s'arrêter à tout moment)
+
+Une session peut s'interrompre au milieu d'une étape (limite d'usage, coupure). Le dépôt doit
+donc toujours permettre à un autre agent de reprendre sans rien perdre :
+
+1. Au début d'une étape, découper l'étape en tranches de 15 à 30 minutes de travail et les
+   écrire comme cases à cocher dans `docs/avancement.md` (étape en cours, tranches, statut).
+   Committer ce plan avant de coder.
+2. Après chaque tranche terminée : cocher la case, noter en une ligne ce qui a été fait et
+   ce qui suit, puis committer (`wip(etape-N): tranche X — …`). Jamais plus d'une tranche
+   sans commit.
+3. Une tranche commencée mais pas finie est notée « en cours » avec ce qui reste précisément.
+4. À la reprise (par Codex ou Claude Code) : lire `docs/avancement.md`, `git log -5`,
+   `git status`, résumer l'état en trois lignes, puis reprendre à la première case non cochée.
+   Si `git status` montre des modifications non commitées, les examiner avant toute chose.
+
+### Règles générales
+
 - Une étape de `docs/etapes.md` à la fois. Annoncer le plan avant de coder, puis le faire.
 - Petits commits clairs en français (`feat: page gîte`, `fix: contraste bouton`).
 - Avant chaque commit : `npm run build` sans erreur ni avertissement.
