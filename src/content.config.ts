@@ -15,4 +15,24 @@ const interfaceContent = defineCollection({
   }),
 });
 
-export const collections = { interface: interfaceContent };
+const accueil = defineCollection({
+  loader: glob({ pattern: '*.md', base: './src/content/accueil' }),
+  schema: ({ image }) => {
+    const photo = z.object({ src: image(), alt: z.string().min(1) });
+    return z.object({
+      title: z.string(), description: z.string(),
+      hero: z.object({ title: z.string(), introduction: z.string(), discover: z.string(), request: z.string(), desktop: photo, mobile: photo }),
+      introduction: z.object({ title: z.string(), text: z.string(), photo, caption: z.string() }),
+      activities: z.object({
+        title: z.string(), lodgeTitle: z.string(), lodgeText: z.string(), lodgeLink: z.string(),
+        soon: z.string(), interestLink: z.string(),
+        upcoming: z.array(z.object({ title: z.string(), text: z.string() })),
+      }),
+      reasons: z.object({ title: z.string(), items: z.array(z.object({ title: z.string(), text: z.string() })), photo }),
+      region: z.object({ title: z.string(), text: z.string(), location: z.string() }),
+      stay: z.object({ title: z.string(), text: z.string(), pending: z.string() }),
+    });
+  },
+});
+
+export const collections = { interface: interfaceContent, accueil };
