@@ -7,7 +7,7 @@ terminée donne lieu à un commit après un build sans erreur ni avertissement.
 ## Étape en cours : 7 — Réservation : données et règles — 2026-11-16
 
 Branche : `etape-7-reservation` · Base : `etape-6-lieu` (étape 6 prête, PR ouverte par Vivien).
-Statut : tranche 1 terminée ; tranche 2 à faire. Une PR dédiée en fin d’étape, sans fusion.
+Statut : tranches 1 et 2 terminées ; tranche 3 à faire. Une PR dédiée en fin d’étape, sans fusion.
 Périmètre (`docs/etapes.md`, étape 7) : configuration, migrations D1 et bibliothèque pure
 (sans réseau ni interface) pour disponibilités et devis, avec tests Vitest. Pas d’API
 (étape 8), pas d’interface (étape 9).
@@ -22,9 +22,12 @@ configuration de test complète, distincte de la configuration réelle.
   Zod dans `src/lib/reservation/config.ts`, tests ; page du gîte inchangée.
   Fait : YAML étendu, schéma avec contrôle de la capacité totale (12), configuration de
   test `tests/reservation/config-test.ts`, 10 nouveaux tests (27 au total). Suite : migrations.
-- [ ] Tranche 2 (15–30 min) — Migrations D1 : `migrations/0001_*.sql` (`demandes`,
+- [x] Tranche 2 (15–30 min) — Migrations D1 : `migrations/0001_*.sql` (`demandes`,
   `occupations`, `blocages`, `journal`, index, contraintes), vérifiées par un test sur une
   base SQLite en mémoire.
+  Fait : `migrations/0001_reservation.sql`, 14 tests sur SQLite en mémoire (`node:sqlite`,
+  clés étrangères actives). Blocages : date de fin exclue, comme les séjours. Suite :
+  disponibilités.
 - [ ] Tranche 3 (15–30 min) — Disponibilités : nuits d’un séjour, occupations actives
   (statuts, expiration à la lecture), blocages, capacité par unité et par nuit, contraintes
   de séjour, messages d’erreur précis ; tests (dortoir presque plein, chevaux au-delà de la
