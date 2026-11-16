@@ -20,7 +20,7 @@ Fait (aucune interface, aucun e-mail : étapes 9 et 10) :
 Contrôles automatiques : build OK, 3 pages, sans erreur ni avertissement · 254 tests OK
 (146 nouveaux : jeton Access 21, administration 55, création 30, démonstration 4, fondations 13,
 API publique 23) · types : 0 erreur, 0 avertissement, 0 indication · liens : 170 références,
-0 cassée · inventaire des `TODO(amaelle)` à jour (93 lignes) · configuration des fonctions
+0 cassée · inventaire des `TODO(amaelle)` à jour (95 lignes) · configuration des fonctions
 synchronisée avec le YAML · secrets : aucune valeur réelle (noms de variables et documentation
 seulement) · `.dev.vars` et `.wrangler/` ignorés par Git. Lighthouse et rendus : non rejoués,
 aucune page ni aucun asset du site modifié.

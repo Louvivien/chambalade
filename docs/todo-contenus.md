@@ -33,7 +33,7 @@ conditions pratiques, identité légale. Les sources ci-dessous font autorité.
 | `docs/etapes.md:31` | > restent visibles avec TODO(amaelle) et sont listées dans docs/todo-contenus.md. |
 | `docs/etapes.md:38` | > avec les TODO(amaelle)), les migrations D1, et une bibliothèque pure (sans accès réseau) qui |
 | `docs/initialisation.md:50` | des routes de contrôle séparées via `npm run dev:audit`. Aucun nouveau `TODO(amaelle)` à cette étape ; les |
-| `docs/journal-audit.md:23` | 0 cassée · inventaire des `TODO(amaelle)` à jour (93 lignes) · configuration des fonctions |
+| `docs/journal-audit.md:23` | 0 cassée · inventaire des `TODO(amaelle)` à jour (95 lignes) · configuration des fonctions |
 | `docs/journal-audit.md:70` | Nouveaux TODO(amaelle) : aucun. À vérifier par Vivien : les décisions ci-dessus, en particulier |
 | `docs/journal-audit.md:79` | blocage (48 h, 7 jours), règles de devis. Toute valeur `TODO(amaelle)` reste `null`. |
 | `docs/journal-audit.md:92` | 0 cassée · inventaire des `TODO(amaelle)` à jour (92 lignes) · secrets : aucune valeur réelle · |
