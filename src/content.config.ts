@@ -107,7 +107,7 @@ const reserver = defineCollection({
       updating: z.string(), error: z.string(), lines: z.record(z.enum(priceIds), z.string()),
     }),
     submit: z.object({ label: z.string(), sending: z.string(), summaryTitle: z.string(), missingKey: z.string() }),
-    errors: z.object({ required: z.string(), email: z.string(), noDates: z.string(), noLodging: z.string(), consent: z.string(), antiRobot: z.string(), network: z.string(), server: z.string(), rateLimit: z.string() }),
+    errors: z.object({ fields: z.object({ nom: z.string(), prenom: z.string(), email: z.string() }), required: z.string(), email: z.string(), noDates: z.string(), noLodging: z.string(), consent: z.string(), antiRobot: z.string(), network: z.string(), server: z.string(), rateLimit: z.string() }),
     confirmation: z.object({ title: z.string(), reference: z.string(), next: z.string(), notBooking: z.string(), recap: z.string(), again: z.string() }),
   }),
 });

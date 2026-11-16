@@ -1,18 +1,23 @@
 import { dateParis, nuits } from '../lib/reservation/dates';
 import { dateComplete, dateCourte, libelleNuits, remplir } from '../lib/reserver/formats';
-import { entierBorne, nettoyerRepas } from '../lib/reserver/sejour';
+import { entierBorne, nettoyerRepas, sejourDepuisEtat } from '../lib/reserver/sejour';
 import { etatInitial, type EtatFormulaire, type LibresParNuit, type Regles } from '../lib/reserver/types';
 import { creerCalendrier } from './calendrier';
+import { creerDevis, nomCourt } from './devis';
+import { brancherEnvoi } from './envoi';
 import { el, trouver, vider } from './dom';
 
 // Données publiques posées dans la page à la construction : textes du contenu, règles de séjour, clé Turnstile.
 interface Donnees { text: Record<string, any>; regles: Regles; siteKey: string }
 const donnees: Donnees = JSON.parse(trouver('reserver-donnees').textContent ?? '{}');
 const { text, regles } = donnees;
+const nomsUnites = Object.fromEntries(Object.entries(text.lodging.rooms as Record<string, string>).map(([id, libelle]) => [id, nomCourt(libelle)]));
 
 const etat: EtatFormulaire = etatInitial();
+const signaler = () => devis.planifier();
 const formulaire = trouver<HTMLFormElement>('formulaire');
 const champ = <T extends HTMLElement>(id: string) => trouver<T>(id);
+const devis = creerDevis({ zone: trouver('devis-contenu'), textes: text.quote, nomsUnites, sejour: () => sejourDepuisEtat(etat, regles) });
 const casesChambres = () => [...formulaire.querySelectorAll<HTMLInputElement>('input[name="chambres"]')];
 
 /** Relit les champs de groupe et d’hébergement dans l’état. */
@@ -60,7 +65,6 @@ async function chargerDisponibilites(du: string, au: string): Promise<LibresParN
   return Object.fromEntries(corps.nuits.map(n => [n.nuit, n.libres]));
 }
 
-export const application = { etat, text, regles, donnees, lireChoix, afficherDates, afficherRepas, champ };
 
 const calendrier = creerCalendrier({
   racine: champ('calendrier'),
@@ -75,10 +79,9 @@ const calendrier = creerCalendrier({
     Object.assign(etat, nettoyerRepas(etat));
     afficherDates();
     afficherRepas();
-    document.dispatchEvent(new CustomEvent('reserver:change'));
+    signaler();
   },
 });
-export { calendrier };
 
 formulaire.addEventListener('change', ev => {
   const cible = ev.target as HTMLInputElement;
@@ -89,21 +92,22 @@ formulaire.addEventListener('change', ev => {
     lireChoix();
     calendrier.rafraichir();
   } else return;
-  document.dispatchEvent(new CustomEvent('reserver:change'));
+  signaler();
 });
 // Les champs numériques se mettent à jour pendant la frappe pour que le calendrier suive.
 formulaire.addEventListener('input', ev => {
   const cible = ev.target as HTMLInputElement;
-  if (['adultes', 'enfants', 'chevaux', 'lits'].includes(cible.name)) { lireChoix(); calendrier.rafraichir(); document.dispatchEvent(new CustomEvent('reserver:change')); }
+  if (['adultes', 'enfants', 'chevaux', 'lits'].includes(cible.name)) { lireChoix(); calendrier.rafraichir(); signaler(); }
 });
 
 champ('effacer-dates').addEventListener('click', () => {
   etat.arrivee = null; etat.depart = null;
   Object.assign(etat, nettoyerRepas(etat));
   afficherDates(); afficherRepas(); calendrier.rafraichir();
-  document.dispatchEvent(new CustomEvent('reserver:change'));
+  signaler();
 });
 
 lireChoix();
 afficherDates();
+brancherEnvoi({ etat, regles, text, siteKey: donnees.siteKey, nomsUnites, apresConflit: () => { calendrier.invalider(); devis.actualiser(); } });
 formulaire.hidden = false;

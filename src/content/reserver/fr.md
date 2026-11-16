@@ -104,6 +104,10 @@ submit:
   summaryTitle: Votre demande n’est pas partie
   missingKey: La vérification anti-robot n’est pas disponible pour le moment. Réessayez plus tard ou contactez-nous.
 errors:
+  fields:
+    nom: Le nom
+    prenom: Le prénom
+    email: L’adresse e-mail
   required: '{champ} est à renseigner.'
   email: Cette adresse e-mail ne semble pas valide.
   noDates: Choisissez vos dates d’arrivée et de départ.

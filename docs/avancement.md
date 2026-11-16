@@ -7,7 +7,7 @@ terminée donne lieu à un commit après un build sans erreur ni avertissement.
 ## Étape en cours : 9 — Réservation : parcours client — 2026-11-16
 
 Branche : `etape-9-reserver` · Base : `etape-8-api` (PR en attente de création par Vivien).
-Statut : tranches 1 à 3 terminées ; tranche 4 à faire. Une PR dédiée en fin d’étape, sans fusion.
+Statut : tranches 1 à 4 terminées ; tranche 5 à faire. Une PR dédiée en fin d’étape, sans fusion.
 Périmètre (`docs/etapes.md` étape 9, `docs/reservation.md` section 7) : page `/reserver/`
 en français : calendrier, composition du séjour, devis en direct, coordonnées, confirmation.
 Pas d’administration ni d’e-mails (étape 10), pas de version anglaise (étape 12).
@@ -39,8 +39,13 @@ visibles. Turnstile : clé publique en variable `PUBLIC_TURNSTILE_SITE_KEY`.
   Vérifié dans un vrai navigateur sur `wrangler pages dev`. Défaut trouvé et corrigé : un clic sur un
   jour était perdu quand un champ numérique avait le focus (la grille était reconstruite entre
   l’appui et le relâchement) ; la grille se met maintenant à jour sur place. Suite : devis et envoi.
-- [ ] Tranche 4 (15–30 min) — Devis en direct, validation, Turnstile, envoi, erreurs
+- [x] Tranche 4 (15–30 min) — Devis en direct, validation, Turnstile, envoi, erreurs
   précises, écran de confirmation avec référence.
+  Fait : `src/scripts/{devis,envoi}.ts` : devis en direct (API, jamais un calcul local), résumé
+  d’erreurs lié aux champs, Turnstile explicite (jeton à usage unique réinitialisé), envoi, messages
+  précis, confirmation avec référence et récapitulatif. Vérifié dans un vrai navigateur : parcours
+  complet (201, `CHB-2026-0001`) et échec « places prises » (409, message du serveur, formulaire
+  conservé). Défaut trouvé et corrigé : `window.turnstile` existe avant que `render` soit prêt.
 - [ ] Tranche 5 (15–30 min) — Audit : parcours complet dans un vrai navigateur sur
   `wrangler pages dev`, clavier, 375/768/1280, Lighthouse, build, types, tests, secrets.
 - [ ] Tranche 6 (15–30 min) — Rapport dans `docs/journal-audit.md`, PR.

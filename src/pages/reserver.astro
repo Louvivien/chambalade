@@ -232,6 +232,10 @@ const chambres = ['chambre_privee', 'chambre_2', 'chambre_3'] as const;
 
   .confirmation { border: 2px solid var(--kaki-fonce); padding: var(--espace-8); display: grid; gap: var(--espace-4); justify-items: start; }
   .reserver [hidden] { display: none !important; }
+  .recap { display: grid; gap: var(--espace-2); }
+  .recap > div { display: grid; grid-template-columns: minmax(7rem, 11rem) 1fr; gap: var(--espace-4); border-bottom: 1px solid color-mix(in srgb, var(--chene) 55%, transparent); padding-bottom: var(--espace-2); }
+  .recap dt { font-weight: 700; }
+  .devis-recap { max-width: 30rem; }
   .reference-ligne strong { font-size: 1.35rem; letter-spacing: 0.02em; }
 
   @media (min-width: 64rem) {
