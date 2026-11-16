@@ -4,7 +4,36 @@ Le dernier état est en haut. À chaque reprise, lire ce fichier, `git log -5` e
 `git status`, puis reprendre la première tranche non cochée. Chaque tranche
 terminée donne lieu à un commit après un build sans erreur ni avertissement.
 
-## Étape en cours : 8 — Réservation : API — 2026-11-16
+## Étape en cours : 9 — Réservation : parcours client — 2026-11-16
+
+Branche : `etape-9-reserver` · Base : `etape-8-api` (PR en attente de création par Vivien).
+Statut : plan committé ; tranche 1 à faire. Une PR dédiée en fin d’étape, sans fusion.
+Périmètre (`docs/etapes.md` étape 9, `docs/reservation.md` section 7) : page `/reserver/`
+en français : calendrier, composition du séjour, devis en direct, coordonnées, confirmation.
+Pas d’administration ni d’e-mails (étape 10), pas de version anglaise (étape 12).
+
+Principes : textes dans `src/content/reserver/fr.md` ; logique pure (état du formulaire →
+requête, état des nuits du calendrier, formatage) dans `src/lib/reserver/`, testée sous
+Vitest ; le script du navigateur ne fait que relier le DOM à cette logique et à l’API.
+JavaScript côté client assumé ici (calendrier, devis, envoi) ; sans lui, la page affiche
+un message et les coordonnées. Prix, disponibilités et devis ne viennent jamais du
+navigateur : tout passe par l’API de l’étape 8. Informations inconnues = `TODO(amaelle)`
+visibles. Turnstile : clé publique en variable `PUBLIC_TURNSTILE_SITE_KEY`.
+
+- [ ] Tranche 1 (15–30 min) — Contenus et page : collection `reserver`, page `/reserver/`
+  (structure HTML complète des champs, accessible, sans script), liens « Réserver » de
+  l’accueil, du gîte et du lieu raccordés, `.env.example`, `TODO(amaelle)`.
+- [ ] Tranche 2 (15–30 min) — Logique pure : état du formulaire, requête `sejour`
+  (dont personnes par chambre dérivées), statut des nuits, formatage, messages ; tests.
+- [ ] Tranche 3 (15–30 min) — Calendrier accessible : grille mensuelle au clavier, choix
+  arrivée/départ, nuits complètes grisées d’après `/api/disponibilites`.
+- [ ] Tranche 4 (15–30 min) — Devis en direct, validation, Turnstile, envoi, erreurs
+  précises, écran de confirmation avec référence.
+- [ ] Tranche 5 (15–30 min) — Audit : parcours complet dans un vrai navigateur sur
+  `wrangler pages dev`, clavier, 375/768/1280, Lighthouse, build, types, tests, secrets.
+- [ ] Tranche 6 (15–30 min) — Rapport dans `docs/journal-audit.md`, PR.
+
+## Étape 8 — Réservation : API, prête pour revue — 2026-11-16
 
 Branche : `etape-8-api` · Base : `etape-7-reservation` (déjà fusionnée dans `etape-6-lieu`, PR #5).
 Statut : tranches 1 à 6 terminées ; étape prête pour revue, sans fusion.
