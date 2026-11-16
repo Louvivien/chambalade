@@ -100,3 +100,4 @@ prices:
 api:
   rate_limit_per_hour: 5 # demandes envoyées par adresse IP et par heure
   availability_max_days: 62 # fenêtre maximale d’une requête de disponibilités
+  expiry_alert_hours: 12 # une demande en attente qui expire dans moins de ce délai est signalée à Amaëlle

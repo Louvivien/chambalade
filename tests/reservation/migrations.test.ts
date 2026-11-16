@@ -81,3 +81,11 @@ it('garde le journal même sans demande', () => {
   expect(add(null, 'blocage_cree', 'amaelle').changes).toBe(1);
   expect(() => add(null, '', 'amaelle')).toThrow();
 });
+
+it('0003 : l’acompte saisi à l’acceptation est facultatif et ne peut pas être négatif', () => {
+  expect(() => insertDemande({ reference: 'CHB-2027-0100' })).not.toThrow();
+  db.prepare('UPDATE demandes SET acompte_cents = 7650 WHERE reference = ?').run('CHB-2027-0100');
+  expect((db.prepare('SELECT acompte_cents AS a FROM demandes WHERE reference = ?').get('CHB-2027-0100') as { a: number }).a).toBe(7650);
+  expect(() => db.prepare('UPDATE demandes SET acompte_cents = -1 WHERE reference = ?').run('CHB-2027-0100')).toThrow();
+  db.prepare('UPDATE demandes SET acompte_cents = NULL WHERE reference = ?').run('CHB-2027-0100');
+});

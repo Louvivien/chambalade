@@ -7,7 +7,7 @@ terminée donne lieu à un commit après un build sans erreur ni avertissement.
 ## Étape en cours : 10 — Réservation : administration et e-mails — 2026-11-16
 
 Branche : `etape-10-admin` · Base : `etape-9-reserver` (PR vers `etape-8-api`).
-Statut : tranche 1 terminée ; tranche 2 à faire. Une PR dédiée en fin d’étape, sans fusion.
+Statut : tranches 1 et 2 terminées ; tranche 3 à faire. Une PR dédiée en fin d’étape, sans fusion.
 Périmètre (`docs/etapes.md` étape 10, `docs/reservation.md` sections 8 et 9) : `/admin/` (demandes,
 fiche, calendrier, blocages) pour Amaëlle, modèles d’e-mails FR/EN branchés sur l’API, protection
 par Cloudflare Access et service d’e-mail documentés, `docs/recette-reservation.md`.
@@ -26,9 +26,13 @@ dans un objet ou un en-tête d’e-mail. Informations inconnues = `TODO(amaelle)
   `src/lib/emails/{formats,modeles}.ts` (7 modèles, texte brut et HTML, échappement, objet assaini),
   38 tests (356 au total). Défaut trouvé et corrigé : les montants avec centimes s’écrivaient
   « 76,5 € » (page Réserver, tarifs du gîte, e-mails) ; ils s’écrivent « 76,50 € ».
-- [ ] Tranche 2 (15–30 min) — Envoi et branchement : service d’e-mail (Resend) derrière une
+- [x] Tranche 2 (15–30 min) — Envoi et branchement : service d’e-mail (Resend) derrière une
   interface, migration `0003` (acompte saisi à l’acceptation), envois depuis la création et les
   actions, alerte d’expiration à la consultation, journal ; tests.
+  Fait : `migrations/0003_acompte.sql`, `src/lib/emails/envoi.ts` (Resend, ne lève jamais), `src/lib/api/
+  notifications.ts` (journal sans adresse, alerte d’expiration unique), envois branchés sur la
+  création (reçue + nouvelle) et sur accepter/refuser/confirmer/annuler (réponse `email`), acompte
+  saisi à l’acceptation ; 29 tests (385 au total).
 - [ ] Tranche 3 (15–30 min) — Protection et socle de `/admin/` : contrôle du jeton Access sur la
   page elle-même (intergiciel), en-têtes `noindex` et sans cache, contenus `admin`, page et
   navigation ; tests.
