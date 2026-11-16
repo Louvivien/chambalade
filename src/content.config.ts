@@ -135,7 +135,7 @@ const admin = defineCollection({
 });
 
 const legal = defineCollection({
-  loader: glob({ pattern: '*.md', base: './src/content/legal' }),
+  loader: glob({ pattern: '**/*.md', base: './src/content/legal' }),
   schema: z.object({
     title: texte, description: texte,
     hero: z.object({ title: texte, text: texte }),

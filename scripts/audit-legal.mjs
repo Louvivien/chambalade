@@ -16,7 +16,7 @@ await mkdir('.audit/screenshots', { recursive: true });
 try {
   for (const width of [375, 768, 1280]) {
     for (const p of pages) {
-      const content = parse((await readFile(`src/content/legal/${p.file}.md`, 'utf8')).split('---')[1]);
+      const content = parse((await readFile(`src/content/legal/fr/${p.file}.md`, 'utf8')).split('---')[1]);
       const page = await browser.newPage({ viewport: { width, height: 900 }, reducedMotion: 'reduce', javaScriptEnabled: false });
       const external = [], failed = [];
       page.on('request', r => { if (!r.url().startsWith(origin)) external.push(r.url()); });

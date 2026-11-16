@@ -7,7 +7,7 @@ terminée donne lieu à un commit après un build sans erreur ni avertissement.
 ## Étape en cours : 12 — Version anglaise — 2026-11-16
 
 Branche : `etape-12-en` · Base : `etape-11-legal`.
-Statut : plan écrit, aucune tranche terminée.
+Statut : tranche 1 terminée.
 Périmètre (`docs/etapes.md` étape 12) : toutes les pages publiques en anglais sous `/en/`
 (`/en/`, `/en/guesthouse/`, `/en/the-place/`, `/en/book/`, `/en/legal/`, `/en/privacy/`,
 `/en/booking-terms/`), `hreflang`, sélecteur de langue. Traduction naturelle, mêmes informations,
@@ -19,9 +19,13 @@ reçoivent la langue), aucune route ni aucun texte en dur ; table de routes uniq
 `src/lib/routes.ts` ; la langue de la demande (`langue`) part à l’API et pilote l’e-mail à la
 cliente ; formats de dates et de montants selon la langue.
 
-- [ ] Tranche 1 — Fondations : table de routes, `hreflang`/`lang` dans `BaseLayout`, en-tête,
+- [x] Tranche 1 — Fondations : table de routes, `hreflang`/`lang` dans `BaseLayout`, en-tête,
   pied de page, interface EN complète, pages converties en vues paramétrées par la langue
   (le français ne change pas) ; tests des routes.
+  Fait : `src/lib/routes.ts`, vues `src/views/*` (une vue par page, langue en paramètre), `hreflang` et x-default dans `BaseLayout`,
+  contenus légaux déplacés dans `src/content/legal/fr/`, 5 tests de routes (501 au total). Les pages `/en/*` sont créées avec leur contenu
+  dans les tranches suivantes : en attendant, le sélecteur de langue pointe vers des pages anglaises pas encore construites.
+  Défaut des audits corrigé : une requête abandonnée par une navigation (`ERR_ABORTED`) était comptée comme panne.
 - [ ] Tranche 2 — Accueil et gîte en anglais (`en.md`, tarifs en €).
 - [ ] Tranche 3 — Le lieu en anglais.
 - [ ] Tranche 4 — Réserver en anglais : formulaire, calendrier, devis, messages d’erreur du

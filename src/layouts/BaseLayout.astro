@@ -1,14 +1,14 @@
 ---
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
-import { getInterface, type Locale, type PageKey, type AvailablePages } from '../lib/interface';
+import { getInterface } from '../lib/interface';
+import { routes, translationsOf, locales, type Locale, type PageKey } from '../lib/routes';
 import '../styles/global.css';
-interface Props {
-  locale?: Locale; title: string; description: string; currentPage?: PageKey;
-  availablePages?: AvailablePages; translations?: Partial<Record<Locale, string>>;
-}
-const { locale = 'fr', title, description, currentPage, availablePages = {}, translations = {} } = Astro.props;
+interface Props { locale?: Locale; title: string; description: string; currentPage: PageKey; availablePages?: Partial<Record<PageKey, string>>; translations?: Partial<Record<Locale, string>>; }
+const { locale = 'fr', title, description, currentPage, availablePages = routes[locale] } = Astro.props;
 const text = await getInterface(locale);
+const translations = Astro.props.translations ?? translationsOf(currentPage);
+const absolue = (chemin: string) => new URL(chemin, Astro.site).href;
 ---
 <!doctype html>
 <html lang={locale}>
@@ -18,6 +18,8 @@ const text = await getInterface(locale);
     <meta name="description" content={description} />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <title>{title}</title>
+    {locales.map(code => translations[code] && <link rel="alternate" hreflang={code} href={absolue(translations[code]!)} />)}
+    {translations.fr && <link rel="alternate" hreflang="x-default" href={absolue(translations.fr)} />}
     <slot name="head" />
   </head>
   <body>

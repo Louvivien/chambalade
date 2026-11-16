@@ -17,7 +17,8 @@ try {
     const failedRequests = [];
     page.on('request', request => { if (!request.url().startsWith(origin)) externalRequests.push(request.url()); });
     page.on('response', response => { if (response.status() >= 400) failedRequests.push(response.url()); });
-    page.on('requestfailed', request => failedRequests.push(request.url()));
+    // Une requête abandonnée par une navigation (ERR_ABORTED) n'est pas une panne ; les vraies pannes et les codes >= 400 restent comptés.
+    page.on('requestfailed', request => { if (request.failure()?.errorText !== 'net::ERR_ABORTED') failedRequests.push(request.url()); });
     assert.equal((await page.goto(origin + '/gite/', { waitUntil: 'networkidle' })).status(), 200);
     await page.evaluate(() => document.fonts.ready);
     assert.equal(await page.title(), content.title);

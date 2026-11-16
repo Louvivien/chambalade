@@ -21,13 +21,14 @@ conditions pratiques, identité légale. Les sources ci-dessous font autorité.
 | `docs/audit.md:29` | `docs/brief.md` ou `src/data/reservation.yaml`. Sinon : `TODO(amaelle)`, jamais une invention. |
 | `docs/audit.md:71` | - [ ] Liste finale des `TODO(amaelle)` restants, classés : bloquant / non bloquant. |
 | `docs/audit.md:87` | Nouveaux TODO(amaelle) : … |
-| `docs/avancement.md:17` | manque est `TODO(amaelle)` visible. Les textes décrivent ce que le site fait réellement |
-| `docs/avancement.md:44` | dans un objet ou un en-tête d’e-mail. Informations inconnues = `TODO(amaelle)` visibles. |
-| `docs/avancement.md:108` | navigateur : tout passe par l’API de l’étape 8. Informations inconnues = `TODO(amaelle)` |
-| `docs/avancement.md:113` | l’accueil, du gîte et du lieu raccordés, `.env.example`, `TODO(amaelle)`. |
-| `docs/avancement.md:197` | inventaire des `TODO(amaelle)`, rapport dans `docs/journal-audit.md`, PR. |
-| `docs/avancement.md:214` | Principe sur les inconnues : toute valeur `TODO(amaelle)` reste `null` dans le YAML. La |
-| `docs/avancement.md:243` | des `TODO(amaelle)`, rapport dans `docs/journal-audit.md`, PR. |
+| `docs/avancement.md:14` | prix en €. `/admin/` reste en français (usage d’Amaëlle seule). Les `TODO(amaelle)` sont repris |
+| `docs/avancement.md:44` | manque est `TODO(amaelle)` visible. Les textes décrivent ce que le site fait réellement |
+| `docs/avancement.md:74` | dans un objet ou un en-tête d’e-mail. Informations inconnues = `TODO(amaelle)` visibles. |
+| `docs/avancement.md:138` | navigateur : tout passe par l’API de l’étape 8. Informations inconnues = `TODO(amaelle)` |
+| `docs/avancement.md:143` | l’accueil, du gîte et du lieu raccordés, `.env.example`, `TODO(amaelle)`. |
+| `docs/avancement.md:227` | inventaire des `TODO(amaelle)`, rapport dans `docs/journal-audit.md`, PR. |
+| `docs/avancement.md:244` | Principe sur les inconnues : toute valeur `TODO(amaelle)` reste `null` dans le YAML. La |
+| `docs/avancement.md:273` | des `TODO(amaelle)`, rapport dans `docs/journal-audit.md`, PR. |
 | `docs/brief.md:5` | pas définitifs : les mettre en ligne avec un `TODO(amaelle)`. |
 | `docs/brief.md:22` | - Téléphone : TODO(amaelle). E-mail de contact : TODO(amaelle). |
 | `docs/brief.md:53` | TODO(amaelle) (environ 1 h, à vérifier). |
@@ -38,23 +39,26 @@ conditions pratiques, identité légale. Les sources ci-dessous font autorité.
 | `docs/etapes.md:31` | > restent visibles avec TODO(amaelle) et sont listées dans docs/todo-contenus.md. |
 | `docs/etapes.md:38` | > avec les TODO(amaelle)), les migrations D1, et une bibliothèque pure (sans accès réseau) qui |
 | `docs/initialisation.md:50` | des routes de contrôle séparées via `npm run dev:audit`. Aucun nouveau `TODO(amaelle)` à cette étape ; les |
-| `docs/journal-audit.md:28` | et inventaire des `TODO(amaelle)` à jour · secrets : aucune valeur réelle. |
-| `docs/journal-audit.md:82` | Nouveaux TODO(amaelle) : valider les textes de l’administration ; relire le ton des e-mails |
-| `docs/journal-audit.md:111` | 0 indication · liens : 181 références internes, 0 cassée · inventaire des `TODO(amaelle)` à jour · |
-| `docs/journal-audit.md:176` | Nouveaux TODO(amaelle) : valider les textes de la page ; confirmer la réponse sous 48 h et le |
-| `docs/journal-audit.md:204` | 0 cassée · inventaire des `TODO(amaelle)` à jour (95 lignes) · configuration des fonctions |
-| `docs/journal-audit.md:251` | Nouveaux TODO(amaelle) : aucun. À vérifier par Vivien : les décisions ci-dessus, en particulier |
-| `docs/journal-audit.md:260` | blocage (48 h, 7 jours), règles de devis. Toute valeur `TODO(amaelle)` reste `null`. |
-| `docs/journal-audit.md:273` | 0 cassée · inventaire des `TODO(amaelle)` à jour (92 lignes) · secrets : aucune valeur réelle · |
-| `docs/journal-audit.md:302` | Nouveaux TODO(amaelle) : aucun nouveau sujet ; les unités et règles inconnues sont |
-| `docs/journal-audit.md:328` | inventaire des `TODO(amaelle)` à jour (75 lignes) · secrets : aucune valeur réelle |
-| `docs/journal-audit.md:350` | Nouveaux TODO(amaelle) (6, déjà dans `docs/todo-contenus.md`) : validation des textes ; |
-| `docs/journal-audit.md:394` | Nouveaux TODO(amaelle) : aucun point métier ajouté. |
-| `docs/journal-audit.md:472` | Nouveaux TODO(amaelle) : validation des dix lignes tarifaires, bases de calcul des |
-| `docs/journal-audit.md:545` | Nouveaux TODO(amaelle) : quatre notes dans le contenu — validation des textes, |
-| `docs/journal-audit.md:617` | Nouveaux TODO(amaelle) : marqueurs FR/EN de contact et logo dans |
-| `docs/journal-audit.md:654` | Nouveaux TODO(amaelle) : aucun ; inventaire des points existants créé. |
-| `docs/journal-audit.md:687` | Nouveaux TODO(amaelle) : aucun ; les inconnues métier restent dans les sources. |
+| `docs/journal-audit.md:26` | étape 9) · liens : 234 références internes, 0 cassée · inventaire des `TODO(amaelle)` à jour (142 lignes) · |
+| `docs/journal-audit.md:36` | durée de conservation sont donc à faire à la main dans la base ; le texte le dit en `TODO(amaelle)`. À traiter avant |
+| `docs/journal-audit.md:41` | Nouveaux TODO(amaelle) : exploitante, statut, SIRET, responsable de publication, adresse de l’hébergeur, médiateur, crédits photo, |
+| `docs/journal-audit.md:73` | et inventaire des `TODO(amaelle)` à jour · secrets : aucune valeur réelle. |
+| `docs/journal-audit.md:127` | Nouveaux TODO(amaelle) : valider les textes de l’administration ; relire le ton des e-mails |
+| `docs/journal-audit.md:156` | 0 indication · liens : 181 références internes, 0 cassée · inventaire des `TODO(amaelle)` à jour · |
+| `docs/journal-audit.md:221` | Nouveaux TODO(amaelle) : valider les textes de la page ; confirmer la réponse sous 48 h et le |
+| `docs/journal-audit.md:249` | 0 cassée · inventaire des `TODO(amaelle)` à jour (95 lignes) · configuration des fonctions |
+| `docs/journal-audit.md:296` | Nouveaux TODO(amaelle) : aucun. À vérifier par Vivien : les décisions ci-dessus, en particulier |
+| `docs/journal-audit.md:305` | blocage (48 h, 7 jours), règles de devis. Toute valeur `TODO(amaelle)` reste `null`. |
+| `docs/journal-audit.md:318` | 0 cassée · inventaire des `TODO(amaelle)` à jour (92 lignes) · secrets : aucune valeur réelle · |
+| `docs/journal-audit.md:347` | Nouveaux TODO(amaelle) : aucun nouveau sujet ; les unités et règles inconnues sont |
+| `docs/journal-audit.md:373` | inventaire des `TODO(amaelle)` à jour (75 lignes) · secrets : aucune valeur réelle |
+| `docs/journal-audit.md:395` | Nouveaux TODO(amaelle) (6, déjà dans `docs/todo-contenus.md`) : validation des textes ; |
+| `docs/journal-audit.md:439` | Nouveaux TODO(amaelle) : aucun point métier ajouté. |
+| `docs/journal-audit.md:517` | Nouveaux TODO(amaelle) : validation des dix lignes tarifaires, bases de calcul des |
+| `docs/journal-audit.md:590` | Nouveaux TODO(amaelle) : quatre notes dans le contenu — validation des textes, |
+| `docs/journal-audit.md:662` | Nouveaux TODO(amaelle) : marqueurs FR/EN de contact et logo dans |
+| `docs/journal-audit.md:699` | Nouveaux TODO(amaelle) : aucun ; inventaire des points existants créé. |
+| `docs/journal-audit.md:732` | Nouveaux TODO(amaelle) : aucun ; les inconnues métier restent dans les sources. |
 | `docs/photos.md:22` | \| cascade de Roybon.HEIC \| cascade-roybon.jpg \| Le lieu, les alentours \| Distance et accès à cheval : TODO(amaelle) \| Cascade de Roybon dans un sous-bois \| À utiliser \| |
 | `docs/reservation.md:4` | étapes 7 à 10). Les valeurs marquées `TODO(amaelle)` sont des paramètres à obtenir : le code doit |
 | `docs/reservation.md:33` | Cloudflare. Expéditeur : adresse sur le domaine chambalade.fr, TODO(amaelle). |
@@ -100,24 +104,24 @@ conditions pratiques, identité légale. Les sources ci-dessous font autorité.
 | `src/content/interface/en.md:10` | logoPending: 'TODO(amaelle): provide a transparent logo; temporary typographic name.' |
 | `src/content/interface/fr.md:9` | contactPending: 'TODO(amaelle): fournir le téléphone et l’adresse e-mail de contact.' |
 | `src/content/interface/fr.md:10` | logoPending: 'TODO(amaelle): fournir le logo transparent ; nom typographique provisoire.' |
-| `src/content/legal/conditions.md:20` | - 'TODO(amaelle): montant ou pourcentage de l’acompte, et coordonnées bancaires communiquées avec l’e-mail d’acceptation.' |
-| `src/content/legal/conditions.md:26` | - 'TODO(amaelle): préciser si la taxe de séjour s’ajoute aux tarifs, son montant et ses exemptions.' |
-| `src/content/legal/conditions.md:27` | - 'TODO(amaelle): préciser le solde à régler, la date et le moyen de paiement.' |
-| `src/content/legal/conditions.md:31` | - 'TODO(amaelle): horaires d’arrivée et de départ.' |
-| `src/content/legal/conditions.md:32` | - 'TODO(amaelle): linge fourni ou non, animaux de compagnie admis ou non, nombre d’enfants et âge minimal.' |
-| `src/content/legal/conditions.md:37` | - 'TODO(amaelle): documents à présenter à l’arrivée, responsabilité et assurance du cavalier pour son cheval, règles de vie au paddock.' |
-| `src/content/legal/conditions.md:41` | - 'TODO(amaelle): conditions d’annulation et de modification par la cliente, sort de l’acompte, et annulation par Chambalade (par exemple en cas d’imprévu).' |
-| `src/content/legal/conditions.md:42` | - 'TODO(amaelle): faire valider par un professionnel la mention sur le droit de rétractation, qui ne s’applique en principe pas à un hébergement à date déterminée.' |
-| `src/content/legal/confidentialite.md:15` | - 'TODO(amaelle): adresse e-mail à laquelle exercer vos droits.' |
-| `src/content/legal/confidentialite.md:33` | - 'TODO(amaelle): faire valider la base légale. Proposition : les mesures précontractuelles prises à votre demande, complétées par la case que vous cochez avant d’envoyer le formulaire.' |
-| `src/content/legal/confidentialite.md:37` | - 'TODO(amaelle): confirmer la durée de conservation. Proposition de docs/reservation.md : suppression ou anonymisation des demandes 3 ans après le séjour, ou 3 ans après la demande si elle n’a pas abouti.' |
-| `src/content/legal/confidentialite.md:38` | - 'TODO(amaelle): le site ne supprime pas encore les demandes automatiquement. Prévoir la procédure (suppression à la demande, purge périodique) avant l’ouverture.' |
-| `src/content/legal/confidentialite.md:45` | - 'un service d’envoi d’e-mails (Resend, choix provisoire), pour vous écrire et pour prévenir Amaëlle. TODO(amaelle): confirmer le prestataire retenu.' |
-| `src/content/legal/confidentialite.md:47` | - 'TODO(amaelle): vérifier si ces prestataires traitent des données hors de l’Union européenne et indiquer les garanties applicables.' |
-| `src/content/legal/confidentialite.md:56` | - 'La fréquentation sera mesurée avec Cloudflare Web Analytics, qui ne dépose pas de cookie et n’identifie pas les visiteurs. TODO(amaelle): ce service n’est pas encore activé ; confirmer ce paragraphe à l’activation, ainsi que l’absence de cookie de la vérification anti-robot.' |
-| `src/content/legal/mentions.md:26` | - 'TODO(amaelle): adresse complète de l’hébergeur, à reprendre de son site avant publication.' |
-| `src/content/legal/mentions.md:31` | - 'TODO(amaelle): confirmer l’origine des photographies et indiquer les crédits photographiques à afficher.' |
-| `src/content/legal/mentions.md:44` | - 'TODO(amaelle): indiquer le médiateur de la consommation auquel vous pouvez recourir en cas de litige, avec ses coordonnées.' |
+| `src/content/legal/fr/conditions.md:20` | - 'TODO(amaelle): montant ou pourcentage de l’acompte, et coordonnées bancaires communiquées avec l’e-mail d’acceptation.' |
+| `src/content/legal/fr/conditions.md:26` | - 'TODO(amaelle): préciser si la taxe de séjour s’ajoute aux tarifs, son montant et ses exemptions.' |
+| `src/content/legal/fr/conditions.md:27` | - 'TODO(amaelle): préciser le solde à régler, la date et le moyen de paiement.' |
+| `src/content/legal/fr/conditions.md:31` | - 'TODO(amaelle): horaires d’arrivée et de départ.' |
+| `src/content/legal/fr/conditions.md:32` | - 'TODO(amaelle): linge fourni ou non, animaux de compagnie admis ou non, nombre d’enfants et âge minimal.' |
+| `src/content/legal/fr/conditions.md:37` | - 'TODO(amaelle): documents à présenter à l’arrivée, responsabilité et assurance du cavalier pour son cheval, règles de vie au paddock.' |
+| `src/content/legal/fr/conditions.md:41` | - 'TODO(amaelle): conditions d’annulation et de modification par la cliente, sort de l’acompte, et annulation par Chambalade (par exemple en cas d’imprévu).' |
+| `src/content/legal/fr/conditions.md:42` | - 'TODO(amaelle): faire valider par un professionnel la mention sur le droit de rétractation, qui ne s’applique en principe pas à un hébergement à date déterminée.' |
+| `src/content/legal/fr/confidentialite.md:15` | - 'TODO(amaelle): adresse e-mail à laquelle exercer vos droits.' |
+| `src/content/legal/fr/confidentialite.md:33` | - 'TODO(amaelle): faire valider la base légale. Proposition : les mesures précontractuelles prises à votre demande, complétées par la case que vous cochez avant d’envoyer le formulaire.' |
+| `src/content/legal/fr/confidentialite.md:37` | - 'TODO(amaelle): confirmer la durée de conservation. Proposition de docs/reservation.md : suppression ou anonymisation des demandes 3 ans après le séjour, ou 3 ans après la demande si elle n’a pas abouti.' |
+| `src/content/legal/fr/confidentialite.md:38` | - 'TODO(amaelle): le site ne supprime pas encore les demandes automatiquement. Prévoir la procédure (suppression à la demande, purge périodique) avant l’ouverture.' |
+| `src/content/legal/fr/confidentialite.md:45` | - 'un service d’envoi d’e-mails (Resend, choix provisoire), pour vous écrire et pour prévenir Amaëlle. TODO(amaelle): confirmer le prestataire retenu.' |
+| `src/content/legal/fr/confidentialite.md:47` | - 'TODO(amaelle): vérifier si ces prestataires traitent des données hors de l’Union européenne et indiquer les garanties applicables.' |
+| `src/content/legal/fr/confidentialite.md:56` | - 'La fréquentation sera mesurée avec Cloudflare Web Analytics, qui ne dépose pas de cookie et n’identifie pas les visiteurs. TODO(amaelle): ce service n’est pas encore activé ; confirmer ce paragraphe à l’activation, ainsi que l’absence de cookie de la vérification anti-robot.' |
+| `src/content/legal/fr/mentions.md:26` | - 'TODO(amaelle): adresse complète de l’hébergeur, à reprendre de son site avant publication.' |
+| `src/content/legal/fr/mentions.md:31` | - 'TODO(amaelle): confirmer l’origine des photographies et indiquer les crédits photographiques à afficher.' |
+| `src/content/legal/fr/mentions.md:44` | - 'TODO(amaelle): indiquer le médiateur de la consommation auquel vous pouvez recourir en cas de litige, avec ses coordonnées.' |
 | `src/content/lieu/fr.md:96` | <!-- TODO(amaelle): valider les textes proposés de la page Le lieu. --> |
 | `src/content/lieu/fr.md:97` | <!-- TODO(amaelle): préciser les conditions d’utilisation de la carrière et du PTV, et les conditions d’accueil dans les paddocks. --> |
 | `src/content/lieu/fr.md:98` | <!-- TODO(amaelle): fournir les portraits de Quinoa, Guiness et Saphir et les présentations des chevaux ; aucune race, personnalité ou prestation montée n’est inventée. --> |

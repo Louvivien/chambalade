@@ -3,13 +3,14 @@ import { Picture } from 'astro:assets';
 import type { CollectionEntry } from 'astro:content';
 import { z } from 'astro/zod';
 import { parse } from 'yaml';
+import { route, type Locale } from '../lib/routes';
 import rawLieu from '../data/lieu.yaml?raw';
 
-interface Props { content: CollectionEntry<'lieu'>['data']['aerial']; }
-const { content } = Astro.props;
+interface Props { content: CollectionEntry<'lieu'>['data']['aerial']; locale: Locale; }
+const { content, locale } = Astro.props;
 const point = z.object({ x: z.number().min(0).max(100), y: z.number().min(0).max(100) });
 const { markers } = z.object({ markers: z.object({ gite: point, carriere: point, pres: point }) }).parse(parse(rawLieu));
-const destinations = { gite: '/gite/', carriere: '#carriere', pres: '#paddocks' };
+const destinations = { gite: route(locale, 'gite'), carriere: '#carriere', pres: '#paddocks' };
 const ids = ['gite', 'carriere', 'pres'] as const;
 ---
 <figure>

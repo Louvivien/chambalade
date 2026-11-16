@@ -3,7 +3,7 @@ import { describe, expect, it } from 'vitest';
 import { parse } from 'yaml';
 import { estAConfirmer, garnir, segments } from '../../src/lib/legal';
 
-const dossier = new URL('../../src/content/legal/', import.meta.url);
+const dossier = new URL('../../src/content/legal/fr/', import.meta.url);
 const pages = Object.fromEntries(readdirSync(dossier).map(f => [f.replace('.md', ''), parse(readFileSync(new URL(f, dossier), 'utf8').split('---')[1])]));
 const toutesLesChaines = (page: any): string[] => [page.title, page.description, page.hero.title, page.hero.text, page.draft.text,
   ...page.sections.flatMap((s: any) => [s.title, ...s.paragraphs, ...(s.items ?? []), ...(s.after ?? [])])];
