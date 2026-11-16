@@ -7,23 +7,25 @@ terminée donne lieu à un commit après un build sans erreur ni avertissement.
 ## Étape en cours : 6 — Le lieu (FR) — 2026-11-16
 
 Branche : `etape-6-lieu` · Base : `etape-5-gite` (PR #4).
-Statut : plan committé dans `f340f60` ; tranche 1 terminée.
+Statut : tranches 1 et 2 terminées ; tranche 3 à faire.
 Une PR dédiée sera créée en fin d’étape.
 
 - [x] Tranche 1 (15–30 min) — Contenus et repères : textes Markdown à partir du
   brief et du tableau des photos, données des repères de la vue aérienne,
   informations inconnues identifiées. Fait : collection typée, six notes de
   validation, positions confirmées en YAML. Suite : page et navigation.
-- [ ] Tranche 2 (15–30 min) — Page et intégration : vue aérienne accessible,
+- [x] Tranche 2 (15–30 min) — Page et intégration : vue aérienne accessible,
   équipements, chevaux, alentours et accès, photos optimisées, navigation des
-  trois pages vers `/le-lieu/`, vérification des liens. Statut : à faire.
+  trois pages vers `/le-lieu/`, vérification des liens. Fait : page `/le-lieu/`, composant
+  `VueDuCiel`, liens depuis l’accueil et le gîte ; build sans avertissement, 0 diagnostic
+  Astro, 17 tests, 170 références internes sans lien cassé. Suite : tranche 3.
 - [ ] Tranche 3 (15–30 min) — Audit et livraison : contrôles automatiques, clavier,
   rendus 375/768/1280, Lighthouse des pages touchées, inventaire, rapport et PR.
   Statut : à faire.
 
-Dernière action : contenus et repères préparés ; build et vérification Astro
-réussis pour la tranche 1. Les deux pages existantes restent les seules routes.
-Prochaine action : tranche 2, construire `/le-lieu/` et raccorder la navigation.
+Dernière action : tranche 2 terminée (page Le lieu, repères, navigation).
+Prochaine action : tranche 3, audit et livraison (clavier, rendus 375/768/1280,
+Lighthouse, inventaire, rapport dans `docs/journal-audit.md`, PR).
 
 Repères confirmés par Vivien : gîte sur le grand bâtiment central, carrière sur
 le rectangle clair à droite, prés au premier plan. Distances, accès en van/camion

@@ -14,7 +14,7 @@ for (const id of priceIds) {
     throw new Error(`Mention de validation manquante pour le tarif ${id}`);
   }
 }
-const availablePages = { home: '/', gite: '/gite/', lieu: '/#le-lieu', reserver: '/#sejour' };
+const availablePages = { home: '/', gite: '/gite/', lieu: '/le-lieu/', reserver: '/#sejour' };
 ---
 <BaseLayout locale="fr" title={text.title} description={text.description} currentPage="gite" {availablePages}>
   <section class="hero" aria-labelledby="gite-titre">
