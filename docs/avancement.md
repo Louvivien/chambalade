@@ -7,7 +7,7 @@ terminée donne lieu à un commit après un build sans erreur ni avertissement.
 ## Étape en cours : 8 — Réservation : API — 2026-11-16
 
 Branche : `etape-8-api` · Base : `etape-7-reservation` (déjà fusionnée dans `etape-6-lieu`, PR #5).
-Statut : tranches 1 et 2 terminées ; tranche 3 à faire. Une PR dédiée en fin d’étape, sans fusion.
+Statut : tranches 1 à 3 terminées ; tranche 4 à faire. Une PR dédiée en fin d’étape, sans fusion.
 Périmètre (`docs/etapes.md`, étape 8) : Pages Functions de l’API (disponibilités, devis,
 création de demande avec transaction, Turnstile et limitation par IP, actions
 d’administration) et wrangler avec un D1 local et des données de démonstration. Pas
@@ -31,9 +31,13 @@ compatible D1, pour exercer le SQL réel. Aucun secret dans le dépôt ; la prot
   Fait : `src/lib/api/{schemas,instantane,runtime,disponibilites,devis}.ts`, adaptateurs
   `functions/api/{disponibilites,devis}.ts`, 23 tests (144 au total). Les champs inconnus sont
   ignorés (montant du navigateur sans effet). Suite : création de demande.
-- [ ] Tranche 3 (15–30 min) — Création de demande : validation stricte, Turnstile,
+- [x] Tranche 3 (15–30 min) — Création de demande : validation stricte, Turnstile,
   limitation par IP, expiration à la lecture, insertion gardée dans un seul `batch`,
   référence `CHB-AAAA-NNNN` ; tests de concurrence sur du SQL réel.
+  Fait : `turnstile.ts`, `limites.ts`, `expiration.ts`, `creation.ts`, `functions/api/demandes.ts` ;
+  insertion gardée en un seul `batch` (lignes passées en JSON pour rester sous les 100 paramètres
+  de D1, `changes()` pour n’écrire que si la demande a été insérée) ; 30 tests (174 au total).
+  À confirmer sur wrangler local (tranche 5) : `changes()` et `json_each` dans un batch D1.
 - [ ] Tranche 4 (15–30 min) — Administration : vérification du jeton Cloudflare Access,
   liste et fiche des demandes, actions (accepter, refuser, confirmer, annuler, prolonger),
   calendrier, blocages ; journal ; tests.

@@ -17,7 +17,9 @@ export function creerBase(): D1Like & { sqlite: DatabaseSync } {
     bind: (...v) => statement(sql, v),
     executer() {
       const requete = sqlite.prepare(sql);
-      if (/^\s*(select|with|pragma)/i.test(sql) || /\breturning\b/i.test(sql)) {
+      // Une requête qui renvoie des colonnes (SELECT, RETURNING) se lit ; sinon elle écrit. Le mot de tête
+      // ne suffit pas : « WITH … INSERT » commence comme un SELECT.
+      if (requete.columns().length > 0) {
         return { results: requete.all(...normaliser(valeurs)), success: true, meta: { changes: 0, last_row_id: 0 } };
       }
       const r = requete.run(...normaliser(valeurs));
