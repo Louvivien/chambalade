@@ -36,7 +36,9 @@ cliente ; formats de dates et de montants selon la langue.
   Fait : `reserver/en.md`, `/en/book/`, formats de dates et de montants par langue (`fixerLangue`), messages d’erreur de l’API traduits
   par code (`src/lib/reserver/messages.ts` ; un code inconnu n’affiche jamais de français), langue de la demande envoyée à l’API
   (donc e-mails en anglais), langue du widget anti-robot. `AUDIT_LANG=en npm run audit:reserver` : parcours complet réussi en anglais.
-- [ ] Tranche 5 — Pages légales en anglais.
+- [x] Tranche 5 — Pages légales en anglais.
+  Fait : `legal/en/*.md`, `/en/legal/`, `/en/privacy/`, `/en/booking-terms/` ; mêmes ancres qu’en français, bandeau « Draft awaiting validation » piloté
+  par le même interrupteur `valide` ; textes signalés comme traduits pour information (la version française fait foi).
 - [ ] Tranche 6 — Audit : hreflang réciproques, parité FR/EN des contenus (tests), navigateur,
   Lighthouse, rapport, `docs/rapports/etape-12.json`.
 

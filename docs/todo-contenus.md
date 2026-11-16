@@ -22,13 +22,13 @@ conditions pratiques, identité légale. Les sources ci-dessous font autorité.
 | `docs/audit.md:71` | - [ ] Liste finale des `TODO(amaelle)` restants, classés : bloquant / non bloquant. |
 | `docs/audit.md:87` | Nouveaux TODO(amaelle) : … |
 | `docs/avancement.md:14` | prix en €. `/admin/` reste en français (usage d’Amaëlle seule). Les `TODO(amaelle)` sont repris |
-| `docs/avancement.md:51` | manque est `TODO(amaelle)` visible. Les textes décrivent ce que le site fait réellement |
-| `docs/avancement.md:81` | dans un objet ou un en-tête d’e-mail. Informations inconnues = `TODO(amaelle)` visibles. |
-| `docs/avancement.md:145` | navigateur : tout passe par l’API de l’étape 8. Informations inconnues = `TODO(amaelle)` |
-| `docs/avancement.md:150` | l’accueil, du gîte et du lieu raccordés, `.env.example`, `TODO(amaelle)`. |
-| `docs/avancement.md:234` | inventaire des `TODO(amaelle)`, rapport dans `docs/journal-audit.md`, PR. |
-| `docs/avancement.md:251` | Principe sur les inconnues : toute valeur `TODO(amaelle)` reste `null` dans le YAML. La |
-| `docs/avancement.md:280` | des `TODO(amaelle)`, rapport dans `docs/journal-audit.md`, PR. |
+| `docs/avancement.md:54` | manque est `TODO(amaelle)` visible. Les textes décrivent ce que le site fait réellement |
+| `docs/avancement.md:84` | dans un objet ou un en-tête d’e-mail. Informations inconnues = `TODO(amaelle)` visibles. |
+| `docs/avancement.md:148` | navigateur : tout passe par l’API de l’étape 8. Informations inconnues = `TODO(amaelle)` |
+| `docs/avancement.md:153` | l’accueil, du gîte et du lieu raccordés, `.env.example`, `TODO(amaelle)`. |
+| `docs/avancement.md:237` | inventaire des `TODO(amaelle)`, rapport dans `docs/journal-audit.md`, PR. |
+| `docs/avancement.md:254` | Principe sur les inconnues : toute valeur `TODO(amaelle)` reste `null` dans le YAML. La |
+| `docs/avancement.md:283` | des `TODO(amaelle)`, rapport dans `docs/journal-audit.md`, PR. |
 | `docs/brief.md:5` | pas définitifs : les mettre en ligne avec un `TODO(amaelle)`. |
 | `docs/brief.md:22` | - Téléphone : TODO(amaelle). E-mail de contact : TODO(amaelle). |
 | `docs/brief.md:53` | TODO(amaelle) (environ 1 h, à vérifier). |
@@ -126,6 +126,24 @@ conditions pratiques, identité légale. Les sources ci-dessous font autorité.
 | `src/content/interface/en.md:10` | logoPending: 'TODO(amaelle): provide a transparent logo; temporary typographic name.' |
 | `src/content/interface/fr.md:9` | contactPending: 'TODO(amaelle): fournir le téléphone et l’adresse e-mail de contact.' |
 | `src/content/interface/fr.md:10` | logoPending: 'TODO(amaelle): fournir le logo transparent ; nom typographique provisoire.' |
+| `src/content/legal/en/conditions.md:20` | - 'TODO(amaelle): deposit amount or percentage, and the bank details given with the acceptance email.' |
+| `src/content/legal/en/conditions.md:26` | - 'TODO(amaelle): specify whether the tourist tax is added to the rates, its amount and exemptions.' |
+| `src/content/legal/en/conditions.md:27` | - 'TODO(amaelle): specify the balance to pay, the date and the payment method.' |
+| `src/content/legal/en/conditions.md:31` | - 'TODO(amaelle): arrival and departure times.' |
+| `src/content/legal/en/conditions.md:32` | - 'TODO(amaelle): whether linen is provided, whether pets are allowed, the number of children and minimum age.' |
+| `src/content/legal/en/conditions.md:37` | - 'TODO(amaelle): documents to show on arrival, the rider’s liability and insurance for their horse, paddock rules.' |
+| `src/content/legal/en/conditions.md:41` | - 'TODO(amaelle): conditions for changes and cancellation by the guest, what happens to the deposit, and cancellation by Chambalade (for example in case of an unforeseen event).' |
+| `src/content/legal/en/conditions.md:42` | - 'TODO(amaelle): have a professional validate the statement on the right of withdrawal, which in principle does not apply to accommodation for a specific date.' |
+| `src/content/legal/en/confidentialite.md:15` | - 'TODO(amaelle): email address for exercising your rights.' |
+| `src/content/legal/en/confidentialite.md:33` | - 'TODO(amaelle): have the legal basis validated. Proposal: pre-contractual steps taken at your request, together with the box you tick before sending the form.' |
+| `src/content/legal/en/confidentialite.md:37` | - 'TODO(amaelle): confirm the retention period. Proposal from docs/reservation.md: deletion or anonymisation of requests 3 years after the stay, or 3 years after the request if it did not go through.' |
+| `src/content/legal/en/confidentialite.md:38` | - 'TODO(amaelle): the website does not yet delete requests automatically. Plan the procedure (deletion on request, periodic purge) before opening.' |
+| `src/content/legal/en/confidentialite.md:45` | - 'an email-sending service (Resend, provisional choice), to write to you and to notify Amaëlle. TODO(amaelle): confirm the provider chosen.' |
+| `src/content/legal/en/confidentialite.md:47` | - 'TODO(amaelle): check whether these providers process data outside the European Union and state the safeguards that apply.' |
+| `src/content/legal/en/confidentialite.md:56` | - 'Visits will be measured with Cloudflare Web Analytics, which sets no cookie and does not identify visitors. TODO(amaelle): this service is not yet active; confirm this paragraph when it is switched on, as well as the absence of a cookie from the anti-robot check.' |
+| `src/content/legal/en/mentions.md:26` | - 'TODO(amaelle): full address of the host, to be taken from its website before publication.' |
+| `src/content/legal/en/mentions.md:31` | - 'TODO(amaelle): confirm where the photographs come from and state the photo credits to display.' |
+| `src/content/legal/en/mentions.md:44` | - 'TODO(amaelle): state the consumer mediator you can turn to in case of a dispute, with their contact details.' |
 | `src/content/legal/fr/conditions.md:20` | - 'TODO(amaelle): montant ou pourcentage de l’acompte, et coordonnées bancaires communiquées avec l’e-mail d’acceptation.' |
 | `src/content/legal/fr/conditions.md:26` | - 'TODO(amaelle): préciser si la taxe de séjour s’ajoute aux tarifs, son montant et ses exemptions.' |
 | `src/content/legal/fr/conditions.md:27` | - 'TODO(amaelle): préciser le solde à régler, la date et le moyen de paiement.' |
@@ -191,5 +209,5 @@ conditions pratiques, identité légale. Les sources ci-dessous font autorité.
 | `src/data/reservation.yaml:92` | unit: null # TODO(amaelle): définir le contenu exact ; forfait exclu du futur devis tant qu’il reste indéfini. |
 | `src/data/reservation.yaml:95` | amount_cents: null # TODO(amaelle): montant par adulte et par nuit ; ne pas assimiler une valeur absente à zéro. |
 | `src/lib/legal.ts:28` | export const estAConfirmer = (texte: string) => texte.includes('TODO(amaelle)'); |
-| `tests/legal/legal.test.ts:34` | it('repère les points à confirmer', () => { expect(estAConfirmer('TODO(amaelle): x')).toBe(true); expect(estAConfirmer('ok')).toBe(false); }); |
-| `tests/legal/legal.test.ts:51` | const sansMarqueur = t.replaceAll('TODO(amaelle):', '').replace(/https:\/\/\S+/g, '').replace(/\]\(\/[^)]*\)/g, ']'); |
+| `tests/legal/legal.test.ts:35` | it('repère les points à confirmer', () => { expect(estAConfirmer('TODO(amaelle): x')).toBe(true); expect(estAConfirmer('ok')).toBe(false); }); |
+| `tests/legal/legal.test.ts:52` | const sansMarqueur = t.replaceAll('TODO(amaelle):', '').replace(/https:\/\/\S+/g, '').replace(/\]\(\/[^)]*\)/g, ']'); |

@@ -3,8 +3,9 @@ import { describe, expect, it } from 'vitest';
 import { parse } from 'yaml';
 import { estAConfirmer, garnir, segments } from '../../src/lib/legal';
 
-const dossier = new URL('../../src/content/legal/fr/', import.meta.url);
-const pages = Object.fromEntries(readdirSync(dossier).map(f => [f.replace('.md', ''), parse(readFileSync(new URL(f, dossier), 'utf8').split('---')[1])]));
+const charger = (langue: string) => { const dossier = new URL(`../../src/content/legal/${langue}/`, import.meta.url); return Object.fromEntries(readdirSync(dossier).map(f => [f.replace('.md', ''), parse(readFileSync(new URL(f, dossier), 'utf8').split('---')[1])])); };
+const pages = charger('fr');
+const pagesEn = charger('en');
 const toutesLesChaines = (page: any): string[] => [page.title, page.description, page.hero.title, page.hero.text, page.draft.text,
   ...page.sections.flatMap((s: any) => [s.title, ...s.paragraphs, ...(s.items ?? []), ...(s.after ?? [])])];
 
@@ -70,4 +71,26 @@ describe('contenus légaux', () => {
 it('tant que les textes ne sont pas validés, `valide` reste false (bandeau et noindex)', () => {
   const legal = parse(readFileSync(new URL('../../src/data/legal.yaml', import.meta.url), 'utf8'));
   expect(legal.valide).toBe(false);
+});
+
+describe('contenus légaux anglais', () => {
+  it('existent pour les trois pages', () => { expect(Object.keys(pagesEn).sort()).toEqual(['conditions', 'confidentialite', 'mentions']); });
+  it.each(Object.entries(pagesEn))('%s : bandeau « draft awaiting validation », jetons et liens valides, apostrophes typographiques', (_nom, page: any) => {
+    expect(page.draft.title.toLowerCase()).toContain('awaiting validation');
+    const autorises = /^\/en\/(privacy\/|legal\/(#mediation)?|booking-terms\/|book\/|guesthouse\/#tarifs)$/;
+    for (const t of toutesLesChaines(page)) {
+      garnir(t, { heures: '48', jours: '7', hebergeur: 'X' });
+      for (const s of segments(t)) if (s.type === 'link' && s.href.startsWith('/')) expect(s.href).toMatch(autorises);
+      expect(t.replace(/TODO\(amaelle\):/g, '')).not.toMatch(/\w'\w/);
+    }
+  });
+  it('mêmes identifiants de section qu’en français (les ancres sont communes)', () => {
+    for (const nom of Object.keys(pages)) expect(pagesEn[nom].sections.map((s: any) => s.id)).toEqual(pages[nom].sections.map((s: any) => s.id));
+  });
+  it('aucune coordonnée, SIRET ni nombre inventé', () => {
+    for (const page of Object.values(pagesEn) as any[]) for (const t of toutesLesChaines(page)) {
+      expect(t).not.toMatch(/\b\d{14}\b|\b\d{9}\b/);
+      expect(t).not.toMatch(/@[a-z0-9-]+\.[a-z]{2,}|\b0\d(?:[ .]?\d{2}){4}\b/i);
+    }
+  });
 });
