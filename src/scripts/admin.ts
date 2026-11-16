@@ -30,7 +30,7 @@ async function afficher(premiere = false) {
   const numero = ++courante;
   const v = lireVue(window.location.hash);
   bandeau.hidden = true;
-  for (const nom of ['demandes', 'fiche', 'calendrier', 'blocages']) trouver(`vue-${nom}`).hidden = nom !== v.vue;
+  for (const nom of ['demandes', 'fiche', 'calendrier', 'blocages']) trouver(nom).hidden = nom !== v.vue;
   for (const lien of document.querySelectorAll<HTMLAnchorElement>('[data-onglet]')) {
     if (lien.dataset.onglet === ongletDe(v)) lien.setAttribute('aria-current', 'page'); else lien.removeAttribute('aria-current');
   }

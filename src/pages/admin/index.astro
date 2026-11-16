@@ -32,7 +32,7 @@ const vues = ['demandes', 'fiche', 'calendrier', 'blocages'] as const;
       <button type="button" class="bouton-lien" id="admin-reessayer">{text.common.retry}</button>
     </div>
     <p id="admin-annonce" class="visuellement-cache" role="status"></p>
-    {vues.map(vue => <section id={`vue-${vue}`} class="admin-vue" hidden aria-labelledby={`titre-${vue}`}>
+    {vues.map(vue => <section id={vue} class="admin-vue" hidden aria-labelledby={`titre-${vue}`}>
       <h1 id={`titre-${vue}`} tabindex="-1">{vue === 'fiche' ? text.demandes.title : text[vue === 'demandes' ? 'demandes' : vue === 'calendrier' ? 'calendrier' : 'blocages'].title}</h1>
       <div class="admin-vue-contenu" id={`contenu-${vue}`}><p>{text.common.loading}</p></div>
     </section>)}
