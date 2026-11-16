@@ -1,0 +1,29 @@
+---
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import { getInterface, type Locale, type PageKey, type AvailablePages } from '../lib/interface';
+import '../styles/global.css';
+interface Props {
+  locale?: Locale; title: string; description: string; currentPage?: PageKey;
+  availablePages?: AvailablePages; translations?: Partial<Record<Locale, string>>;
+}
+const { locale = 'fr', title, description, currentPage, availablePages = {}, translations = {} } = Astro.props;
+const text = await getInterface(locale);
+---
+<!doctype html>
+<html lang={locale}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content={description} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <title>{title}</title>
+    <slot name="head" />
+  </head>
+  <body>
+    <a class="skip-link" href="#contenu">{text.skipLink}</a>
+    <Header {locale} {currentPage} {availablePages} {translations} />
+    <main id="contenu" class="site-main" tabindex="-1"><slot /></main>
+    <Footer {locale} {availablePages} />
+  </body>
+</html>

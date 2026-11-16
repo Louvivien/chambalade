@@ -1,0 +1,131 @@
+{
+  "date": "2026-11-16",
+  "scope": "Gabarit uniquement, routes de contrôle exclues du build de production",
+  "tests": 9,
+  "internalReferences": 44,
+  "brokenInternalReferences": 0,
+  "browser": [
+    {
+      "locale": "fr",
+      "width": 375,
+      "keyboardLinks": 11,
+      "overflow": false,
+      "bodyFont": "\"Nunito Sans\", system-ui, sans-serif",
+      "headingFont": "Lora, Georgia, serif",
+      "animations": 0,
+      "fonts": [
+        "Lora",
+        "Nunito Sans",
+        "Nunito Sans"
+      ],
+      "externalRequests": [],
+      "errors": []
+    },
+    {
+      "locale": "fr",
+      "width": 768,
+      "keyboardLinks": 11,
+      "overflow": false,
+      "bodyFont": "\"Nunito Sans\", system-ui, sans-serif",
+      "headingFont": "Lora, Georgia, serif",
+      "animations": 0,
+      "fonts": [
+        "Lora",
+        "Nunito Sans",
+        "Nunito Sans"
+      ],
+      "externalRequests": [],
+      "errors": []
+    },
+    {
+      "locale": "fr",
+      "width": 1280,
+      "keyboardLinks": 11,
+      "overflow": false,
+      "bodyFont": "\"Nunito Sans\", system-ui, sans-serif",
+      "headingFont": "Lora, Georgia, serif",
+      "animations": 0,
+      "fonts": [
+        "Lora",
+        "Nunito Sans",
+        "Nunito Sans"
+      ],
+      "externalRequests": [],
+      "errors": []
+    },
+    {
+      "locale": "en",
+      "width": 375,
+      "keyboardLinks": 11,
+      "overflow": false,
+      "bodyFont": "\"Nunito Sans\", system-ui, sans-serif",
+      "headingFont": "Lora, Georgia, serif",
+      "animations": 0,
+      "fonts": [
+        "Lora",
+        "Nunito Sans",
+        "Nunito Sans"
+      ],
+      "externalRequests": [],
+      "errors": []
+    },
+    {
+      "locale": "en",
+      "width": 768,
+      "keyboardLinks": 11,
+      "overflow": false,
+      "bodyFont": "\"Nunito Sans\", system-ui, sans-serif",
+      "headingFont": "Lora, Georgia, serif",
+      "animations": 0,
+      "fonts": [
+        "Lora",
+        "Nunito Sans",
+        "Nunito Sans"
+      ],
+      "externalRequests": [],
+      "errors": []
+    },
+    {
+      "locale": "en",
+      "width": 1280,
+      "keyboardLinks": 11,
+      "overflow": false,
+      "bodyFont": "\"Nunito Sans\", system-ui, sans-serif",
+      "headingFont": "Lora, Georgia, serif",
+      "animations": 0,
+      "fonts": [
+        "Lora",
+        "Nunito Sans",
+        "Nunito Sans"
+      ],
+      "externalRequests": [],
+      "errors": []
+    }
+  ],
+  "lighthouse": {
+    "fr": {
+      "fetchTime": "2026-11-16T10:17:52.285Z",
+      "version": "13.6.0",
+      "formFactor": "mobile",
+      "throttlingMethod": "simulate",
+      "scores": {
+        "performance": 100,
+        "accessibility": 100,
+        "best-practices": 100,
+        "seo": 100
+      }
+    },
+    "en": {
+      "fetchTime": "2026-11-16T10:18:04.856Z",
+      "version": "13.6.0",
+      "formFactor": "mobile",
+      "throttlingMethod": "simulate",
+      "scores": {
+        "performance": 100,
+        "accessibility": 100,
+        "best-practices": 100,
+        "seo": 100
+      }
+    }
+  }
+}

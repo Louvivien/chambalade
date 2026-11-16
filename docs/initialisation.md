@@ -38,14 +38,14 @@ Le script `photos` a été ajouté à l'étape 2 ; voir `docs/conversion-photos.
 - `src/assets/photos/` et `src/assets/logo/` : images sources du site.
 - `src/styles/global.css` : imports locaux Fontsource et familles typographiques.
 
-Le futur gabarit (étape 3) devra importer `../styles/global.css` pour charger
+Le gabarit de l’étape 3 importe `../styles/global.css` pour charger
 Lora (400, 600) et Nunito Sans (400, 600, 700), avec le sous-ensemble latin
 qui couvre les textes français et anglais. Les tokens de couleur et le design
-system seront ajoutés à cette étape.
+system sont dans `src/styles/tokens.css`. Voir `docs/gabarit.md`.
 
 Aucune page ni contenu éditorial n'est encore créé : le build produit zéro page,
-et `/` comme `/en/` affichent donc une 404 en développement. Il n'y a pas encore
-de rendu visuel à valider. Aucun nouveau `TODO(amaelle)` à cette étape ; les
+et `/` comme `/en/` affichent donc une 404 en développement. L’étape 3 fournit
+des routes de contrôle séparées via `npm run dev:audit`. Aucun nouveau `TODO(amaelle)` à cette étape ; les
 questions de contenu restent dans `docs/brief.md` et `docs/photos.md`.
 
 ## Environnement
