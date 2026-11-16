@@ -1,6 +1,7 @@
 import { defineCollection } from 'astro:content';
 import { z } from 'astro/zod';
 import { glob } from 'astro/loaders';
+import { priceIds, priceUnits } from './lib/tarifs';
 
 const interfaceContent = defineCollection({
   loader: glob({ pattern: '*.md', base: './src/content/interface' }),
@@ -35,4 +36,25 @@ const accueil = defineCollection({
   },
 });
 
-export const collections = { interface: interfaceContent, accueil };
+const gite = defineCollection({
+  loader: glob({ pattern: '*.md', base: './src/content/gite' }),
+  schema: ({ image }) => {
+    const photo = z.object({ src: image(), alt: z.string(), caption: z.string() });
+    return z.object({
+      title: z.string(), description: z.string(),
+      hero: z.object({ title: z.string(), text: z.string(), opening: z.string(), ratesLink: z.string(), requestLink: z.string(), photo }),
+      rooms: z.object({ title: z.string(), capacityLabel: z.string(), items: z.array(z.object({ title: z.string(), text: z.string() })), photosPending: z.string() }),
+      horse: z.object({ title: z.string(), text: z.string(), vaccines: z.string(), future: z.string() }),
+      rates: z.object({
+        title: z.string(), introduction: z.string(), included: z.string(), unknown: z.string(),
+        units: z.record(z.enum(priceUnits), z.string()),
+        items: z.record(z.enum(priceIds), z.object({ label: z.string(), pending: z.string().startsWith('TODO(amaelle)').optional() })),
+      }),
+      shared: z.object({ title: z.string(), text: z.string(), mealsTitle: z.string(), mealsText: z.string() }),
+      practical: z.object({ title: z.string(), photo, items: z.array(z.object({ title: z.string(), pending: z.string() })) }),
+      stay: z.object({ title: z.string(), text: z.string(), link: z.string() }),
+    });
+  },
+});
+
+export const collections = { interface: interfaceContent, accueil, gite };

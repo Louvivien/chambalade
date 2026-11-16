@@ -26,7 +26,8 @@ sans JavaScript et après redimensionnement. L’audit navigateur vérifie ces c
 
 ## Destinations provisoires
 
-Les liens du gîte, du lieu et de demande mènent aux sections de l’accueil, tant
+Depuis l’étape 5, le lien du gîte et « Découvrir le gîte » mènent à `/gite/`.
+Les liens du lieu et de demande mènent encore aux sections de l’accueil, tant
 que les pages correspondantes ne sont pas construites. La section de demande
 annonce clairement que les coordonnées et le formulaire seront disponibles
 ultérieurement. Elle ne collecte rien. Les liens anglais et légaux restent
@@ -58,7 +59,7 @@ npx --no-install lighthouse http://127.0.0.1:4321/ --only-categories=performance
 
 Chrome doit être installé. Exécuter Lighthouse après l’audit navigateur, sans autre
 audit en parallèle. Le script vérifie les largeurs 375, 768 et 1280 px, la photo
-choisie, la description accessible, le chargement unique du bandeau, les ancres,
+choisie, la description accessible, le chargement unique du bandeau, le lien du gîte, les ancres,
 le clavier, les polices, le mouvement réduit et l’absence de requête externe.
 Captures et résultats bruts restent dans `.audit/`, ignoré par Git ; le résumé
 partageable est `docs/rapports/etape-4.json`.

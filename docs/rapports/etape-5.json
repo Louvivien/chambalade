@@ -1,0 +1,181 @@
+{
+  "step": 5,
+  "date": "2026-11-16",
+  "branch": "etape-5-gite",
+  "build": {
+    "pages": 2,
+    "errors": 0,
+    "warnings": 0
+  },
+  "astroCheck": {
+    "errors": 0,
+    "warnings": 0,
+    "hints": 0
+  },
+  "unitTests": {
+    "passed": 17
+  },
+  "internalLinks": {
+    "checked": 87,
+    "broken": 0
+  },
+  "lighthouse": {
+    "/gite/": {
+      "version": "13.6.0",
+      "fetchTime": "2026-11-16T10:47:46.719Z",
+      "scores": {
+        "performance": 100,
+        "accessibility": 100,
+        "best-practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first-contentful-paint": 1179.7056499999999,
+        "largest-contentful-paint": 1179.7056499999999,
+        "total-blocking-time": 40.5,
+        "cumulative-layout-shift": 4.068520081599215e-05,
+        "speed-index": 1179.7056499999999
+      }
+    },
+    "/": {
+      "version": "13.6.0",
+      "fetchTime": "2026-11-16T10:47:59.883Z",
+      "scores": {
+        "performance": 100,
+        "accessibility": 100,
+        "best-practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first-contentful-paint": 905.4721999999999,
+        "largest-contentful-paint": 905.4721999999999,
+        "total-blocking-time": 73.26390000000009,
+        "cumulative-layout-shift": 4.068520081599215e-05,
+        "speed-index": 905.4721999999999
+      }
+    }
+  },
+  "browser": {
+    "gite": [
+      {
+        "width": 375,
+        "keyboardLinks": 10,
+        "pricesFromYaml": 10,
+        "pendingPrices": 10,
+        "noClientJavaScript": true,
+        "overflow": false,
+        "animations": 0,
+        "bodyFont": "\"Nunito Sans\", system-ui, sans-serif",
+        "headingFont": "Lora, Georgia, serif",
+        "fonts": [
+          "Lora",
+          "Nunito Sans",
+          "Nunito Sans"
+        ],
+        "photoSource": "piscine.DbJ81kHP_Z1gfofN.avif",
+        "externalRequests": [],
+        "failedRequests": []
+      },
+      {
+        "width": 768,
+        "keyboardLinks": 10,
+        "pricesFromYaml": 10,
+        "pendingPrices": 10,
+        "noClientJavaScript": true,
+        "overflow": false,
+        "animations": 0,
+        "bodyFont": "\"Nunito Sans\", system-ui, sans-serif",
+        "headingFont": "Lora, Georgia, serif",
+        "fonts": [
+          "Lora",
+          "Nunito Sans",
+          "Nunito Sans"
+        ],
+        "photoSource": "piscine.DbJ81kHP_3hWFQ.avif",
+        "externalRequests": [],
+        "failedRequests": []
+      },
+      {
+        "width": 1280,
+        "keyboardLinks": 10,
+        "pricesFromYaml": 10,
+        "pendingPrices": 10,
+        "noClientJavaScript": true,
+        "overflow": false,
+        "animations": 0,
+        "bodyFont": "\"Nunito Sans\", system-ui, sans-serif",
+        "headingFont": "Lora, Georgia, serif",
+        "fonts": [
+          "Lora",
+          "Nunito Sans",
+          "Nunito Sans"
+        ],
+        "photoSource": "piscine.DbJ81kHP_Z29Ldnj.avif",
+        "externalRequests": [],
+        "failedRequests": []
+      }
+    ],
+    "accueil": [
+      {
+        "width": 375,
+        "hero": "foret-chambaran",
+        "initialHeroRequests": 1,
+        "keyboardLinks": 11,
+        "noClientJavaScript": true,
+        "overflow": false,
+        "bodyFont": "\"Nunito Sans\", system-ui, sans-serif",
+        "headingFont": "Lora, Georgia, serif",
+        "animations": 0,
+        "fonts": [
+          "Lora",
+          "Nunito Sans",
+          "Nunito Sans"
+        ],
+        "externalRequests": [],
+        "failedRequests": []
+      },
+      {
+        "width": 768,
+        "hero": "pres-de-la-trappe",
+        "initialHeroRequests": 1,
+        "keyboardLinks": 11,
+        "noClientJavaScript": true,
+        "overflow": false,
+        "bodyFont": "\"Nunito Sans\", system-ui, sans-serif",
+        "headingFont": "Lora, Georgia, serif",
+        "animations": 0,
+        "fonts": [
+          "Lora",
+          "Nunito Sans",
+          "Nunito Sans"
+        ],
+        "externalRequests": [],
+        "failedRequests": []
+      },
+      {
+        "width": 1280,
+        "hero": "pres-de-la-trappe",
+        "initialHeroRequests": 1,
+        "keyboardLinks": 11,
+        "noClientJavaScript": true,
+        "overflow": false,
+        "bodyFont": "\"Nunito Sans\", system-ui, sans-serif",
+        "headingFont": "Lora, Georgia, serif",
+        "animations": 0,
+        "fonts": [
+          "Lora",
+          "Nunito Sans",
+          "Nunito Sans"
+        ],
+        "externalRequests": [],
+        "failedRequests": []
+      }
+    ]
+  },
+  "limitations": [
+    "Tarifs proposés à confirmer, dix mentions de validation publiques.",
+    "Photos intérieures après rénovation attendues.",
+    "Coordonnées absentes et formulaire prévu à une étape ultérieure.",
+    "Données tarifaires créées ici ; règles de réservation à ajouter à l’étape 7."
+  ]
+}

@@ -1,5 +1,89 @@
 # Journal d’audit
 
+## Étape 5 — Le gîte français — 2026-11-16
+
+Branche : `etape-5-gite` · Pull request : à renseigner après création.
+Base : `etape-4-accueil` (PR #3), sans fusion dans main.
+
+Fait :
+- Page `/gite/` : présentation, chambres et dortoir, accueil du cheval, tarifs,
+  repas et espaces communs, préparation de l’arrivée, information de demande.
+- Textes éditables dans `src/content/gite/fr.md`. Création du fichier
+  `src/data/reservation.yaml`, absent jusqu’ici, avec les montants du brief en
+  centimes et la capacité totale. Les unités et montants inconnus restent `null`.
+- Dix lignes tarifaires alimentées par ce YAML. Les dix propositions affichent
+  leur mention de validation ; six informations pratiques restent également
+  signalées à l’écran. Aucune ambiguïté tarifaire tranchée à la place d’Amaëlle.
+- Schéma de validation des données et tests sur les montants, les inconnues et
+  les centimes. Pas de calcul de devis ou de logique serveur anticipés sur l’étape 7.
+- Photos autorisées de la piscine (bandeau recadré) et du portail (chargement
+  différé), variantes AVIF/WebP et plusieurs largeurs via Picture.
+- Menu et bouton « Découvrir le gîte » de l’accueil reliés à `/gite/` ; audit et
+  documentation de l’accueil adaptés à ce parcours réel.
+
+Contrôles automatiques : build OK, 2 pages, sans erreur ni avertissement ·
+17 tests OK (6 photos, 3 contrastes, 8 tarifs) · `check` : 0 erreur, 0 avertissement,
+0 indication · secrets : aucune valeur réelle · liens : 87 références internes,
+0 cassée. Inventaire éditorial synchronisé. Aucun original, `.env`, build ou
+rapport brut ajouté au commit. `git diff --check` propre.
+
+Lighthouse mobile (perf / a11y / BP / SEO), Chrome headless, simulation mobile par
+défaut, serveur statique local, mesures successives :
+
+| Page | Performance | Accessibilité | Bonnes pratiques | SEO |
+| --- | --- | --- | --- | --- |
+| `/gite/` | 100 | 100 | 100 | 100 |
+| `/` | 100 | 100 | 100 | 100 |
+
+Résumé machine dans `docs/rapports/etape-5.json`. Rapports bruts dans `.audit/`.
+Les recommandations sur le cache/compression du serveur local, les images et
+la chaîne CSS/polices seront réévaluées lors du déploiement Cloudflare.
+
+Qualité front : les deux pages vérifiées à 375, 768 et 1280 px, aucun débordement
+horizontal. Parcours au clavier, focus visible, lien d’évitement, ancres des tarifs
+et de demande, liens entre les pages vérifiés. Les dix prix rendus sont comparés
+au YAML et les mentions visibles au Markdown à chaque largeur. Images et polices
+locales, aucune requête externe ou en échec, aucune animation, aucun JavaScript
+client. Contrastes AA du design system conservés, focus crème sur le bloc foncé.
+Pas d’étiquettes en capitales, ombres, dégradés ou animations décoratives.
+Captures du gîte inspectées aux trois largeurs dans `.audit/screenshots/`.
+
+Contenu : capacité, couchages, équipements, qualifications, ouverture et montants
+issus du brief et du cahier des charges de réservation. Petit-déjeuner affiché
+« Compris » à partir de sa valeur nulle dans le YAML ; taxe affichée « À confirmer »
+à partir de `null`, jamais assimilée à zéro. Le forfait garde son prix proposé et
+son contenu explicitement indéfini. Photos uniquement « À utiliser », alternatives
+du tableau avec typographie française. Aucune projection utilisée. Marque et
+vouvoiement respectés. Page anglaise prévue à l’étape 12, non créée ici.
+
+Écarts et décisions :
+- Création anticipée de la partie tarifaire de `reservation.yaml`, nécessaire à
+  l’instruction de l’étape 5. Les unités réservables, capacités détaillées et
+  règles métier seront ajoutées à l’étape 7 ; ce fichier devra être enrichi.
+- Les mentions de validation sont volontairement publiques, conformément à la
+  demande explicite de Vivien. Elles ne sont pas cachées dans des commentaires.
+- Photo « piscine et table » en attente d’original remplacée par la piscine
+  autorisée. Recadrage CSS 16:9 aligné en haut : robot et terre nue exclus,
+  source inchangée. Photos des chambres et du dortoir encore attendues.
+- Le portail porte « Chez Amaëlle » : photo autorisée, point de marque rappelé
+  dans les notes éditoriales. Pas de retouche de l’inscription.
+- Demandes non opérationnelles : téléphone et e-mail absents, formulaire prévu
+  plus tard. Les appels mènent à une information explicite. Logo provisoire,
+  pages du lieu, légales et anglaises toujours prévus aux étapes suivantes.
+- Seul changement de l’accueil : raccordement de la navigation au gîte et
+  adaptation de son contrôle navigateur. Aucune fonctionnalité hors périmètre.
+
+Nouveaux TODO(amaelle) : validation des dix lignes tarifaires, bases de calcul des
+chambres et draps, contenu du forfait, montant de la taxe ; horaires et ouverture
+exacte, accès, linge, animaux, documents du cheval, acompte/annulation ; textes,
+photos après travaux et inscription du portail. Ces précisions reprennent les
+points ouverts des sources et figurent dans `docs/todo-contenus.md`.
+
+À vérifier visuellement par Vivien : lecture des tarifs et de leurs validations
+sur mobile, photographie de la piscine, présentation des couchages et informations
+d’arrivée. Faire confirmer les montants et modalités par Amaëlle avant publication.
+Aucune fusion ni publication effectuée.
+
 ## Étape 4 — Accueil français — 2026-11-16
 
 Branche : `etape-4-accueil` · Pull request : [#3](https://github.com/Louvivien/chambalade/pull/3).

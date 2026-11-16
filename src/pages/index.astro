@@ -6,7 +6,7 @@ import AccueilBandeau from '../components/AccueilBandeau.astro';
 const entry = await getEntry('accueil', 'fr');
 if (!entry) throw new Error('Contenu accueil/fr absent');
 const text = entry.data;
-const availablePages = { home: '/', gite: '/#gite', lieu: '/#le-lieu', reserver: '/#sejour' };
+const availablePages = { home: '/', gite: '/gite/', lieu: '/#le-lieu', reserver: '/#sejour' };
 ---
 <BaseLayout locale="fr" title={text.title} description={text.description} currentPage="home" {availablePages}>
   <section class="hero" aria-labelledby="accueil-titre">
@@ -14,7 +14,7 @@ const availablePages = { home: '/', gite: '/#gite', lieu: '/#le-lieu', reserver:
       <h1 id="accueil-titre">{text.hero.title}</h1>
       <p>{text.hero.introduction}</p>
       <div class="hero-actions">
-        <a class="button" href="#gite">{text.hero.discover}</a>
+        <a class="button" href="/gite/">{text.hero.discover}</a>
         <a class="text-link" href="#sejour">{text.hero.request}</a>
       </div>
     </div>

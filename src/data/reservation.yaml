@@ -1,0 +1,46 @@
+# Source tarifaire unique. Montants en centimes, issus de docs/brief.md et docs/reservation.md.
+# Données de présentation pour l’étape 5 ; unités réservables et règles complètes à l’étape 7.
+currency: EUR
+capacity: 12
+# TODO(amaelle): valider l’ensemble des tarifs proposés avant publication.
+prices:
+  dortoir:
+    amount_cents: 3500
+    unit: person_night
+    validated: false
+  draps_dortoir:
+    amount_cents: 500
+    unit: null # TODO(amaelle): par lit et par séjour ou par nuit ?
+    validated: false
+  chambre_partagee:
+    amount_cents: 7500
+    unit: null # TODO(amaelle): par chambre ou par personne et par nuit ; prix en occupation seule ?
+    validated: false
+  chambre_privee:
+    amount_cents: 8000
+    unit: null # TODO(amaelle): par chambre ou par personne et par nuit ; prix en occupation seule ?
+    validated: false
+  petit_dejeuner:
+    amount_cents: 0
+    unit: included
+    validated: false
+  dejeuner:
+    amount_cents: 1500
+    unit: person_day
+    validated: false
+  diner:
+    amount_cents: 2000
+    unit: person_evening
+    validated: false
+  cheval:
+    amount_cents: 1000
+    unit: horse_night
+    validated: false
+  forfait_cavalier:
+    amount_cents: 7000
+    unit: null # TODO(amaelle): définir le contenu exact ; forfait exclu du futur devis tant qu’il reste indéfini.
+    validated: false
+  taxe_sejour:
+    amount_cents: null # TODO(amaelle): montant par adulte et par nuit ; ne pas assimiler une valeur absente à zéro.
+    unit: adult_night
+    validated: false
