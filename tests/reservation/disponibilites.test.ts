@@ -168,10 +168,42 @@ describe('contraintes du séjour', () => {
   it('refuse une chambre choisie deux fois', () => expect(codes({ chambres: ['chambre_2', 'chambre_2'] })).toEqual(['chambre_en_double']));
   it('un cheval suppose une personne hébergée', () => expect(codes({ adultes: 0, chevaux: 1 })).toEqual(expect.arrayContaining(['adulte_requis', 'cheval_sans_personne'])));
   it('refuse les enfants seulement si la configuration le dit explicitement', () => {
-    expect(codes({ enfants: 1 })).toEqual([]);
+    expect(codes({ enfants: 1, litsDortoir: 1 })).toEqual([]);
     const non = testConfig({ quote: { ...config.quote, children_accepted: false } });
-    expect(codes({ enfants: 1 }, non)).toEqual(['enfants_refuses']);
+    expect(codes({ enfants: 1, litsDortoir: 1 }, non)).toEqual(['enfants_refuses']);
     const inconnu = testConfig({ quote: { ...config.quote, children_accepted: null } });
-    expect(codes({ enfants: 1 }, inconnu)).toEqual([]);
+    expect(codes({ enfants: 1, litsDortoir: 1 }, inconnu)).toEqual([]);
+  });
+});
+
+describe('contraintes complémentaires du séjour', () => {
+  const codes = (d: Partial<DemandeSejour>) => validerSejour(config, sejour(d), aujourdhui).map(e => e.code);
+
+  it('refuse plus de personnes que de couchages choisis', () => {
+    expect(codes({ adultes: 3 })).toEqual(['places_insuffisantes']);
+    expect(codes({ adultes: 3, litsDortoir: 1 })).toEqual([]);
+    expect(codes({ adultes: 2, enfants: 1 })).toEqual(['places_insuffisantes']);
+  });
+
+  it('valide le nombre de personnes par chambre', () => {
+    expect(codes({ personnesParChambre: { chambre_2: 2 } })).toEqual([]);
+    expect(codes({ personnesParChambre: { chambre_2: 3 } })).toEqual(['personnes_chambre_invalides']);
+    expect(codes({ personnesParChambre: { chambre_3: 1 } })).toEqual(['personnes_chambre_invalides']);
+    expect(codes({ personnesParChambre: { chambre_2: 0 } })).toEqual(['personnes_chambre_invalides']);
+  });
+
+  it('valide les repas : dîner un soir du séjour, déjeuner un jour du séjour, nombre de personnes', () => {
+    expect(codes({ diners: [{ date: '2027-05-12', personnes: 2 }] })).toEqual([]);
+    expect(codes({ diners: [{ date: '2027-05-13', personnes: 2 }] })).toEqual(['repas_invalide']);
+    expect(codes({ dejeuners: [{ date: '2027-05-13', personnes: 2 }] })).toEqual([]);
+    expect(codes({ dejeuners: [{ date: '2027-05-14', personnes: 1 }] })).toEqual(['repas_invalide']);
+    expect(codes({ diners: [{ date: '2027-05-10', personnes: 3 }] })).toEqual(['repas_invalide']);
+    expect(codes({ diners: [{ date: '2027-05-10', personnes: 0 }] })).toEqual(['repas_invalide']);
+  });
+
+  it('valide le nombre de forfaits cavalier', () => {
+    expect(codes({ forfaitsCavalier: 2 })).toEqual([]);
+    expect(codes({ forfaitsCavalier: 3 })).toEqual(['forfait_invalide']);
+    expect(codes({ forfaitsCavalier: -1 })).toEqual(['forfait_invalide']);
   });
 });

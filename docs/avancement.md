@@ -7,7 +7,7 @@ terminée donne lieu à un commit après un build sans erreur ni avertissement.
 ## Étape en cours : 7 — Réservation : données et règles — 2026-11-16
 
 Branche : `etape-7-reservation` · Base : `etape-6-lieu` (étape 6 prête, PR ouverte par Vivien).
-Statut : tranches 1 à 3 terminées ; tranche 4 à faire. Une PR dédiée en fin d’étape, sans fusion.
+Statut : tranches 1 à 4 terminées ; tranche 5 (audit et livraison) à faire. Une PR dédiée en fin d’étape, sans fusion.
 Périmètre (`docs/etapes.md`, étape 7) : configuration, migrations D1 et bibliothèque pure
 (sans réseau ni interface) pour disponibilités et devis, avec tests Vitest. Pas d’API
 (étape 8), pas d’interface (étape 9).
@@ -34,9 +34,12 @@ configuration de test complète, distincte de la configuration réelle.
   capacité, séjour sur un blocage, expiration).
   Fait : `src/lib/reservation/{dates,statuts,disponibilites,types}.ts`, 40 tests (81 au total).
   Capacité inconnue = refus, jamais illimité. Suite : devis et prise de place.
-- [ ] Tranche 4 (15–30 min) — Devis et prise de place : devis en centimes depuis la
+- [x] Tranche 4 (15–30 min) — Devis et prise de place : devis en centimes depuis la
   configuration seule, lignes inconnues « à confirmer », devis figé ; fonction qui décide
   des occupations à insérer ; tests dont deux demandes sur la dernière place.
+  Fait : `devis.ts` (lignes en centimes, « à confirmer » pour les inconnues, devis figé et gelé),
+  `demande.ts` (`preparerDemande`, occupations), contraintes de repas, de couchages et de
+  personnes par chambre ; 108 tests au total. Suite : audit et PR.
 - [ ] Tranche 5 (15–30 min) — Audit et livraison : build, types, tests, liens, inventaire
   des `TODO(amaelle)`, rapport dans `docs/journal-audit.md`, PR.
 

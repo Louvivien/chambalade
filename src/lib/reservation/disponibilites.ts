@@ -64,6 +64,32 @@ export function validerSejour(config: ReservationConfig, demande: DemandeSejour,
   if (!Number.isInteger(demande.litsDortoir) || demande.litsDortoir < 0) erreurs.push(erreur('lits_invalides', 'Le nombre de lits n’est pas valide.'));
   if (demande.chambres.length === 0 && demande.litsDortoir === 0) erreurs.push(erreur('hebergement_requis', 'Choisissez au moins une chambre ou un lit en dortoir.'));
   if (new Set(demande.chambres).size !== demande.chambres.length) erreurs.push(erreur('chambre_en_double', 'Une chambre ne peut être choisie qu’une fois.'));
+  const places = demande.chambres.reduce((total, c) => total + config.units[c].capacity_people, 0) + (demande.litsDortoir > 0 ? demande.litsDortoir : 0);
+  if (demande.adultes + demande.enfants > places && erreurs.every(e => e.code !== 'hebergement_requis')) {
+    erreurs.push(erreur('places_insuffisantes', `Les logements choisis offrent ${plur(places, 'couchage', 'couchages')} pour ${plur(demande.adultes + demande.enfants, 'personne', 'personnes')}.`));
+  }
+  for (const [chambre, personnes] of Object.entries(demande.personnesParChambre ?? {})) {
+    const unite = config.units[chambre as keyof typeof config.units];
+    const max = unite.type === 'chambre' ? unite.capacity_people : 0;
+    if (!demande.chambres.includes(chambre as never) || !Number.isInteger(personnes) || personnes < 1 || personnes > max) {
+      erreurs.push(erreur('personnes_chambre_invalides', `Le nombre de personnes pour « ${unite.label} » n’est pas valide (1 à ${max}).`, { unite: chambre as UnitId }));
+    }
+  }
+  const totalPersonnes = demande.adultes + demande.enfants;
+  const verifierRepas = (repas: DemandeSejour['diners'], nom: string, dernierJour: string) => {
+    for (const r of repas ?? []) {
+      const dansLeSejour = estDateValide(r.date) && r.date >= demande.arrivee && r.date <= dernierJour;
+      if (!dansLeSejour || !Number.isInteger(r.personnes) || r.personnes < 1 || r.personnes > totalPersonnes) {
+        erreurs.push(erreur('repas_invalide', `Un ${nom} demandé n’est pas valide (date hors séjour ou nombre de personnes incorrect).`));
+        return;
+      }
+    }
+  };
+  verifierRepas(demande.diners, 'dîner', ajouterJours(demande.depart, -1));
+  verifierRepas(demande.dejeuners, 'déjeuner', demande.depart);
+  if (demande.forfaitsCavalier !== undefined && (!Number.isInteger(demande.forfaitsCavalier) || demande.forfaitsCavalier < 0 || demande.forfaitsCavalier > demande.adultes)) {
+    erreurs.push(erreur('forfait_invalide', 'Le nombre de forfaits cavalier n’est pas valide.'));
+  }
   if (demande.chevaux > 0 && demande.adultes < 1) erreurs.push(erreur('cheval_sans_personne', 'Un cheval suppose au moins une personne hébergée.'));
   return erreurs;
 }
