@@ -22,7 +22,7 @@ Fait :
 
 Contrôles automatiques : build OK, 15 pages, sans erreur ni avertissement · 548 tests OK (47 nouveaux : routes, parité FR/EN, langue de
 la réservation, légal anglais) · types : 0 erreur, 0 avertissement, 1 indication (`erreurEnvoi` inutilisée, étape 9) · liens : 475 références
-internes, 0 cassée · configuration des fonctions et inventaire des `TODO(amaelle)` à jour (201 lignes) · secrets : rien.
+internes, 0 cassée · configuration des fonctions et inventaire des points à confirmer à jour · secrets : rien.
 Parité FR/EN testée : mêmes clés, mêmes types, mêmes tailles de listes, mêmes images, autant de `TODO(amaelle)` ; une page anglaise oubliée casse le test.
 Audits navigateur : `npm run audit:langues` (7 pages × 2 langues × 375/1280 px, JavaScript désactivé) — hreflang réciproques, sélecteur,
 tous les liens internes dans la langue de la page et valides, aucun mot français sur une page anglaise (titre, description, texte, alt),
