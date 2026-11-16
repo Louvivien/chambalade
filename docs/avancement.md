@@ -28,8 +28,9 @@ tester ici sont écrits comme tels.
   Fait : `scripts/deploiement/controles.mjs` + `scripts/verifier-deploiement.mjs` (`npm run deploiement:verifier [-- --strict --ouverture]`),
   13 tests ; page `404.html` ajoutée (il n’y en avait pas : Cloudflare Pages en sert une pour toute adresse inconnue). Résultat actuel :
   3 points bloquants attendus (identifiant D1 de test, clés Turnstile de test) et 5 points avant ouverture.
-- [ ] Tranche 2 — Guide `docs/deploiement.md` (Cloudflare Pages, D1, migrations, Turnstile, Resend,
+- [x] Tranche 2 — Guide `docs/deploiement.md` (Cloudflare Pages, D1, migrations, Turnstile, Resend,
   Access, variables, domaine chambalade.fr, statistiques) et section du `README.md`.
+  Fait : `docs/deploiement.md` (12 étapes ; les points non vérifiables sans compte sont marqués « à vérifier »), section « Mettre en ligne » du README.
 - [ ] Tranche 3 — Données personnelles en production : effacement/anonymisation d’une demande et purge
   périodique (SQL testé sur SQLite, script `scripts/rgpd.mjs`), texte de confidentialité mis à jour.
 - [ ] Tranche 4 — Contrôle après mise en ligne : `npm run deploiement:smoke -- <url>` (pages, hreflang,
