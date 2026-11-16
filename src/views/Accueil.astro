@@ -10,7 +10,7 @@ const entry = await getEntry('accueil', locale);
 if (!entry) throw new Error(`Contenu accueil/${locale} absent`);
 const text = entry.data;
 ---
-<BaseLayout {locale} title={text.title} description={text.description} currentPage="home">
+<BaseLayout {locale} title={text.title} description={text.description} image={{ src: text.hero.desktop.src, alt: text.hero.desktop.alt }} currentPage="home">
   <section class="hero" aria-labelledby="accueil-titre">
     <div class="hero-copy">
       <h1 id="accueil-titre">{text.hero.title}</h1>

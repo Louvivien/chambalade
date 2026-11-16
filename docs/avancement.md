@@ -18,8 +18,10 @@ générés depuis la table de routes (`src/lib/routes.ts`), pas écrits à la ma
 restent hors du sitemap et en `noindex` tant que `valide: false` (`src/data/legal.yaml`) ;
 `/admin/` et `/api/` interdits aux robots ; aucune nouvelle dépendance.
 
-- [ ] Tranche 1 — Balises de tête : canonical, Open Graph et Twitter par page (titre, description,
+- [x] Tranche 1 — Balises de tête : canonical, Open Graph et Twitter par page (titre, description,
   langue, alternatives de langue, image 1200×630 issue d’une photo « À utiliser »), tests.
+  Fait : `src/lib/seo.ts` (`construireMeta`), `BaseLayout` (canonical, Open Graph, Twitter ; image de partage 1200×630 générée depuis la photo
+  d’en-tête de l’accueil, du gîte et du lieu ; pas d’image pour Réserver ni le légal), 18 tests (titres ≤ 70 signes, descriptions de 60 à 170, uniques).
 - [ ] Tranche 2 — `sitemap.xml` (avec alternatives de langue), `robots.txt`, JSON-LD
   `LodgingBusiness` (FR/EN) ; tests de cohérence avec la table de routes.
 - [ ] Tranche 3 — Accessibilité et performance : contrastes mesurés pour tous les couples de
