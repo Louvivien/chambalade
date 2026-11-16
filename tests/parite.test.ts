@@ -10,9 +10,11 @@ const donnees = (chemin: string) => parse(lire(chemin).split('---')[1]);
 const marqueur = 'TODO' + '(amaelle)';
 const compter = (texte: string) => texte.split(marqueur).length - 1;
 
+// Clés réservées à l’anglais (voir src/content.config.ts) : elles n’ont pas d’équivalent français.
+const SEULEMENT_EN = new Set(['unitNames', 'serverErrors']);
 const formes = (valeur: unknown): unknown => {
   if (Array.isArray(valeur)) return valeur.map(formes);
-  if (valeur && typeof valeur === 'object') return Object.fromEntries(Object.entries(valeur).map(([k, v]) => [k, formes(v)]));
+  if (valeur && typeof valeur === 'object') return Object.fromEntries(Object.entries(valeur).filter(([k]) => !SEULEMENT_EN.has(k)).map(([k, v]) => [k, formes(v)]));
   return typeof valeur;
 };
 const images = (valeur: unknown, chemin = ''): string[] => {

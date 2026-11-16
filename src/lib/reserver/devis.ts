@@ -1,4 +1,5 @@
 import { euros } from './formats';
+import type { ErreurApi } from './messages';
 
 /** Forme du devis renvoyé par l’API (voir src/lib/reservation/devis.ts). */
 export interface LigneApi { id: string; unite?: string; quantite: number; prix_unitaire_cents: number | null; total_cents: number | null; statut: 'calculee' | 'incluse' | 'a_confirmer' }
@@ -25,7 +26,8 @@ export function lignesVue(devis: DevisApi, textes: TextesDevis, nomsUnites: Reco
 }
 
 /** Messages de disponibilité renvoyés par /api/devis, tels quels (l’API les écrit déjà en français). */
-export const messagesDisponibilite = (erreurs: Array<{ message: string }>): string[] => erreurs.map(e => e.message);
+export const messagesDisponibilite = (erreurs: ErreurApi[], traduire: (e: ErreurApi) => string | null = e => e.message ?? null): string[] =>
+  erreurs.map(traduire).filter((m): m is string => m !== null);
 
 /** Nom court d’une unité pour le détail d’une ligne : « Chambre 2 » à partir de « Chambre 2, un lit double… ». */
 export const nomCourt = (libelle: string) => libelle.split(',')[0];

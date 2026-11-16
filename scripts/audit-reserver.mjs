@@ -8,7 +8,10 @@ import { parse } from 'yaml';
 import { chromium } from 'playwright';
 
 const origin = process.env.AUDIT_URL || 'http://127.0.0.1:8788';
-const content = parse((await readFile('src/content/reserver/fr.md', 'utf8')).split('---')[1]);
+// AUDIT_LANG=en : même parcours sur /en/book/ avec les textes anglais.
+const lang = process.env.AUDIT_LANG === 'en' ? 'en' : 'fr';
+const chemin = lang === 'en' ? '/en/book/' : '/reserver/';
+const content = parse((await readFile(`src/content/reserver/${lang}.md`, 'utf8')).split('---')[1]);
 const heures = parse(await readFile('src/data/reservation.yaml', 'utf8')).holds.pending_hours;
 const AUTORISES = new Set([new URL(origin).origin, 'https://challenges.cloudflare.com']);
 const browser = await chromium.launch({ channel: 'chrome', headless: true });
@@ -35,13 +38,13 @@ try {
     const reponses5xx = [];
     page.on('response', r => { if (r.status() >= 500) reponses5xx.push(`${r.status()} ${r.url()}`); });
 
-    assert.equal((await page.goto(origin + '/reserver/', { waitUntil: 'load' })).status(), 200);
+    assert.equal((await page.goto(origin + chemin, { waitUntil: 'load' })).status(), 200);
     await page.locator('#formulaire').waitFor({ state: 'visible' });
     assert.equal(await page.title(), content.title);
-    assert.equal(await page.locator('html').getAttribute('lang'), 'fr');
+    assert.equal(await page.locator('html').getAttribute('lang'), lang);
     assert.equal(await page.locator('h1').count(), 1);
     assert.equal(await page.locator('h1').textContent(), content.hero.title);
-    assert.equal(await page.locator('.main-navigation a[aria-current="page"]').getAttribute('href'), '/reserver/');
+    assert.equal(await page.locator('.main-navigation a[aria-current="page"]').getAttribute('href'), chemin);
     assert.equal(await page.locator('#confirmation').isHidden(), true);
 
     // Aucune donnée tarifaire n'est confiée au navigateur : seuls textes et règles de séjour.
@@ -51,7 +54,7 @@ try {
     assert.equal(await page.evaluate(() => document.documentElement.scrollWidth > innerWidth), false, 'défilement horizontal');
 
     // Se placer sur le bon mois (le premier mois affiché dépend de la date du jour).
-    const moisCible = new Intl.DateTimeFormat('fr-FR', { month: 'long', year: 'numeric', timeZone: 'UTC' }).format(new Date(`${sc.arrivee}T00:00:00Z`));
+    const moisCible = new Intl.DateTimeFormat(lang === 'en' ? 'en-GB' : 'fr-FR', { month: 'long', year: 'numeric', timeZone: 'UTC' }).format(new Date(`${sc.arrivee}T00:00:00Z`)).toLowerCase();
     for (let i = 0; i < 24 && (await page.locator('#cal-titre').textContent()).toLowerCase() !== moisCible; i++) {
       await page.getByRole('button', { name: content.dates.nextMonth, exact: true }).click();
       await page.waitForFunction(() => document.querySelector('#calendrier').dataset.etat !== 'chargement');
@@ -75,7 +78,7 @@ try {
     await page.keyboard.press('ArrowLeft');
     await page.keyboard.press('Enter');
     assert.equal(await page.locator('#date-arrivee').textContent() !== content.dates.none, true, 'arrivée non choisie au clavier');
-    assert.match(await page.locator('.calendrier-statut').textContent(), /Arrivée choisie/);
+    assert.match(await page.locator('.calendrier-statut').textContent(), new RegExp(content.dates.selectedArrival.split('{date}')[0].trim()));
     await page.locator(`[data-date="${sc.depart}"]`).click();
     assert.equal(await page.locator('#nombre-nuits').textContent(), content.dates.nightsMany.replace('{n}', '2'));
 
@@ -102,7 +105,7 @@ try {
     assert.equal(await page.locator('#resume-erreurs').isVisible(), true);
     assert.equal(await page.evaluate(() => document.activeElement.id), 'resume-erreurs');
     const liens = await page.locator('#resume-erreurs a').allInnerTexts();
-    assert(liens.includes(content.errors.consent) && liens.includes(`${content.errors.fields.nom} est à renseigner.`), `résumé inattendu : ${liens}`);
+    assert(liens.includes(content.errors.consent) && liens.includes(content.errors.required.replace('{champ}', content.errors.fields.nom)), `résumé inattendu : ${liens}`);
     await page.locator('#resume-erreurs a', { hasText: content.errors.fields.nom }).click();
     assert.equal(await page.evaluate(() => document.activeElement.id), 'nom');
     assert.equal(await page.locator('#nom').getAttribute('aria-invalid'), 'true');
@@ -135,6 +138,8 @@ try {
     const demande = liste.demandes.find(d => d.reference === reference);
     assert(demande, 'la demande n’est pas dans la base');
     assert.equal(demande.statut, 'en_attente');
+    const fiche = await (await page.request.get(origin + `/api/admin/demandes/${demande.id}`)).json();
+    assert.equal((fiche.demande ?? fiche).langue, lang, 'la langue de la demande doit être celle de la page');
     assert.equal(demande.date_arrivee, sc.arrivee);
     assert.equal(demande.date_depart, sc.depart);
     assert.equal(demande.total_cents, totalAffiche, 'le total enregistré diffère du total affiché');
@@ -151,7 +156,7 @@ try {
 
   // Sans JavaScript : le formulaire reste masqué et un message l'explique.
   const nojs = await browser.newPage({ viewport: { width: 375, height: 900 }, javaScriptEnabled: false });
-  await nojs.goto(origin + '/reserver/', { waitUntil: 'load' });
+  await nojs.goto(origin + chemin, { waitUntil: 'load' });
   assert.equal(await nojs.locator('#formulaire').isHidden(), true);
   assert(await nojs.getByText(content.noscript.text, { exact: true }).isVisible());
   await nojs.close();

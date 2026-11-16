@@ -1,5 +1,6 @@
 import { dateParis, nuits } from '../lib/reservation/dates';
-import { dateComplete, dateCourte, libelleNuits, remplir } from '../lib/reserver/formats';
+import { dateComplete, dateCourte, fixerLangue, libelleNuits, remplir, type Langue } from '../lib/reserver/formats';
+import { messageApi, type ErreurApi } from '../lib/reserver/messages';
 import { entierBorne, nettoyerRepas, sejourDepuisEtat } from '../lib/reserver/sejour';
 import { etatInitial, type EtatFormulaire, type LibresParNuit, type Regles } from '../lib/reserver/types';
 import { creerCalendrier } from './calendrier';
@@ -8,9 +9,11 @@ import { brancherEnvoi } from './envoi';
 import { el, trouver, vider } from './dom';
 
 // Données publiques posées dans la page à la construction : textes du contenu, règles de séjour, clé Turnstile.
-interface Donnees { text: Record<string, any>; regles: Regles; siteKey: string }
+interface Donnees { locale: Langue; text: Record<string, any>; regles: Regles; siteKey: string }
 const donnees: Donnees = JSON.parse(trouver('reserver-donnees').textContent ?? '{}');
 const { text, regles } = donnees;
+fixerLangue(donnees.locale);
+const traduire = (e: ErreurApi) => messageApi(e, { serverErrors: text.serverErrors ?? {}, unitNames: text.unitNames ?? {}, nights: { one: text.dates.nightsOne, many: text.dates.nightsMany }, regles });
 const nomsUnites = Object.fromEntries(Object.entries(text.lodging.rooms as Record<string, string>).map(([id, libelle]) => [id, nomCourt(libelle)]));
 
 const etat: EtatFormulaire = etatInitial();
@@ -18,7 +21,7 @@ const etat: EtatFormulaire = etatInitial();
 const signaler = () => { devis.planifier(); document.dispatchEvent(new CustomEvent('reserver:change')); };
 const formulaire = trouver<HTMLFormElement>('formulaire');
 const champ = <T extends HTMLElement>(id: string) => trouver<T>(id);
-const devis = creerDevis({ zone: trouver('devis-contenu'), textes: text.quote, nomsUnites, sejour: () => sejourDepuisEtat(etat, regles) });
+const devis = creerDevis({ zone: trouver('devis-contenu'), textes: text.quote, nomsUnites, traduire, sejour: () => sejourDepuisEtat(etat, regles) });
 const casesChambres = () => [...formulaire.querySelectorAll<HTMLInputElement>('input[name="chambres"]')];
 
 /** Relit les champs de groupe et d’hébergement dans l’état. */
@@ -110,5 +113,5 @@ champ('effacer-dates').addEventListener('click', () => {
 
 lireChoix();
 afficherDates();
-brancherEnvoi({ etat, regles, text, siteKey: donnees.siteKey, nomsUnites, apresConflit: () => { calendrier.invalider(); devis.actualiser(); } });
+brancherEnvoi({ etat, regles, text, siteKey: donnees.siteKey, nomsUnites, traduire, apresConflit: () => { calendrier.invalider(); devis.actualiser(); } });
 formulaire.hidden = false;

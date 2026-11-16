@@ -20,6 +20,7 @@ const siteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY ?? '';
 
 // Données publiques transmises au script : textes du contenu et règles de séjour de la configuration.
 const donnees = {
+  locale,
   text: { ...text, hero: { ...text.hero, text: garnir(text.hero.text) }, confirmation: { ...text.confirmation, next: garnir(text.confirmation.next) } },
   regles: {
     premiereNuit: config.stay.first_night, nuitsMin: config.stay.min_nights, nuitsMax: config.stay.max_nights,
@@ -57,7 +58,7 @@ const chambres = ['chambre_privee', 'chambre_2', 'chambre_3'] as const;
 
     <div id="confirmation" class="confirmation" tabindex="-1" hidden aria-labelledby="confirmation-titre">
       <h2 id="confirmation-titre">{text.confirmation.title}</h2>
-      <p class="reference-ligne">{text.confirmation.reference} : <strong id="confirmation-reference"></strong></p>
+      <p class="reference-ligne">{text.confirmation.reference}{locale === 'fr' ? '\u00a0: ' : ': '}<strong id="confirmation-reference"></strong></p>
       <p>{garnir(text.confirmation.next)}</p>
       <p>{text.confirmation.notBooking}</p>
       <h3>{text.confirmation.recap}</h3>
@@ -110,7 +111,7 @@ const chambres = ['chambre_privee', 'chambre_2', 'chambre_3'] as const;
         </ul>
         <div class="champ dortoir">
           <label for="lits">{text.lodging.dormitory}</label>
-          <input id="lits" name="lits" type="number" inputmode="numeric" min="0" max={config.units.dortoir.capacity_beds} value="0" aria-label={`${text.lodging.dormitoryCount} : ${text.lodging.dormitory}`} />
+          <input id="lits" name="lits" type="number" inputmode="numeric" min="0" max={config.units.dortoir.capacity_beds} value="0" aria-label={`${text.lodging.dormitoryCount}${locale === 'fr' ? '\u00a0: ' : ': '}${text.lodging.dormitory}`} />
         </div>
         <p class="aide">{text.lodging.breakfast}</p>
         <p class="erreur" id="erreur-hebergement" hidden></p>

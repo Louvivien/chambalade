@@ -31,8 +31,11 @@ cliente ; formats de dates et de montants selon la langue.
   test de parité FR/EN (`tests/parite.test.ts` : mêmes clés, mêmes images, mêmes TODO).
 - [x] Tranche 3 — Le lieu en anglais.
   Fait : `lieu/en.md`, page `/en/the-place/` ; repères G / A / M (guesthouse, arena, meadows) ; parité vérifiée par test.
-- [ ] Tranche 4 — Réserver en anglais : formulaire, calendrier, devis, messages d’erreur du
+- [x] Tranche 4 — Réserver en anglais : formulaire, calendrier, devis, messages d’erreur du
   serveur, langue envoyée à l’API ; tests.
+  Fait : `reserver/en.md`, `/en/book/`, formats de dates et de montants par langue (`fixerLangue`), messages d’erreur de l’API traduits
+  par code (`src/lib/reserver/messages.ts` ; un code inconnu n’affiche jamais de français), langue de la demande envoyée à l’API
+  (donc e-mails en anglais), langue du widget anti-robot. `AUDIT_LANG=en npm run audit:reserver` : parcours complet réussi en anglais.
 - [ ] Tranche 5 — Pages légales en anglais.
 - [ ] Tranche 6 — Audit : hreflang réciproques, parité FR/EN des contenus (tests), navigateur,
   Lighthouse, rapport, `docs/rapports/etape-12.json`.

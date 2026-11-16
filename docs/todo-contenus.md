@@ -22,13 +22,13 @@ conditions pratiques, identité légale. Les sources ci-dessous font autorité.
 | `docs/audit.md:71` | - [ ] Liste finale des `TODO(amaelle)` restants, classés : bloquant / non bloquant. |
 | `docs/audit.md:87` | Nouveaux TODO(amaelle) : … |
 | `docs/avancement.md:14` | prix en €. `/admin/` reste en français (usage d’Amaëlle seule). Les `TODO(amaelle)` sont repris |
-| `docs/avancement.md:50` | manque est `TODO(amaelle)` visible. Les textes décrivent ce que le site fait réellement |
-| `docs/avancement.md:80` | dans un objet ou un en-tête d’e-mail. Informations inconnues = `TODO(amaelle)` visibles. |
-| `docs/avancement.md:144` | navigateur : tout passe par l’API de l’étape 8. Informations inconnues = `TODO(amaelle)` |
-| `docs/avancement.md:149` | l’accueil, du gîte et du lieu raccordés, `.env.example`, `TODO(amaelle)`. |
-| `docs/avancement.md:233` | inventaire des `TODO(amaelle)`, rapport dans `docs/journal-audit.md`, PR. |
-| `docs/avancement.md:250` | Principe sur les inconnues : toute valeur `TODO(amaelle)` reste `null` dans le YAML. La |
-| `docs/avancement.md:279` | des `TODO(amaelle)`, rapport dans `docs/journal-audit.md`, PR. |
+| `docs/avancement.md:51` | manque est `TODO(amaelle)` visible. Les textes décrivent ce que le site fait réellement |
+| `docs/avancement.md:81` | dans un objet ou un en-tête d’e-mail. Informations inconnues = `TODO(amaelle)` visibles. |
+| `docs/avancement.md:145` | navigateur : tout passe par l’API de l’étape 8. Informations inconnues = `TODO(amaelle)` |
+| `docs/avancement.md:150` | l’accueil, du gîte et du lieu raccordés, `.env.example`, `TODO(amaelle)`. |
+| `docs/avancement.md:234` | inventaire des `TODO(amaelle)`, rapport dans `docs/journal-audit.md`, PR. |
+| `docs/avancement.md:251` | Principe sur les inconnues : toute valeur `TODO(amaelle)` reste `null` dans le YAML. La |
+| `docs/avancement.md:280` | des `TODO(amaelle)`, rapport dans `docs/journal-audit.md`, PR. |
 | `docs/brief.md:5` | pas définitifs : les mettre en ligne avec un `TODO(amaelle)`. |
 | `docs/brief.md:22` | - Téléphone : TODO(amaelle). E-mail de contact : TODO(amaelle). |
 | `docs/brief.md:53` | TODO(amaelle) (environ 1 h, à vérifier). |
@@ -75,7 +75,7 @@ conditions pratiques, identité légale. Les sources ci-dessous font autorité.
 | `docs/reservation.md:153` | (TODO(amaelle), proposition : anonymisation 3 ans après le séjour), droits d'accès et |
 | `src/content.config.ts:51` | items: z.record(z.enum(priceIds), z.object({ label: z.string(), pending: z.string().startsWith('TODO(amaelle)').optional() })), |
 | `src/content.config.ts:93` | group: z.object({ legend: z.string(), adults: z.string(), children: z.string(), childrenHint: z.string().startsWith('TODO(amaelle)'), horses: z.string(), horsesHint: z.string().startsWith('TODO(amaelle)') }), |
-| `src/content.config.ts:130` | messageLabel: texte, messageHint: texte, depositLabel: texte, depositHint: texte.startsWith('TODO(amaelle)'), extendLabel: texte, extendOptions: dico, confirm: texte, working: texte, depositInvalid: texte, done: texte, email: dico, journalActions: dico, journalBy: dico, |
+| `src/content.config.ts:133` | messageLabel: texte, messageHint: texte, depositLabel: texte, depositHint: texte.startsWith('TODO(amaelle)'), extendLabel: texte, extendOptions: dico, confirm: texte, working: texte, depositInvalid: texte, done: texte, email: dico, journalActions: dico, journalBy: dico, |
 | `src/content/accueil/en.md:58` | <!-- TODO(amaelle): validate the proposed home page texts, taken from the brief. --> |
 | `src/content/accueil/en.md:59` | <!-- TODO(amaelle): provide a phone number and email address to reach Chambalade outside the booking form. --> |
 | `src/content/accueil/en.md:60` | <!-- TODO(amaelle): confirm the distances from Lyon, Grenoble and Valence; no travel time is published until then. --> |
@@ -156,6 +156,11 @@ conditions pratiques, identité légale. Les sources ci-dessous font autorité.
 | `src/content/lieu/fr.md:99` | <!-- TODO(amaelle): confirmer la distance et l’accès à cheval pour la cascade de Roybon, et fournir les itinéraires conseillés autour de Dionay. --> |
 | `src/content/lieu/fr.md:100` | <!-- TODO(amaelle): confirmer les distances et temps de trajet depuis Lyon, Grenoble et Valence. --> |
 | `src/content/lieu/fr.md:101` | <!-- TODO(amaelle): fournir les indications d’arrivée en voiture, van et camion, ainsi que les modalités de stationnement. --> |
+| `src/content/reserver/en.md:10` | contact: 'TODO(amaelle): provide the contact phone number and email address.' |
+| `src/content/reserver/en.md:48` | childrenHint: 'TODO(amaelle): specify whether children are welcome and at what rate.' |
+| `src/content/reserver/en.md:50` | horsesHint: 'TODO(amaelle): specify how many horses can be hosted at the same time. While unknown, requests with a horse cannot be sent.' |
+| `src/content/reserver/en.md:162` | <!-- TODO(amaelle): validate the proposed texts of the Book page. --> |
+| `src/content/reserver/en.md:163` | <!-- TODO(amaelle): confirm that a reply within 48 hours and the temporary hold on the dates are acceptable. --> |
 | `src/content/reserver/fr.md:10` | contact: 'TODO(amaelle): fournir le téléphone et l’adresse e-mail de contact.' |
 | `src/content/reserver/fr.md:48` | childrenHint: 'TODO(amaelle): préciser si les enfants sont accueillis et à quel tarif.' |
 | `src/content/reserver/fr.md:50` | horsesHint: 'TODO(amaelle): préciser le nombre de chevaux accueillis en même temps. Tant qu’il est inconnu, les demandes avec un cheval ne peuvent pas être envoyées.' |
