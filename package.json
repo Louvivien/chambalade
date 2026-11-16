@@ -24,6 +24,7 @@
     "audit:accueil": "node scripts/audit-accueil.mjs",
     "audit:gite": "node scripts/audit-gite.mjs",
     "audit:lieu": "node scripts/audit-lieu.mjs",
+    "audit:langues": "node scripts/audit-langues.mjs",
     "audit:legal": "node scripts/audit-legal.mjs",
     "audit:reserver": "node scripts/audit-reserver.mjs",
     "audit:admin": "node scripts/audit-admin.mjs",

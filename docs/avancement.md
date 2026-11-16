@@ -7,7 +7,8 @@ terminée donne lieu à un commit après un build sans erreur ni avertissement.
 ## Étape en cours : 12 — Version anglaise — 2026-11-16
 
 Branche : `etape-12-en` · Base : `etape-11-legal`.
-Statut : tranche 1 terminée.
+Statut : tranches 1 à 6 terminées ; étape prête pour revue, sans fusion.
+PR à créer sur GitHub (base `etape-11-legal`).
 Périmètre (`docs/etapes.md` étape 12) : toutes les pages publiques en anglais sous `/en/`
 (`/en/`, `/en/guesthouse/`, `/en/the-place/`, `/en/book/`, `/en/legal/`, `/en/privacy/`,
 `/en/booking-terms/`), `hreflang`, sélecteur de langue. Traduction naturelle, mêmes informations,
@@ -39,8 +40,9 @@ cliente ; formats de dates et de montants selon la langue.
 - [x] Tranche 5 — Pages légales en anglais.
   Fait : `legal/en/*.md`, `/en/legal/`, `/en/privacy/`, `/en/booking-terms/` ; mêmes ancres qu’en français, bandeau « Draft awaiting validation » piloté
   par le même interrupteur `valide` ; textes signalés comme traduits pour information (la version française fait foi).
-- [ ] Tranche 6 — Audit : hreflang réciproques, parité FR/EN des contenus (tests), navigateur,
+- [x] Tranche 6 — Audit : hreflang réciproques, parité FR/EN des contenus (tests), navigateur,
   Lighthouse, rapport, `docs/rapports/etape-12.json`.
+  Fait : `npm run audit:langues`, audit de réservation en anglais, Lighthouse 100 partout (96 en bonnes pratiques sur `/en/book/`), rapport.
 
 ## Étape précédente : 11 — Pages légales (FR) — 2026-11-16
 

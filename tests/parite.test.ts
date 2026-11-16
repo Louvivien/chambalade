@@ -29,7 +29,7 @@ const paires: Array<[string, string]> = [
   ['interface/fr.md', 'interface/en.md'],
 ];
 
-describe.each(paires.filter(([, en]) => existsSync(new URL(en, racine))))('parité %s ↔ %s', (fr, en) => {
+describe.each(paires)('parité %s ↔ %s', (fr, en) => {
   it('mêmes clés, mêmes types, mêmes tailles de listes', () => { expect(formes(donnees(en))).toEqual(formes(donnees(fr))); });
   it('mêmes images', () => { expect(images(donnees(en))).toEqual(images(donnees(fr))); });
   it('aucun texte français laissé tel quel par oubli (titre et description différents)', () => {
@@ -44,8 +44,6 @@ describe.each(paires.filter(([, en]) => existsSync(new URL(en, racine))))('parit
   });
 });
 
-it('toutes les paires prévues existent à la fin de l’étape 12', () => {
-  // Garde-fou : une page anglaise ne doit pas être oubliée (voir docs/avancement.md).
-  const attendues = process.env.PARITE_COMPLETE === '1' ? paires : paires.filter(([, en]) => existsSync(new URL(en, racine)));
-  for (const [, en] of attendues) expect(existsSync(new URL(en, racine)), en).toBe(true);
+it('toutes les pages anglaises prévues existent (une page oubliée casse ce test)', () => {
+  for (const [, en] of paires) expect(existsSync(new URL(en, racine)), en).toBe(true);
 });
