@@ -1,0 +1,80 @@
+{
+  "step": 6,
+  "date": "2026-11-16",
+  "branch": "etape-6-lieu",
+  "build": {
+    "pages": 3,
+    "errors": 0,
+    "warnings": 0
+  },
+  "astroCheck": {
+    "errors": 0,
+    "warnings": 0,
+    "hints": 0
+  },
+  "unitTests": {
+    "passed": 17
+  },
+  "internalLinks": {
+    "checked": 170,
+    "broken": 0
+  },
+  "lighthouse": {
+    "/le-lieu/": {
+      "version": "13.6.0",
+      "scores": {
+        "performance": 91,
+        "accessibility": 100,
+        "best-practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "lcp_ms": 1053,
+        "tbt_ms": 390,
+        "cls": 0
+      }
+    },
+    "/gite/": {
+      "version": "13.6.0",
+      "scores": {
+        "performance": 100,
+        "accessibility": 100,
+        "best-practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "lcp_ms": 1053,
+        "tbt_ms": 0,
+        "cls": 0.0
+      }
+    },
+    "/": {
+      "version": "13.6.0",
+      "scores": {
+        "performance": 100,
+        "accessibility": 100,
+        "best-practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "lcp_ms": 903,
+        "tbt_ms": 0,
+        "cls": 0.0
+      }
+    }
+  },
+  "lighthouseLieuPerformanceRepeats": [
+    91,
+    100,
+    88
+  ],
+  "browserAudit": {
+    "script": "scripts/audit-lieu.mjs",
+    "widths": [
+      375,
+      768,
+      1280
+    ],
+    "result": "ok"
+  }
+}

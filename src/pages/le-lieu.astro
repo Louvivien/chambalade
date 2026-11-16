@@ -1,0 +1,144 @@
+---
+import { getEntry } from 'astro:content';
+import { Picture } from 'astro:assets';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import VueDuCiel from '../components/VueDuCiel.astro';
+import { site } from '../lib/interface';
+const entry = await getEntry('lieu', 'fr');
+if (!entry) throw new Error('Contenu lieu/fr absent');
+const text = entry.data;
+const availablePages = { home: '/', gite: '/gite/', lieu: '/le-lieu/', reserver: '/#sejour' };
+const mapUrl = new URL('https://www.google.com/maps/search/');
+mapUrl.search = new URLSearchParams({ api: '1', query: `${site.address}, ${site.locality}` }).toString();
+---
+<BaseLayout locale="fr" title={text.title} description={text.description} currentPage="lieu" {availablePages}>
+  <section class="hero container" aria-labelledby="lieu-titre">
+    <h1 id="lieu-titre">{text.hero.title}</h1>
+    <div><p>{text.hero.text}</p><a class="text-link" href="#acces">{text.hero.accessLink}</a></div>
+  </section>
+
+  <section class="aerial container" aria-labelledby="vue-titre">
+    <div class="section-heading"><h2 id="vue-titre">{text.aerial.title}</h2><p>{text.aerial.instructions}</p></div>
+    <VueDuCiel content={text.aerial} />
+  </section>
+
+  <section class="facilities container section" aria-labelledby="equipements-titre">
+    <div>
+      <h2 id="equipements-titre">{text.facilities.title}</h2>
+      <ul class="facilities-list">
+        {text.facilities.items.map(item => <li id={item.id} tabindex="-1"><h3>{item.title}</h3><p>{item.text}</p></li>)}
+      </ul>
+      <p class="pending">{text.facilities.pending}</p>
+      <a class="text-link" href="/gite/#cheval-titre">{text.facilities.lodgeLink}</a>
+    </div>
+    <figure>
+      <Picture src={text.facilities.photo.src} alt={text.facilities.photo.alt} formats={['avif', 'webp']} widths={[480, 960, 1440]} sizes="(min-width: 64rem) 45vw, 100vw" quality={60} loading="lazy" />
+      <figcaption>{text.facilities.photo.caption}</figcaption>
+    </figure>
+  </section>
+
+  <section class="horses section" aria-labelledby="chevaux-titre">
+    <div class="container">
+      <div class="section-heading"><h2 id="chevaux-titre">{text.horses.title}</h2><p>{text.horses.text}</p></div>
+      <div class="horse-portraits">
+        <figure class="instinct">
+          <Picture src={text.horses.instinct.src} alt={text.horses.instinct.alt} formats={['avif', 'webp']} widths={[360, 720, 1080]} sizes="(min-width: 48rem) 30vw, 100vw" quality={60} loading="lazy" />
+          <figcaption>{text.horses.instinct.caption}</figcaption>
+        </figure>
+        <figure class="baraka">
+          <div class="baraka-crop"><Picture src={text.horses.baraka.src} alt={text.horses.baraka.alt} formats={['avif', 'webp']} widths={[480, 960, 1440]} sizes="(min-width: 48rem) 50vw, 100vw" quality={60} loading="lazy" /></div>
+          <figcaption>{text.horses.baraka.caption}</figcaption>
+        </figure>
+      </div>
+      <p class="pending portraits-pending">{text.horses.pending}</p>
+    </div>
+  </section>
+
+  <section class="surroundings container section" aria-labelledby="alentours-titre">
+    <div class="section-heading"><h2 id="alentours-titre">{text.surroundings.title}</h2><p>{text.surroundings.text}</p></div>
+    <article class="dionay landscape">
+      <div><h3>{text.surroundings.dionay.title}</h3><p>{text.surroundings.dionay.text}</p></div>
+      <figure>
+        <Picture src={text.surroundings.dionay.photo.src} alt={text.surroundings.dionay.photo.alt} formats={['avif', 'webp']} widths={[480, 960, 1440]} sizes="(min-width: 48rem) 65vw, 100vw" quality={60} loading="lazy" />
+        <figcaption>{text.surroundings.dionay.photo.caption}</figcaption>
+      </figure>
+    </article>
+    <article class="cascade landscape">
+      <div><h3>{text.surroundings.cascade.title}</h3><p>{text.surroundings.cascade.text}</p></div>
+      <figure>
+        <Picture src={text.surroundings.cascade.photo.src} alt={text.surroundings.cascade.photo.alt} formats={['avif', 'webp']} widths={[480, 960, 1440]} sizes="(min-width: 48rem) 55vw, 100vw" quality={60} loading="lazy" />
+        <figcaption>{text.surroundings.cascade.photo.caption}</figcaption>
+      </figure>
+    </article>
+  </section>
+
+  <section class="access section" id="acces" aria-labelledby="acces-titre" tabindex="-1">
+    <div class="container access-inner">
+      <div>
+        <h2 id="acces-titre">{text.access.title}</h2>
+        <p>{text.access.text}</p>
+        <address>{site.address}<br />{site.locality}</address>
+        <a class="text-link" href={mapUrl.href}>{text.access.mapLink}</a>
+      </div>
+      <div>
+        <h3>{text.access.vehicleTitle}</h3><p>{text.access.vehicleText}</p>
+        <h3 class="distance-title">{text.access.distanceTitle}</h3><p>{text.access.distanceText}</p>
+        <a class="text-link" href="/gite/#arrivee-titre">{text.access.lodgeLink}</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="stay section" aria-labelledby="rester-titre">
+    <div class="container">
+      <h2 id="rester-titre">{text.stay.title}</h2><p>{text.stay.text}</p>
+      <div class="actions"><a class="button" href="/gite/">{text.stay.lodgeLink}</a><a class="text-link" href="/#sejour">{text.stay.requestLink}</a></div>
+    </div>
+  </section>
+</BaseLayout>
+<style>
+  :global(.site-main) { padding-block: 0; }
+  h1, h2, h3, p, figure { margin: 0; }
+  h2 + p, h3 + p, p + p { margin-top: var(--espace-4); }
+  .section { padding-block: var(--espace-section); }
+  .hero { display: grid; gap: var(--espace-8); padding-block: var(--espace-section); }
+  h1 { max-width: 18ch; }
+  .text-link { display: inline-flex; align-items: center; min-height: 48px; font-weight: 700; margin-top: var(--espace-4); }
+  .section-heading { margin-bottom: var(--espace-8); max-width: var(--largeur-lecture); }
+  figure :global(img) { display: block; width: 100%; }
+  figcaption { font-size: var(--texte-petit); margin-top: var(--espace-3); }
+  .facilities, .access-inner { display: grid; gap: var(--espace-12); }
+  .facilities-list { list-style: none; padding: 0; margin: var(--espace-8) 0 0; }
+  .facilities-list li { padding-block: var(--espace-6); border-top: 1px solid var(--chene); }
+  .facilities-list li:target { border-top-color: var(--foret); }
+  .pending { font-size: var(--texte-petit); }
+  .horses { border-block: 1px solid var(--chene); }
+  .horse-portraits { display: grid; gap: var(--espace-8); align-items: center; }
+  .instinct { max-width: 26rem; }
+  .baraka-crop { aspect-ratio: 4 / 5; overflow: hidden; }
+  .baraka-crop :global(picture), .baraka-crop :global(img) { display: block; width: 100%; height: 100%; }
+  .baraka-crop :global(img) { object-fit: cover; object-position: 80% center; }
+  .portraits-pending { margin-top: var(--espace-8); }
+  .landscape { display: grid; gap: var(--espace-8); align-items: center; }
+  .landscape + .landscape { margin-top: var(--espace-section); }
+  .access { background: var(--horizon); }
+  address { font-style: normal; margin-top: var(--espace-6); }
+  .distance-title { margin-top: var(--espace-8); }
+  .stay { background: var(--foret); color: var(--creme); }
+  .actions { display: flex; flex-wrap: wrap; gap: var(--espace-4) var(--espace-6); align-items: center; margin-top: var(--espace-8); }
+  .actions .text-link { margin: 0; }
+  .stay .button { background: var(--creme); color: var(--foret); border-color: var(--creme); }
+  .stay .button:hover { background: var(--horizon); border-color: var(--horizon); }
+  .stay a:focus-visible { outline-color: var(--creme); }
+  @media (min-width: 48rem) {
+    .hero, .access-inner { grid-template-columns: 1fr 1fr; gap: var(--espace-16); }
+    .hero { align-items: center; }
+    .horse-portraits { grid-template-columns: .85fr 1.15fr; gap: var(--espace-16); max-width: 62rem; margin-inline: auto; }
+    .dionay { grid-template-columns: .8fr 1.6fr; }
+    .cascade { grid-template-columns: 1.3fr 1fr; }
+    .cascade figure { grid-row: 1; grid-column: 1; }
+    .cascade > div { grid-column: 2; }
+  }
+  @media (min-width: 64rem) {
+    .facilities { grid-template-columns: 1fr 1.1fr; gap: var(--espace-16); align-items: center; }
+  }
+</style>

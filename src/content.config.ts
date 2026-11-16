@@ -57,4 +57,23 @@ const gite = defineCollection({
   },
 });
 
-export const collections = { interface: interfaceContent, accueil, gite };
+const lieu = defineCollection({
+  loader: glob({ pattern: '*.md', base: './src/content/lieu' }),
+  schema: ({ image }) => {
+    const photo = z.object({ src: image(), alt: z.string().min(1), caption: z.string() });
+    const marker = z.object({ symbol: z.string().length(1), label: z.string(), accessibleLabel: z.string(), description: z.string() });
+    const surrounding = z.object({ title: z.string(), text: z.string(), photo });
+    return z.object({
+      title: z.string(), description: z.string(),
+      hero: z.object({ title: z.string(), text: z.string(), accessLink: z.string() }),
+      aerial: z.object({ title: z.string(), instructions: z.string(), navigationLabel: z.string(), legendLabel: z.string(), photo, markers: z.object({ gite: marker, carriere: marker, pres: marker }) }),
+      facilities: z.object({ title: z.string(), items: z.array(z.object({ id: z.enum(['carriere', 'ptv', 'paddocks']), title: z.string(), text: z.string() })), pending: z.string(), photo, lodgeLink: z.string() }),
+      horses: z.object({ title: z.string(), text: z.string(), instinct: photo, baraka: photo, pending: z.string() }),
+      surroundings: z.object({ title: z.string(), text: z.string(), dionay: surrounding, cascade: surrounding }),
+      access: z.object({ title: z.string(), text: z.string(), mapLink: z.string(), vehicleTitle: z.string(), vehicleText: z.string(), distanceTitle: z.string(), distanceText: z.string(), lodgeLink: z.string() }),
+      stay: z.object({ title: z.string(), text: z.string(), lodgeLink: z.string(), requestLink: z.string() }),
+    });
+  },
+});
+
+export const collections = { interface: interfaceContent, accueil, gite, lieu };

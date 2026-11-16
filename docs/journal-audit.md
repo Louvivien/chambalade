@@ -1,5 +1,118 @@
 # Journal d’audit
 
+## Étape 7 — Réservation : données et règles — 2026-11-16
+
+Branche : `etape-7-reservation` · Base : `etape-6-lieu` · Pull request : à créer (voir `docs/avancement.md`).
+
+Fait (bibliothèque pure, sans réseau, sans interface, sans API) :
+- `src/data/reservation.yaml` étendu : cinq unités réservables, règles de séjour, délais de
+  blocage (48 h, 7 jours), règles de devis. Toute valeur `TODO(amaelle)` reste `null`.
+- `src/lib/reservation/` : schéma de configuration (`config.ts`), dates en UTC et jour de
+  Paris (`dates.ts`), statuts avec expiration à la lecture (`statuts.ts`), disponibilités et
+  contraintes de séjour (`disponibilites.ts`), devis en centimes et devis figé (`devis.ts`),
+  préparation d’une demande (`demande.ts`).
+- `migrations/0001_reservation.sql` : `demandes`, `occupations`, `blocages`, `journal`,
+  avec contraintes ; vérifiée sur une base SQLite en mémoire, clés étrangères actives.
+- Jeu de test complet à part (`tests/reservation/config-test.ts`) : la configuration réelle
+  garde ses inconnues, le code est exercé avec des valeurs de test sans portée métier.
+
+Contrôles automatiques : build OK, 3 pages, sans erreur ni avertissement · 108 tests OK
+(dont 81 nouveaux : config 10, dates 6, statuts 7, disponibilités 31, devis 14, demande 9,
+migrations 14) · types : 0 erreur, 0 avertissement, 0 indication · liens : 170 références,
+0 cassée · inventaire des `TODO(amaelle)` à jour (92 lignes) · secrets : aucune valeur réelle ·
+rien d’ignoré ajouté. Lighthouse et rendus : non rejoués, aucune page ni aucun asset modifié.
+La page du gîte lit toujours `reservation.yaml` et se construit sans changement.
+
+Couverture des règles de `docs/reservation.md` (section 4 de `docs/audit.md`, limitée à
+l’étape 7) : capacités par unité · dortoir au lit, presque plein et complet · chevaux
+au-delà de la capacité · séjour à cheval sur un blocage · durées minimale et maximale ·
+J-1, 12 mois et première nuit · expiration d’une demande en attente ou acceptée · deux
+demandes sur la dernière place · devis figé · montant envoyé par le navigateur ignoré ·
+toutes les valeurs lues dans la configuration.
+
+Décisions de conception à valider (aucune ne tranche une question métier) :
+- Une valeur inconnue n’est jamais remplacée : ligne « à confirmer », devis `complet: false`,
+  pas d’acompte calculé. Avec la configuration réelle, la chambre (règle par chambre ou par
+  personne), les draps (par séjour ou par nuit) et la taxe de séjour sont « à confirmer ».
+- Une capacité inconnue n’est jamais illimitée : tant que le nombre de chevaux accueillis
+  n’est pas fourni, toute demande avec un cheval est refusée par la bibliothèque.
+- Tous les tarifs étant encore « non validés », le devis porte `provisoire: true`.
+- Le forfait cavalier reste hors du devis tant que `rider_package_enabled` est faux.
+- Blocages : date de fin exclue, comme un séjour (une fermeture du 1er au 15 libère le 15).
+- Les enfants occupent un couchage ; leur acceptation et leur tarif restent inconnus
+  (aucun refus tant que `children_accepted` n’est pas explicitement faux).
+- Le jour de départ compte pour un déjeuner mais pas pour un dîner.
+
+Point d’attention pour l’étape 8 : D1 n’offre pas de transaction interactive. La vérification
+des places doit être rejouée au moment de l’insertion, dans un seul `batch` (insertion
+conditionnelle de type `INSERT … SELECT … WHERE` qui compare la somme déjà occupée à la
+capacité). Les tests simulent cette fenêtre de concurrence mais ne peuvent pas la fermer.
+
+Nouveaux TODO(amaelle) : aucun nouveau sujet ; les unités et règles inconnues sont
+désormais portées par `src/data/reservation.yaml` (capacité des paddocks, privatisation du
+dortoir, première nuit, durée minimale, règle des chambres, règle des draps, forfait
+cavalier, acompte, enfants), en plus des tarifs déjà listés.
+
+À vérifier par Vivien : que les valeurs par défaut du cahier des charges conviennent
+en attendant Amaëlle (durée minimale 1 nuit, maximale 14, J-1, 12 mois, blocages de 48 h
+puis 7 jours), et les décisions de conception ci-dessus.
+
+## Étape 6 — Le lieu (FR) — 2026-11-16
+
+Branche : `etape-6-lieu` · Base : `etape-5-gite` ([PR #4](https://github.com/Louvivien/chambalade/pull/4)) · Pull request : à créer (voir `docs/avancement.md`).
+
+Fait :
+- Page `/le-lieu/` : vue aérienne avec trois repères cliquables (gîte, carrière, prés),
+  réduits à un petit rond pour ne pas masquer les lieux, doublés d’une légende textuelle, équipements, chevaux, alentours, accès, appel au séjour.
+- Textes dans `src/content/lieu/fr.md`, positions des repères dans `src/data/lieu.yaml`
+  (attribution confirmée par Vivien). Aucun texte ni position en dur dans le composant.
+- Lien « Le lieu » de l’accueil et du gîte raccordé à `/le-lieu/`.
+- Script `npm run audit:lieu` (navigateur, JavaScript désactivé comme en production) :
+  titre, h1, page courante, image prioritaire unique, repères placés d’après le YAML,
+  cibles tactiles ≥ 44 px, ancres, parcours clavier complet avec focus visible,
+  absence de défilement horizontal, polices, aucune requête externe ni en échec.
+
+Contrôles automatiques : build OK, 3 pages, sans erreur ni avertissement · 17 tests OK ·
+types : 0 erreur, 0 avertissement, 0 indication · liens : 170 références internes, 0 cassée ·
+inventaire des `TODO(amaelle)` à jour (75 lignes) · secrets : aucune valeur réelle
+(occurrences de documentation, tokens CSS) · rien d’ignoré ajouté (`photos-originales/`, `dist/`).
+
+Lighthouse mobile (perf / a11y / BP / SEO), serveur statique local sur le build :
+
+| Page | Performance | Accessibilité | Bonnes pratiques | SEO |
+| --- | --- | --- | --- | --- |
+| `/le-lieu/` | 91 | 100 | 100 | 100 |
+| `/gite/` | 100 | 100 | 100 | 100 |
+| `/` | 100 | 100 | 100 | 100 |
+
+Écart signalé : la performance de `/le-lieu/` varie d’une mesure à l’autre
+(91, 100, 88 sur trois essais, LCP ≈ 1,05 s, CLS 0). Seul le temps de blocage total
+change (0 à 480 ms) ; la page n’a pas de JavaScript. Une mesure sur trois est sous 90.
+Piste si cela persiste : réduire la plus grande largeur de la vue aérienne (1920) ou
+sa qualité. Non traité pour ne pas optimiser sur du bruit ; à reconfirmer sur le
+déploiement Cloudflare.
+
+Contenu : conforme. Seules les photos « À utiliser » sont employées ; la photo de la
+carrière reste exclue. Aucune distance, aucun accès van/camion, aucun portrait de
+Quinoa, Guiness ou Saphir inventés : tout est signalé à l’écran.
+Version anglaise : hors périmètre (pages FR uniquement à cette étape).
+Nouveaux TODO(amaelle) (6, déjà dans `docs/todo-contenus.md`) : validation des textes ;
+conditions carrière, PTV et paddocks ; portraits des trois autres chevaux ; distance et
+accès à cheval pour la cascade, itinéraires de Dionay ; distances depuis Lyon, Grenoble
+et Valence ; accès en voiture, van et camion.
+
+À vérifier visuellement par Vivien :
+- Les trois repères sont bien sur le gîte, la carrière et les prés (positions confirmées
+  sur la photo, pas sur un rendu final).
+- Les repères sont de petits ronds (22 px, zone tactile de 44 px) avec le nom décalé
+  sur le côté sur ordinateur : la zone désignée reste visible. Sur téléphone, seules
+  les lettres G, C et P s’affichent, les noms sont dans la légende sous la photo.
+  À confirmer sur un vrai téléphone.
+- Le recadrage du portrait de Baraka et l’équilibre général de la page.
+
+Captures : `.audit/screenshots/lieu-375.png`, `-768.png`, `-1280.png` (non versionnées).
+Résumé machine : `docs/rapports/etape-6.json`.
+
 ## Étape 5 — Reprise par tranches après réorganisation — 2026-11-16
 
 Branche : `etape-5-gite` · Pull request : [#4](https://github.com/Louvivien/chambalade/pull/4).

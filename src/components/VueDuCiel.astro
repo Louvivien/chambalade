@@ -1,0 +1,60 @@
+---
+import { Picture } from 'astro:assets';
+import type { CollectionEntry } from 'astro:content';
+import { z } from 'astro/zod';
+import { parse } from 'yaml';
+import rawLieu from '../data/lieu.yaml?raw';
+
+interface Props { content: CollectionEntry<'lieu'>['data']['aerial']; }
+const { content } = Astro.props;
+const point = z.object({ x: z.number().min(0).max(100), y: z.number().min(0).max(100) });
+const { markers } = z.object({ markers: z.object({ gite: point, carriere: point, pres: point }) }).parse(parse(rawLieu));
+const destinations = { gite: '/gite/', carriere: '#carriere', pres: '#paddocks' };
+const ids = ['gite', 'carriere', 'pres'] as const;
+---
+<figure>
+  <div class="aerial-image">
+    <Picture src={content.photo.src} alt={content.photo.alt} formats={['avif', 'webp']} widths={[480, 960, 1440, 1920]} sizes="(min-width: 1280px) 1216px, 100vw" quality={65} loading="eager" fetchpriority="high" />
+    <nav aria-label={content.navigationLabel}>
+      <ul class="markers">
+        {ids.map(id => <li>
+          <a class="marker" data-marker={id} href={destinations[id]} aria-label={content.markers[id].accessibleLabel} style={`left:${markers[id].x}%;top:${markers[id].y}%;`}>
+            <span class="symbol" aria-hidden="true">{content.markers[id].symbol}</span>
+            <span class="marker-name" aria-hidden="true">{content.markers[id].label}</span>
+          </a>
+        </li>)}
+      </ul>
+    </nav>
+  </div>
+  <figcaption>{content.photo.caption}</figcaption>
+</figure>
+<ul class="legend" aria-label={content.legendLabel}>
+  {ids.map(id => <li>
+    <a href={destinations[id]}><span class="symbol" aria-hidden="true">{content.markers[id].symbol}</span>{content.markers[id].label}</a>
+    <p>{content.markers[id].description}</p>
+  </li>)}
+</ul>
+<style>
+  figure { margin: 0; }
+  .aerial-image { position: relative; }
+  .aerial-image :global(img) { display: block; width: 100%; height: auto; }
+  .markers { margin: 0; padding: 0; list-style: none; }
+  /* La zone cliquable fait 44 px, mais seul un petit rond se voit : le repère ne doit pas masquer ce qu'il désigne. */
+  .marker { position: absolute; transform: translate(-50%, -50%); display: flex; align-items: center; justify-content: center; width: 44px; height: 44px; color: var(--foret); text-decoration: none; font-size: var(--texte-petit); font-weight: 700; }
+  .symbol { display: inline-flex; justify-content: center; align-items: center; width: 22px; height: 22px; border: 2px solid var(--foret); border-radius: 50%; background: var(--creme); font-size: .75rem; line-height: 1; font-weight: 700; }
+  .marker:hover .symbol, .marker:hover .marker-name { background: var(--foret); color: var(--creme); }
+  .marker:focus-visible { outline: none; z-index: 1; }
+  .marker:focus-visible .symbol { outline: 3px solid var(--creme); box-shadow: 0 0 0 6px var(--foret); }
+  .legend .symbol { flex: none; }
+  /* Le nom est décalé sur le côté du rond, jamais par-dessus la zone désignée. */
+  .marker-name { display: none; position: absolute; left: calc(50% + 16px); top: 50%; transform: translateY(-50%); padding: .15rem .5rem; border-radius: 3px; background: var(--creme); white-space: nowrap; }
+  figcaption { font-size: var(--texte-petit); margin-top: var(--espace-3); }
+  .legend { list-style: none; margin: var(--espace-8) 0 0; padding: 0; display: grid; gap: var(--espace-6); }
+  .legend li { border-top: 1px solid var(--chene); padding-top: var(--espace-3); }
+  .legend a { display: inline-flex; gap: var(--espace-3); align-items: center; min-height: 44px; font-weight: 700; }
+  .legend p { font-size: var(--texte-petit); margin: var(--espace-2) 0 0; }
+  @media (min-width: 48rem) {
+    .marker-name { display: inline; }
+    .legend { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--espace-8); }
+  }
+</style>
