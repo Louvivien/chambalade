@@ -1,6 +1,10 @@
 # Source : docs/brief.md. Coordonnées inconnues laissées vides.
 address: 2333 route de la Croix de Toutes Aures
 locality: 38940 Roybon, Isère
+postalCode: '38940'
+city: Roybon
+region: Isère
+country: FR
 phone: null
 email: null
 directoryUrl: https://tourisme-equestre-ara.com/cdte/isere

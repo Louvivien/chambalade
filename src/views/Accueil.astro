@@ -1,5 +1,8 @@
 ---
-import { route, type Locale } from '../lib/routes';
+import { route, routes, type Locale } from '../lib/routes';
+import { getImage } from 'astro:assets';
+import { donneesStructurees, jsonPourScript } from '../lib/seo';
+import { getInterface, site } from '../lib/interface';
 interface Props { locale: Locale; }
 const { locale } = Astro.props;
 import { getEntry } from 'astro:content';
@@ -9,8 +12,16 @@ import AccueilBandeau from '../components/AccueilBandeau.astro';
 const entry = await getEntry('accueil', locale);
 if (!entry) throw new Error(`Contenu accueil/${locale} absent`);
 const text = entry.data;
+const ui = await getInterface(locale);
+const partage = await getImage({ src: text.hero.desktop.src, width: 1200, height: 630, fit: 'cover', format: 'jpg', quality: 70 });
+const absolue = (chemin: string) => new URL(chemin, Astro.site).href;
+const entreprise = jsonPourScript(donneesStructurees({
+  nom: ui.name, description: text.description, url: absolue(routes[locale].home), image: absolue(partage.src), langue: locale,
+  adresse: { rue: site.address, codePostal: site.postalCode, ville: site.city, region: site.region, pays: site.country }, telephone: site.phone, email: site.email,
+}));
 ---
 <BaseLayout {locale} title={text.title} description={text.description} image={{ src: text.hero.desktop.src, alt: text.hero.desktop.alt }} currentPage="home">
+  <Fragment slot="head"><script type="application/ld+json" set:html={entreprise}></script></Fragment>
   <section class="hero" aria-labelledby="accueil-titre">
     <div class="hero-copy">
       <h1 id="accueil-titre">{text.hero.title}</h1>

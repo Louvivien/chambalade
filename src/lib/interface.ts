@@ -13,6 +13,6 @@ export async function getInterface(locale: Locale) {
 }
 
 export const site = z.object({
-  address: z.string(), locality: z.string(), phone: z.string().nullable(),
+  address: z.string(), locality: z.string(), postalCode: z.string(), city: z.string(), region: z.string(), country: z.string().length(2), phone: z.string().nullable(),
   email: z.email().nullable(), directoryUrl: z.url(),
 }).parse(parse(rawSite));

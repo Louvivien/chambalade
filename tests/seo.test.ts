@@ -48,3 +48,65 @@ describe('titres et descriptions des contenus', () => {
     }
   });
 });
+
+import { construireRobots, construireSitemap, donneesStructurees, jsonPourScript } from '../src/lib/seo';
+import { GET as sitemap } from '../src/pages/sitemap.xml';
+import { GET as robots } from '../src/pages/robots.txt';
+import { locales, pageKeys, routes } from '../src/lib/routes';
+
+const site = new URL('https://chambalade.fr');
+const appeler = async (route: any) => (await route({ site } as any)).text() as Promise<string>;
+
+describe('sitemap.xml', () => {
+  it('échappe le XML et déclare les alternatives de langue', () => {
+    const xml = construireSitemap([{ url: 'https://x.fr/?a=1&b=2', alternatives: [{ langue: 'fr', url: 'https://x.fr/' }, { langue: 'en', url: 'https://x.fr/en/' }] }]);
+    expect(xml).toContain('<loc>https://x.fr/?a=1&amp;b=2</loc>');
+    expect(xml).toContain('hreflang="en" href="https://x.fr/en/"');
+    expect(xml).toContain('hreflang="x-default" href="https://x.fr/"');
+  });
+  it('liste les pages publiques dans les deux langues, adresses absolues et réciproques', async () => {
+    const xml = await appeler(sitemap);
+    for (const cle of ['home', 'gite', 'lieu', 'reserver'] as const) for (const l of locales) expect(xml).toContain(`<loc>https://chambalade.fr${routes[l][cle]}</loc>`);
+    for (const l of locales) expect((xml.match(new RegExp(`hreflang="${l}"`, 'g')) ?? []).length).toBe(8);
+  });
+  it('exclut les pages légales tant qu’elles ne sont pas validées, et /admin/', async () => {
+    const xml = await appeler(sitemap);
+    for (const cle of ['mentions', 'confidentialite', 'conditions'] as const) for (const l of locales) expect(xml).not.toContain(routes[l][cle]);
+    expect(xml).not.toContain('/admin');
+    expect(xml).not.toContain('/api');
+  });
+  it('toutes les adresses viennent de la table de routes', async () => {
+    const xml = await appeler(sitemap);
+    const connues = new Set(pageKeys.flatMap(k => locales.map(l => `https://chambalade.fr${routes[l][k]}`)));
+    for (const m of xml.matchAll(/<loc>([^<]+)<\/loc>/g)) expect(connues.has(m[1]), m[1]).toBe(true);
+  });
+});
+
+describe('robots.txt', () => {
+  it('interdit /admin/ et /api/, autorise le reste, annonce le sitemap', async () => {
+    const txt = await appeler(robots);
+    expect(txt).toContain('Disallow: /admin/');
+    expect(txt).toContain('Disallow: /api/');
+    expect(txt).toContain('Allow: /');
+    expect(txt).toContain('Sitemap: https://chambalade.fr/sitemap.xml');
+  });
+  it('construireRobots', () => { expect(construireRobots('https://x.fr/s.xml', ['/a/'])).toBe('User-agent: *\nAllow: /\nDisallow: /a/\n\nSitemap: https://x.fr/s.xml\n'); });
+});
+
+describe('données structurées LodgingBusiness', () => {
+  const base = { nom: 'Chambalade', description: 'D', url: 'https://chambalade.fr/', langue: 'fr' as const, adresse: { rue: 'R', codePostal: '38940', ville: 'Roybon', region: 'Isère', pays: 'FR' } };
+  it('type, adresse et langue', () => {
+    const d: any = donneesStructurees(base);
+    expect(d['@type']).toBe('LodgingBusiness');
+    expect(d.address['@type']).toBe('PostalAddress');
+    expect(d.inLanguage).toBe('fr');
+  });
+  it('n’invente aucune coordonnée : téléphone et e-mail absents tant qu’ils sont inconnus', () => {
+    const d: any = donneesStructurees({ ...base, telephone: null, email: null });
+    for (const cle of ['telephone', 'email', 'priceRange', 'geo', 'aggregateRating', 'openingHours', 'checkinTime']) expect(cle in d, cle).toBe(false);
+    expect((donneesStructurees({ ...base, telephone: '+33 4 00 00 00 00' }) as any).telephone).toBe('+33 4 00 00 00 00');
+  });
+  it('« < » ne peut pas fermer la balise script', () => {
+    expect(jsonPourScript({ a: '</script><img>' })).not.toContain('<');
+  });
+});

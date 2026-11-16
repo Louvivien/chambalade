@@ -22,8 +22,11 @@ restent hors du sitemap et en `noindex` tant que `valide: false` (`src/data/lega
   langue, alternatives de langue, image 1200×630 issue d’une photo « À utiliser »), tests.
   Fait : `src/lib/seo.ts` (`construireMeta`), `BaseLayout` (canonical, Open Graph, Twitter ; image de partage 1200×630 générée depuis la photo
   d’en-tête de l’accueil, du gîte et du lieu ; pas d’image pour Réserver ni le légal), 18 tests (titres ≤ 70 signes, descriptions de 60 à 170, uniques).
-- [ ] Tranche 2 — `sitemap.xml` (avec alternatives de langue), `robots.txt`, JSON-LD
+- [x] Tranche 2 — `sitemap.xml` (avec alternatives de langue), `robots.txt`, JSON-LD
   `LodgingBusiness` (FR/EN) ; tests de cohérence avec la table de routes.
+  Fait : `sitemap.xml` (8 pages, alternatives de langue ; pages légales exclues tant que `valide: false`), `robots.txt` (interdit `/admin/` et
+  `/api/`), JSON-LD sur l’accueil (nom, adresse, description, image ; aucun téléphone, prix, GPS ni horaire inventé), adresse découpée dans
+  `site.yaml`. 27 tests.
 - [ ] Tranche 3 — Accessibilité et performance : contrastes mesurés pour tous les couples de
   couleurs utilisés, clavier, Lighthouse mobile sur toutes les pages publiques, liste des restes
   à corriger, rapport, `docs/rapports/etape-13.json`.
