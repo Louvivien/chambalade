@@ -1,7 +1,58 @@
 # Source tarifaire unique. Montants en centimes, issus de docs/brief.md et docs/reservation.md.
-# Données de présentation pour l’étape 5 ; unités réservables et règles complètes à l’étape 7.
+# Étape 5 : présentation des tarifs. Étape 7 : unités réservables, règles de séjour, délais.
+# Toute valeur TODO(amaelle) reste null : le code ne la remplace jamais par une valeur inventée.
 currency: EUR
 capacity: 12
+timezone: Europe/Paris
+
+# Unités réservables (docs/reservation.md, section 3). Une nuit = date d’arrivée incluse,
+# date de départ exclue.
+units:
+  chambre_privee:
+    type: chambre
+    label: Chambre avec salle de bain privée
+    capacity_people: 2
+    price: chambre_privee
+  chambre_2:
+    type: chambre
+    label: Chambre 2
+    capacity_people: 2
+    price: chambre_partagee
+  chambre_3:
+    type: chambre
+    label: Chambre 3
+    capacity_people: 2
+    price: chambre_partagee
+  dortoir:
+    type: dortoir
+    label: Dortoir
+    capacity_beds: 6
+    privatisable: null # TODO(amaelle): le dortoir est-il privatisable en entier, et à quel prix ?
+  paddocks:
+    type: paddock
+    label: Paddocks
+    capacity_horses: null # TODO(amaelle): nombre de chevaux accueillis en même temps.
+
+# Contraintes de séjour. Les valeurs 1 et 14 sont les défauts du cahier des charges.
+stay:
+  first_night: null # TODO(amaelle): première nuit réservable (ouverture au printemps 2027), AAAA-MM-JJ.
+  min_nights: 1 # TODO(amaelle): confirmer la durée minimale.
+  max_nights: 14
+  last_booking_days_before: 1
+  max_advance_months: 12
+
+# Durée pendant laquelle une demande bloque les dates.
+holds:
+  pending_hours: 48
+  accepted_days: 7
+
+# Règles de calcul du devis. Null = inconnu : la ligne concernée est « à confirmer ».
+quote:
+  room_pricing: null # TODO(amaelle): per_room_night ou per_person_night.
+  sheets_pricing: null # TODO(amaelle): per_bed_stay ou per_bed_night.
+  rider_package_enabled: false # TODO(amaelle): contenu du forfait ; exclu du devis tant que false.
+  deposit_percent: null # TODO(amaelle): pourcentage d’acompte (proposition : 30).
+  children_accepted: null # TODO(amaelle): enfants acceptés ? tarif ?
 # TODO(amaelle): valider l’ensemble des tarifs proposés avant publication.
 prices:
   dortoir:

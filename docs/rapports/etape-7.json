@@ -1,0 +1,35 @@
+{
+  "step": 7,
+  "date": "2026-11-16",
+  "branch": "etape-7-reservation",
+  "build": {
+    "pages": 3,
+    "errors": 0,
+    "warnings": 0
+  },
+  "astroCheck": {
+    "errors": 0,
+    "warnings": 0,
+    "hints": 0
+  },
+  "unitTests": {
+    "passed": 108,
+    "files": {
+      "config": 10,
+      "dates": 6,
+      "statuts": 7,
+      "disponibilites": 31,
+      "devis": 14,
+      "demande": 9,
+      "migrations": 14,
+      "tarifs": 8,
+      "photos": 6,
+      "contrastes": 3
+    }
+  },
+  "internalLinks": {
+    "checked": 170,
+    "broken": 0
+  },
+  "lighthouse": "non rejoué : aucune page ni aucun asset modifié (étape sans interface)"
+}

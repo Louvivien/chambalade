@@ -1,5 +1,62 @@
 # Journal d’audit
 
+## Étape 7 — Réservation : données et règles — 2026-11-16
+
+Branche : `etape-7-reservation` · Base : `etape-6-lieu` · Pull request : à créer (voir `docs/avancement.md`).
+
+Fait (bibliothèque pure, sans réseau, sans interface, sans API) :
+- `src/data/reservation.yaml` étendu : cinq unités réservables, règles de séjour, délais de
+  blocage (48 h, 7 jours), règles de devis. Toute valeur `TODO(amaelle)` reste `null`.
+- `src/lib/reservation/` : schéma de configuration (`config.ts`), dates en UTC et jour de
+  Paris (`dates.ts`), statuts avec expiration à la lecture (`statuts.ts`), disponibilités et
+  contraintes de séjour (`disponibilites.ts`), devis en centimes et devis figé (`devis.ts`),
+  préparation d’une demande (`demande.ts`).
+- `migrations/0001_reservation.sql` : `demandes`, `occupations`, `blocages`, `journal`,
+  avec contraintes ; vérifiée sur une base SQLite en mémoire, clés étrangères actives.
+- Jeu de test complet à part (`tests/reservation/config-test.ts`) : la configuration réelle
+  garde ses inconnues, le code est exercé avec des valeurs de test sans portée métier.
+
+Contrôles automatiques : build OK, 3 pages, sans erreur ni avertissement · 108 tests OK
+(dont 81 nouveaux : config 10, dates 6, statuts 7, disponibilités 31, devis 14, demande 9,
+migrations 14) · types : 0 erreur, 0 avertissement, 0 indication · liens : 170 références,
+0 cassée · inventaire des `TODO(amaelle)` à jour (92 lignes) · secrets : aucune valeur réelle ·
+rien d’ignoré ajouté. Lighthouse et rendus : non rejoués, aucune page ni aucun asset modifié.
+La page du gîte lit toujours `reservation.yaml` et se construit sans changement.
+
+Couverture des règles de `docs/reservation.md` (section 4 de `docs/audit.md`, limitée à
+l’étape 7) : capacités par unité · dortoir au lit, presque plein et complet · chevaux
+au-delà de la capacité · séjour à cheval sur un blocage · durées minimale et maximale ·
+J-1, 12 mois et première nuit · expiration d’une demande en attente ou acceptée · deux
+demandes sur la dernière place · devis figé · montant envoyé par le navigateur ignoré ·
+toutes les valeurs lues dans la configuration.
+
+Décisions de conception à valider (aucune ne tranche une question métier) :
+- Une valeur inconnue n’est jamais remplacée : ligne « à confirmer », devis `complet: false`,
+  pas d’acompte calculé. Avec la configuration réelle, la chambre (règle par chambre ou par
+  personne), les draps (par séjour ou par nuit) et la taxe de séjour sont « à confirmer ».
+- Une capacité inconnue n’est jamais illimitée : tant que le nombre de chevaux accueillis
+  n’est pas fourni, toute demande avec un cheval est refusée par la bibliothèque.
+- Tous les tarifs étant encore « non validés », le devis porte `provisoire: true`.
+- Le forfait cavalier reste hors du devis tant que `rider_package_enabled` est faux.
+- Blocages : date de fin exclue, comme un séjour (une fermeture du 1er au 15 libère le 15).
+- Les enfants occupent un couchage ; leur acceptation et leur tarif restent inconnus
+  (aucun refus tant que `children_accepted` n’est pas explicitement faux).
+- Le jour de départ compte pour un déjeuner mais pas pour un dîner.
+
+Point d’attention pour l’étape 8 : D1 n’offre pas de transaction interactive. La vérification
+des places doit être rejouée au moment de l’insertion, dans un seul `batch` (insertion
+conditionnelle de type `INSERT … SELECT … WHERE` qui compare la somme déjà occupée à la
+capacité). Les tests simulent cette fenêtre de concurrence mais ne peuvent pas la fermer.
+
+Nouveaux TODO(amaelle) : aucun nouveau sujet ; les unités et règles inconnues sont
+désormais portées par `src/data/reservation.yaml` (capacité des paddocks, privatisation du
+dortoir, première nuit, durée minimale, règle des chambres, règle des draps, forfait
+cavalier, acompte, enfants), en plus des tarifs déjà listés.
+
+À vérifier par Vivien : que les valeurs par défaut du cahier des charges conviennent
+en attendant Amaëlle (durée minimale 1 nuit, maximale 14, J-1, 12 mois, blocages de 48 h
+puis 7 jours), et les décisions de conception ci-dessus.
+
 ## Étape 6 — Le lieu (FR) — 2026-11-16
 
 Branche : `etape-6-lieu` · Base : `etape-5-gite` ([PR #4](https://github.com/Louvivien/chambalade/pull/4)) · Pull request : à créer (voir `docs/avancement.md`).
