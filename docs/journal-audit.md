@@ -5,8 +5,8 @@
 Branche : `etape-6-lieu` · Base : `etape-5-gite` ([PR #4](https://github.com/Louvivien/chambalade/pull/4)) · Pull request : à créer (voir `docs/avancement.md`).
 
 Fait :
-- Page `/le-lieu/` : vue aérienne avec trois repères cliquables (gîte, carrière, prés)
-  doublés d’une légende textuelle, équipements, chevaux, alentours, accès, appel au séjour.
+- Page `/le-lieu/` : vue aérienne avec trois repères cliquables (gîte, carrière, prés),
+  réduits à un petit rond pour ne pas masquer les lieux, doublés d’une légende textuelle, équipements, chevaux, alentours, accès, appel au séjour.
 - Textes dans `src/content/lieu/fr.md`, positions des repères dans `src/data/lieu.yaml`
   (attribution confirmée par Vivien). Aucun texte ni position en dur dans le composant.
 - Lien « Le lieu » de l’accueil et du gîte raccordé à `/le-lieu/`.
@@ -47,8 +47,10 @@ et Valence ; accès en voiture, van et camion.
 À vérifier visuellement par Vivien :
 - Les trois repères sont bien sur le gîte, la carrière et les prés (positions confirmées
   sur la photo, pas sur un rendu final).
-- À 375 px, les repères G, C et P sont proches les uns des autres ; lisibles et assez
-  grands au toucher, mais à confirmer sur un vrai téléphone.
+- Les repères sont de petits ronds (22 px, zone tactile de 44 px) avec le nom décalé
+  sur le côté sur ordinateur : la zone désignée reste visible. Sur téléphone, seules
+  les lettres G, C et P s’affichent, les noms sont dans la légende sous la photo.
+  À confirmer sur un vrai téléphone.
 - Le recadrage du portrait de Baraka et l’équilibre général de la page.
 
 Captures : `.audit/screenshots/lieu-375.png`, `-768.png`, `-1280.png` (non versionnées).
