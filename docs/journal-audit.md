@@ -2,7 +2,7 @@
 
 ## Étape 4 — Accueil français — 2026-11-16
 
-Branche : `etape-4-accueil` · Pull request : à renseigner après création.
+Branche : `etape-4-accueil` · Pull request : [#3](https://github.com/Louvivien/chambalade/pull/3).
 Base : `etape-3-gabarit` (PR #2), sans fusion dans main.
 
 Fait :
