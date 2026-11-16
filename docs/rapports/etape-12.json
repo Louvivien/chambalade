@@ -6,7 +6,7 @@
   "astroCheck": { "errors": 0, "warnings": 0, "hints": 1 },
   "unitTests": { "passed": 548, "new": 47 },
   "internalLinks": { "checked": 475, "broken": 0 },
-  "todoInventoryLines": 197,
+  "todoInventoryLines": 201,
   "lighthouse": {
     "/en/": { "performance": 100, "accessibility": 100, "best-practices": 100, "seo": 100 },
     "/en/guesthouse/": { "performance": 100, "accessibility": 100, "best-practices": 100, "seo": 100 },
