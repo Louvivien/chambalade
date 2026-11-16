@@ -19,7 +19,7 @@ Fait (bibliothèque pure, sans réseau, sans interface, sans API) :
 Contrôles automatiques : build OK, 3 pages, sans erreur ni avertissement · 108 tests OK
 (dont 81 nouveaux : config 10, dates 6, statuts 7, disponibilités 31, devis 14, demande 9,
 migrations 14) · types : 0 erreur, 0 avertissement, 0 indication · liens : 170 références,
-0 cassée · inventaire des `TODO(amaelle)` à jour (89 lignes) · secrets : aucune valeur réelle ·
+0 cassée · inventaire des `TODO(amaelle)` à jour (92 lignes) · secrets : aucune valeur réelle ·
 rien d’ignoré ajouté. Lighthouse et rendus : non rejoués, aucune page ni aucun asset modifié.
 La page du gîte lit toujours `reservation.yaml` et se construit sans changement.
 
