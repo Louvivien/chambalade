@@ -1,5 +1,76 @@
 # Journal d’audit
 
+## Étape 4 — Accueil français — 2026-11-16
+
+Branche : `etape-4-accueil` · Pull request : à renseigner après création.
+Base : `etape-3-gabarit` (PR #2), sans fusion dans main.
+
+Fait :
+- Accueil `/` : bandeau, présentation avec Amaëlle et Instinct, gîte, balades et
+  pension « Bientôt », raisons de venir, Chambarans et section de demande de séjour.
+- Textes, légendes, photos et alternatives dans `src/content/accueil/fr.md`, avec
+  schéma Astro. Aucun texte éditorial ni prix ajouté dans les composants.
+- Bandeau adapté : forêt sous 768 px, pré à partir de 768 px, AVIF/WebP/JPEG et
+  plusieurs largeurs. Un seul téléchargement au chargement ; alternatives exactes
+  du tableau exposées selon l’écran, sans JavaScript. Saturation du pré légèrement
+  réduite. Autres photos via Picture et chargement différé.
+- Navigation vers les sections existantes ; méthode de contrôle dans
+  `docs/accueil.md`, audit reproductible `npm run audit:accueil`.
+
+Contrôles automatiques : build OK, 1 page, aucune erreur ni avertissement ·
+9 tests OK (6 photos, 3 contrastes) · `check` : 0 erreur, 0 avertissement, 0 indication ·
+secrets : aucune valeur réelle (occurrences de documentation, tokens CSS et noms
+de dépendances) · liens : 51 références internes, 0 cassée. Inventaire éditorial
+synchronisé. Aucun original, `.env`, build ou rapport brut dans le commit.
+`git diff --check` propre.
+
+Lighthouse mobile (perf / a11y / BP / SEO) : `/` — **94 / 100 / 100 / 100**.
+Mesure finale sur serveur statique local, Chrome headless, simulation mobile par
+défaut. La première mesure donnait 100 / 100 / 100 / 100 ; celle réalisée après
+l’ajustement de saturation ci-dessus est retenue. Tous les seuils sont atteints.
+Les recommandations restantes portent notamment sur le cache/compression du
+serveur local, les images et la chaîne CSS/polices ; à réévaluer sur Cloudflare à
+l’étape de mise en ligne. Résumé conservé dans `docs/rapports/etape-4.json`.
+
+Qualité front : rendus 375, 768 et 1280 px inspectés ; aucun débordement horizontal.
+11 liens parcourus dans l’ordre du document avec focus visible ; lien d’évitement
+et ancres du gîte et du séjour vérifiés. Descriptions des images testées dans
+l’arbre d’accessibilité, y compris après redimensionnement. Page vérifiée sans
+JavaScript, polices réellement chargées en local, aucune requête externe ou en
+échec, aucune animation en mouvement réduit. Contrastes du gabarit conservés
+(forêt/crème 10,18, forêt/horizon 6,20, crème/kaki foncé 5,65). Pas de décor générique
+interdit. Captures locales : `.audit/screenshots/accueil-{375,768,1280}.png`.
+
+Contenu : informations issues du brief (20 hectares, douze couchages, ouverture,
+équipements, qualifications, futures activités). Aucun tarif ni temps de trajet
+non confirmé. « Paddock et foin » ne signifie pas une inclusion dans le prix du
+couchage humain. Vouvoiement, marque et typographie respectés. L’accueil anglais
+n’existe pas encore ; sa construction relève de l’étape de traduction.
+
+Écarts et décisions :
+- Le pré n’a pas le statut strict « À utiliser » : sa sélection est explicitement
+  demandée par Vivien à l’étape 4. Cette instruction autorise son utilisation ; le
+  statut « Original à demander (utilisable en attendant) » est conservé dans la
+  source. Toutes les autres photos utilisées ont le statut « À utiliser ».
+- Le téléphone et l’e-mail manquent, le formulaire est prévu plus tard. Les liens
+  de demande mènent à une explication honnête de leur disponibilité à venir.
+  L’appel final proposé par le brief est adapté pour ne pas prétendre qu’une
+  demande peut déjà être transmise. Raccorder les appels au formulaire lorsqu’il
+  sera prêt ; les demandes ne sont pas encore opérationnelles à cette étape.
+- Les pages gîte/lieu, anglaises et légales restent à construire aux étapes
+  prévues. Les deux premières disposent ici d’ancres réelles ; les autres restent
+  des libellés désactivés du gabarit. Logo typographique provisoire inchangé.
+- Aucun travail hors du périmètre de l’accueil. Réservation serveur : non applicable.
+
+Nouveaux TODO(amaelle) : quatre notes dans le contenu — validation des textes,
+coordonnées, distances, clarification de l’inclusion du paddock/foin. Les points
+déjà ouverts dans le brief sont rappelés au plus près du contenu et inventoriés.
+
+À vérifier visuellement par Vivien : équilibre du titre sur le pré, lecture du
+bandeau mobile, portrait d’Amaëlle, enchaînement des sections et formulation des
+demandes en attente. Faire relire les textes proposés par Amaëlle. Aucune fusion
+ni publication effectuée.
+
 ## Étape 3 — Design system et gabarit — 2026-11-16
 
 Branche : `etape-3-gabarit` · Pull request : [#2](https://github.com/Louvivien/chambalade/pull/2).

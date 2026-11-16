@@ -59,9 +59,10 @@ conditions pratiques, identité légale. Les sources ci-dessous font autorité.
 | `docs/etapes.md:31` | > restent visibles avec TODO(amaelle) et sont listées dans docs/todo-contenus.md. |
 | `docs/etapes.md:38` | > avec les TODO(amaelle)), les migrations D1, et une bibliothèque pure (sans accès réseau) qui |
 | `docs/initialisation.md:48` | des routes de contrôle séparées via `npm run dev:audit`. Aucun nouveau `TODO(amaelle)` à cette étape ; les |
-| `docs/journal-audit.md:66` | Nouveaux TODO(amaelle) : marqueurs FR/EN de contact et logo dans |
-| `docs/journal-audit.md:103` | Nouveaux TODO(amaelle) : aucun ; inventaire des points existants créé. |
-| `docs/journal-audit.md:136` | Nouveaux TODO(amaelle) : aucun ; les inconnues métier restent dans les sources. |
+| `docs/journal-audit.md:65` | Nouveaux TODO(amaelle) : quatre notes dans le contenu — validation des textes, |
+| `docs/journal-audit.md:137` | Nouveaux TODO(amaelle) : marqueurs FR/EN de contact et logo dans |
+| `docs/journal-audit.md:174` | Nouveaux TODO(amaelle) : aucun ; inventaire des points existants créé. |
+| `docs/journal-audit.md:207` | Nouveaux TODO(amaelle) : aucun ; les inconnues métier restent dans les sources. |
 | `docs/photos.md:22` | \| cascade de Roybon.HEIC \| cascade-roybon.jpg \| Le lieu, les alentours \| Distance et accès à cheval : TODO(amaelle) \| Cascade de Roybon dans un sous-bois \| À utiliser \| |
 | `docs/reservation.md:4` | étapes 7 à 10). Les valeurs marquées `TODO(amaelle)` sont des paramètres à obtenir : le code doit |
 | `docs/reservation.md:33` | Cloudflare. Expéditeur : adresse sur le domaine chambalade.fr, TODO(amaelle). |
@@ -76,6 +77,10 @@ conditions pratiques, identité légale. Les sources ci-dessous font autorité.
 | `docs/reservation.md:71` | \| Acompte \| pourcentage du total \| TODO(amaelle) (proposition : 30 %) \| |
 | `docs/reservation.md:142` | l'acompte, coordonnées bancaires TODO(amaelle) et date limite ; réservation confirmée ; |
 | `docs/reservation.md:153` | (TODO(amaelle), proposition : anonymisation 3 ans après le séjour), droits d'accès et |
+| `src/content/accueil/fr.md:58` | <!-- TODO(amaelle): valider les textes proposés de l’accueil, issus du brief. --> |
+| `src/content/accueil/fr.md:59` | <!-- TODO(amaelle): fournir téléphone et e-mail pour rendre la demande de séjour possible avant le module de réservation. --> |
+| `src/content/accueil/fr.md:60` | <!-- TODO(amaelle): confirmer les distances depuis Lyon, Grenoble et Valence ; aucune durée publiée en attendant. --> |
+| `src/content/accueil/fr.md:61` | <!-- TODO(amaelle): confirmer la portée de « paddock et foin compris » ; le tarif cheval est distinct de l’hébergement humain dans le brief. --> |
 | `src/content/interface/en.md:9` | contactPending: 'TODO(amaelle): provide the contact phone number and email address.' |
 | `src/content/interface/en.md:10` | logoPending: 'TODO(amaelle): provide a transparent logo; temporary typographic name.' |
 | `src/content/interface/fr.md:9` | contactPending: 'TODO(amaelle): fournir le téléphone et l’adresse e-mail de contact.' |

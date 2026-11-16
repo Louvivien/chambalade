@@ -1,0 +1,101 @@
+{
+  "step": 4,
+  "page": "/",
+  "branch": "etape-4-accueil",
+  "date": "2026-11-16",
+  "build": {
+    "pages": 1,
+    "errors": 0,
+    "warnings": 0
+  },
+  "astroCheck": {
+    "errors": 0,
+    "warnings": 0,
+    "hints": 0
+  },
+  "unitTests": {
+    "passed": 9
+  },
+  "internalLinks": {
+    "checked": 51,
+    "broken": 0
+  },
+  "lighthouse": {
+    "version": "13.6.0",
+    "fetchTime": "2026-11-16T10:35:24.808Z",
+    "scores": {
+      "performance": 94,
+      "accessibility": 100,
+      "best-practices": 100,
+      "seo": 100
+    },
+    "metrics": {
+      "first-contentful-paint": 1017.4159,
+      "largest-contentful-paint": 1017.4159,
+      "total-blocking-time": 292.5,
+      "cumulative-layout-shift": 4.068520081599215e-05,
+      "speed-index": 1141.320379145865
+    }
+  },
+  "browser": [
+    {
+      "width": 375,
+      "hero": "foret-chambaran",
+      "initialHeroRequests": 1,
+      "keyboardLinks": 11,
+      "noClientJavaScript": true,
+      "overflow": false,
+      "bodyFont": "\"Nunito Sans\", system-ui, sans-serif",
+      "headingFont": "Lora, Georgia, serif",
+      "animations": 0,
+      "fonts": [
+        "Lora",
+        "Nunito Sans",
+        "Nunito Sans"
+      ],
+      "externalRequests": [],
+      "failedRequests": []
+    },
+    {
+      "width": 768,
+      "hero": "pres-de-la-trappe",
+      "initialHeroRequests": 1,
+      "keyboardLinks": 11,
+      "noClientJavaScript": true,
+      "overflow": false,
+      "bodyFont": "\"Nunito Sans\", system-ui, sans-serif",
+      "headingFont": "Lora, Georgia, serif",
+      "animations": 0,
+      "fonts": [
+        "Lora",
+        "Nunito Sans",
+        "Nunito Sans"
+      ],
+      "externalRequests": [],
+      "failedRequests": []
+    },
+    {
+      "width": 1280,
+      "hero": "pres-de-la-trappe",
+      "initialHeroRequests": 1,
+      "keyboardLinks": 11,
+      "noClientJavaScript": true,
+      "overflow": false,
+      "bodyFont": "\"Nunito Sans\", system-ui, sans-serif",
+      "headingFont": "Lora, Georgia, serif",
+      "animations": 0,
+      "fonts": [
+        "Lora",
+        "Nunito Sans",
+        "Nunito Sans"
+      ],
+      "externalRequests": [],
+      "failedRequests": []
+    }
+  ],
+  "limitations": [
+    "Demandes de séjour non opérationnelles : coordonnées absentes et formulaire prévu plus tard.",
+    "Photo du pré explicitement demandée par Vivien ; original toujours attendu.",
+    "Pages gîte, lieu, anglaises et légales prévues aux étapes suivantes."
+  ]
+}
