@@ -94,7 +94,7 @@ export async function gererAdmin(request: Request, deps: ApiDeps, chemin: string
       if (!/^\d{4}-\d{2}$/.test(mois) || !estDateValide(`${mois}-01`)) return erreur(400, 'mois_invalide', 'Indiquez un mois au format AAAA-MM.');
       const du = `${mois}-01`;
       const suivant = new Date(Date.UTC(+mois.slice(0, 4), +mois.slice(5, 7), 1)).toISOString().slice(0, 10);
-      const occ = await db.prepare(`SELECT o.unite, o.nuit, o.quantite, d.id AS demande_id, d.reference, d.statut, d.nom
+      const occ = await db.prepare(`SELECT o.unite, o.nuit, o.quantite, d.id AS demande_id, d.reference, d.statut, d.nom, d.prenom
         FROM occupations o JOIN demandes d ON d.id = o.demande_id
         WHERE o.nuit >= ? AND o.nuit < ? AND (d.statut = 'confirmee' OR (d.statut IN ('en_attente', 'acceptee') AND (d.expire_at IS NULL OR d.expire_at > ?)))
         ORDER BY o.nuit, o.unite`).bind(du, suivant, maintenant.toISOString()).all();

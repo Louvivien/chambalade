@@ -111,6 +111,35 @@ const vues = ['demandes', 'fiche', 'calendrier', 'blocages'] as const;
   .devis-lignes .montant { white-space: nowrap; font-weight: 700; }
   .devis-total { display: flex; justify-content: space-between; gap: var(--espace-4); font-weight: 700; font-size: 1.25rem; max-width: 32rem; }
   .devis-recap .alerte { font-weight: 700; }
+  .cal-mois { margin: 0; font-size: var(--titre-3); text-transform: capitalize; }
+  .cal-defile { overflow-x: auto; border: 1px solid var(--foret); background: color-mix(in srgb, var(--creme) 55%, white); }
+  .cal-admin { border-collapse: collapse; min-width: 100%; font-size: var(--texte-petit); }
+  .cal-admin th, .cal-admin td { border: 1px solid color-mix(in srgb, var(--foret) 25%, transparent); padding: 2px; text-align: center; min-width: 1.9rem; }
+  .cal-admin th.cal-unite { position: sticky; left: 0; z-index: 1; background: var(--creme); text-align: left; padding: var(--espace-2) var(--espace-3); min-width: 7.5rem; max-width: 9rem; border-right: 2px solid var(--foret); }
+  .cal-admin thead th { font-weight: 700; padding-block: var(--espace-2); }
+  .cal-sem { display: block; font-weight: 400; font-size: 0.7rem; }
+  .cal-admin .weekend { background: color-mix(in srgb, var(--horizon) 25%, transparent); }
+  .cell { display: inline-flex; align-items: center; justify-content: center; min-width: 1.7rem; min-height: 2rem; padding: 0 3px; border: 1px solid var(--foret); border-radius: 3px; font: inherit; font-weight: 700; font-size: 0.8rem; color: var(--foret); background: var(--creme); }
+  button.cell { cursor: pointer; width: 100%; min-height: 2.4rem; }
+  button.cell:hover { outline: 2px solid var(--foret); }
+  .etat-confirmee { background: var(--kaki-fonce); color: var(--creme); border-color: var(--kaki-fonce); }
+  .etat-acceptee { background: repeating-linear-gradient(135deg, var(--horizon) 0 5px, var(--creme) 5px 9px); }
+  .etat-en_attente { background: var(--chene); border-style: dashed; border-width: 2px; }
+  .etat-bloque { background: repeating-linear-gradient(45deg, var(--foret) 0 3px, var(--creme) 3px 6px), repeating-linear-gradient(-45deg, transparent 0 3px, var(--foret) 3px 4px); color: var(--foret); background-blend-mode: normal; }
+  .etat-bloque { background-color: var(--creme); text-shadow: 0 0 3px var(--creme), 0 0 3px var(--creme), 0 0 3px var(--creme); }
+  .conflit { outline: 3px solid var(--erreur); outline-offset: -3px; }
+  .cal-legende ul { list-style: none; padding: 0; display: flex; flex-wrap: wrap; gap: var(--espace-3) var(--espace-6); }
+  .cal-legende li { display: inline-flex; align-items: center; gap: var(--espace-2); }
+  .cal-legende h3 { font-size: 1.1rem; margin: var(--espace-6) 0 var(--espace-2); }
+  .cal-details { margin-top: var(--espace-4); min-height: 2rem; }
+  .cal-details h3 { font-size: 1.1rem; margin: 0 0 var(--espace-2); }
+  .cal-details-liste { padding-left: 1.2rem; }
+  .liste-blocages { list-style: none; padding: 0; display: grid; gap: var(--espace-3); }
+  .bloc-item { border: 1px solid var(--foret); padding: var(--espace-4); background: color-mix(in srgb, var(--creme) 55%, white); display: grid; gap: var(--espace-2); justify-items: start; }
+  .bloc-item p { margin: 0; }
+  .confirmation-suppression { display: grid; gap: var(--espace-2); }
+  .conflits { border: 2px solid var(--erreur); padding: var(--espace-4); margin-bottom: var(--espace-4); font-weight: 700; }
+  .conflits p { margin: 0 0 var(--espace-2); }
   @media (min-width: 48rem) {
     .demande-lien { grid-template-columns: 1.6fr 1.2fr 1.4fr 1fr; align-items: center; }
     .demande-id { grid-column: 1; }
