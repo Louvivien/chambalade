@@ -77,13 +77,14 @@ try {
     assert.equal(new URL(page.url()).pathname, '/gite/');
     assert.equal((await page.locator('h1').textContent()).length > 0, true);
     await page.goto(origin, { waitUntil: 'networkidle' });
-    await page.getByRole('link', { name: content.hero.request, exact: true }).click();
+    assert.equal(await page.getByRole('link', { name: content.hero.request, exact: true }).evaluateAll(l => [...new Set(l.map(a => a.getAttribute('href')))].join()), '/reserver/');
+    await page.locator('.hero').getByRole('link', { name: content.hero.request, exact: true }).click();
     assert.equal(new URL(page.url()).pathname, '/reserver/');
     await page.goto(origin, { waitUntil: 'networkidle' });
     await page.getByRole('link', { name: content.activities.interestLink, exact: true }).click();
     assert.equal(new URL(page.url()).hash, '#sejour');
     assert(await page.locator('#sejour').isVisible());
-    await page.getByRole('link', { name: content.stay.requestLink, exact: true }).click();
+    await page.locator('#sejour').getByRole('link', { name: content.stay.requestLink, exact: true }).click();
     assert.equal(new URL(page.url()).pathname, '/reserver/');
     await page.goto(origin, { waitUntil: 'networkidle' });
     await page.evaluate(() => window.scrollTo(0, 0));

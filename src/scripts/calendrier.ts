@@ -81,7 +81,8 @@ export function creerCalendrier(o: OptionsCalendrier) {
   }
 
   const statutRegion = el('p', { class: 'calendrier-statut', role: 'status' });
-  const titre = el('h3', { class: 'cal-titre', id: 'cal-titre', 'aria-live': 'polite' });
+  // Un paragraphe, pas un titre : le calendrier est un widget, il ne doit pas casser la hiérarchie des titres de la page.
+  const titre = el('p', { class: 'cal-titre', id: 'cal-titre', 'aria-live': 'polite' });
   const precedent = el('button', { type: 'button', class: 'cal-nav', 'aria-label': t.previousMonth }, ['‹']);
   const suivant = el('button', { type: 'button', class: 'cal-nav', 'aria-label': t.nextMonth }, ['›']);
   const grille = el('table', { class: 'cal-grille', role: 'grid', 'aria-labelledby': 'cal-titre' });

@@ -1,0 +1,112 @@
+{
+  "step": 9,
+  "date": "2026-11-16",
+  "branch": "etape-9-reserver",
+  "build": {
+    "pages": 4,
+    "errors": 0,
+    "warnings": 0
+  },
+  "astroCheck": {
+    "errors": 0,
+    "warnings": 0,
+    "hints": 0
+  },
+  "unitTests": {
+    "passed": 318,
+    "newInStep9": 64
+  },
+  "internalLinks": {
+    "checked": 181,
+    "broken": 0
+  },
+  "browserAudit": {
+    "reserver": "375, 768, 1280 px : parcours complet, demande retrouvée côté serveur",
+    "accueil": "ok",
+    "gite": "ok",
+    "lieu": "ok"
+  },
+  "lighthouse": {
+    "/reserver/ (wrangler, 3 mesures)": [
+      {
+        "scores": {
+          "performance": 96,
+          "accessibility": 100,
+          "best-practices": 100,
+          "seo": 91
+        },
+        "metrics": {
+          "lcp_ms": 964,
+          "tbt_ms": 217,
+          "cls": 0.0
+        }
+      },
+      {
+        "scores": {
+          "performance": 89,
+          "accessibility": 100,
+          "best-practices": 100,
+          "seo": 91
+        },
+        "metrics": {
+          "lcp_ms": 987,
+          "tbt_ms": 432,
+          "cls": 0
+        }
+      },
+      {
+        "scores": {
+          "performance": 100,
+          "accessibility": 100,
+          "best-practices": 100,
+          "seo": 91
+        },
+        "metrics": {
+          "lcp_ms": 956,
+          "tbt_ms": 54,
+          "cls": 0.04
+        }
+      }
+    ],
+    "/": {
+      "scores": {
+        "performance": 100,
+        "accessibility": 100,
+        "best-practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "lcp_ms": 902,
+        "tbt_ms": 0,
+        "cls": 0.0
+      }
+    },
+    "/gite/": {
+      "scores": {
+        "performance": 100,
+        "accessibility": 100,
+        "best-practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "lcp_ms": 1054,
+        "tbt_ms": 0,
+        "cls": 0.0
+      }
+    },
+    "/le-lieu/": {
+      "scores": {
+        "performance": 100,
+        "accessibility": 100,
+        "best-practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "lcp_ms": 1055,
+        "tbt_ms": 0,
+        "cls": 0.02
+      }
+    }
+  },
+  "lighthouseNote": "SEO 91 sur /reserver/ : robots.txt absent, wrangler dev renvoie une page HTML en 200 (artefact de développement ; robots.txt relève de l'étape 13)"
+}

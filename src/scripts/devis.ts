@@ -19,7 +19,7 @@ export function dessinerDevis(zone: HTMLElement, devis: DevisApi, t: TextesDevis
     ]));
   }
   zone.append(liste);
-  zone.append(el('p', { class: 'devis-total' }, [el('span', {}, [t.total]), el('span', {}, [euros(devis.total_cents)])]));
+  zone.append(el('p', { class: 'devis-total' }, [el('span', {}, [t.total]), el('span', {}, [devis.total_cents === 0 && !devis.complet ? t.pending : euros(devis.total_cents)])]));
   zone.append(el('p', { class: 'aide' }, [devis.acompte_cents !== null ? `${t.deposit} : ${euros(devis.acompte_cents)}` : t.depositUnknown]));
   if (devis.provisoire) zone.append(el('p', { class: 'aide alerte' }, [t.provisional]));
   if (!devis.complet) zone.append(el('p', { class: 'aide alerte' }, [t.incomplete]));

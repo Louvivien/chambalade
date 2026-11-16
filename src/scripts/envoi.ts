@@ -125,13 +125,30 @@ export function brancherEnvoi(o: OptionsEnvoi) {
     }
   });
 
-  // L’erreur d’un champ disparaît dès qu’on le corrige.
+  // Le résumé suit les corrections : une ligne disparaît dès que son problème est réglé, le bloc avec la dernière.
+  function actualiserResume() {
+    if (resume.hidden) return;
+    const restants = new Set(validerFormulaire(etat, contact(), trouver<HTMLInputElement>('consentement').checked, jeton, text.errors, text.errors.fields).map(p => p.champ));
+    for (const [champ, id] of Object.entries(CHAMPS_ERREUR)) {
+      if (restants.has(champ) || trouver(id).hidden) continue;
+      cacher(id);
+      const saisie = document.getElementById(CHAMPS_SAISIE[champ] ?? '');
+      saisie?.removeAttribute('aria-invalid');
+    }
+    for (const li of [...resume.querySelectorAll('li')]) {
+      const lien = li.querySelector('a')!;
+      const champ = Object.entries(CHAMPS_SAISIE).find(([, id]) => lien.getAttribute('href') === `#${id}`)?.[0] ?? lien.getAttribute('href')!.replace('#erreur-', '');
+      if (!restants.has(champ)) li.remove();
+    }
+    if (resume.querySelectorAll('li').length === 0) resume.hidden = true;
+  }
   formulaire.addEventListener('input', ev => {
     const c = ev.target as HTMLElement;
-    if (!c.id || !CHAMPS_SAISIE[c.id]) return;
-    c.removeAttribute('aria-invalid');
-    cacher(CHAMPS_ERREUR[c.id]);
+    if (c.id && CHAMPS_SAISIE[c.id]) { c.removeAttribute('aria-invalid'); cacher(CHAMPS_ERREUR[c.id]); }
+    actualiserResume();
   });
+  formulaire.addEventListener('change', actualiserResume);
+  document.addEventListener('reserver:change', actualiserResume);
   trouver('consentement').addEventListener('change', () => { cacher('erreur-consentement'); trouver('consentement').removeAttribute('aria-invalid'); });
 
   function afficherConfirmation(r: { reference: string; devis: DevisApi }) {

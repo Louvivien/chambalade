@@ -10,11 +10,13 @@ export interface LigneVue { cle: string; libelle: string; detail: string | null;
 /** Les lignes à afficher : libellé tiré du contenu, jamais un prix décidé ici. */
 export function lignesVue(devis: DevisApi, textes: TextesDevis, nomsUnites: Record<string, string>): LigneVue[] {
   return devis.lignes.map((l, i) => {
-    const nom = l.unite ? nomsUnites[l.unite] : null;
+    const libelle = textes.lines[l.id] ?? l.id;
+    // Le nom de la chambre n'est utile que s'il apporte quelque chose au libellé de la ligne.
+    const nom = l.unite && nomsUnites[l.unite] !== libelle ? nomsUnites[l.unite] : null;
     const detail = [nom, l.statut === 'calculee' && l.prix_unitaire_cents !== null ? `${l.quantite} × ${euros(l.prix_unitaire_cents)}` : null].filter(Boolean).join(' · ') || null;
     return {
       cle: `${l.id}-${l.unite ?? i}`,
-      libelle: textes.lines[l.id] ?? l.id,
+      libelle,
       detail,
       montant: l.statut === 'incluse' ? textes.included : l.statut === 'a_confirmer' || l.total_cents === null ? textes.pending : euros(l.total_cents),
       aConfirmer: l.statut === 'a_confirmer',

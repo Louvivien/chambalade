@@ -14,7 +14,8 @@ const { text, regles } = donnees;
 const nomsUnites = Object.fromEntries(Object.entries(text.lodging.rooms as Record<string, string>).map(([id, libelle]) => [id, nomCourt(libelle)]));
 
 const etat: EtatFormulaire = etatInitial();
-const signaler = () => devis.planifier();
+/** Un choix a changé : le devis est redemandé et le résumé d’erreurs se remet à jour. */
+const signaler = () => { devis.planifier(); document.dispatchEvent(new CustomEvent('reserver:change')); };
 const formulaire = trouver<HTMLFormElement>('formulaire');
 const champ = <T extends HTMLElement>(id: string) => trouver<T>(id);
 const devis = creerDevis({ zone: trouver('devis-contenu'), textes: text.quote, nomsUnites, sejour: () => sejourDepuisEtat(etat, regles) });

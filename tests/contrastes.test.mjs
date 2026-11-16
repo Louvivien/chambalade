@@ -8,9 +8,16 @@ function luminance(hex) {
     .map(v => v <= 0.04045 ? v / 12.92 : ((v + 0.055) / 1.055) ** 2.4)
     .reduce((sum, v, i) => sum + v * [0.2126, 0.7152, 0.0722][i], 0);
 }
-it.each([['foret', 'creme'], ['foret', 'horizon'], ['creme', 'kaki-fonce']])('contraste AA texte %s sur %s', (fg, bg) => {
+// Les messages d'erreur du formulaire de réservation s'écrivent en --erreur sur le fond crème, et sur le champ (crème éclairci).
+it.each([['foret', 'creme'], ['foret', 'horizon'], ['creme', 'kaki-fonce'], ['erreur', 'creme']])('contraste AA texte %s sur %s', (fg, bg) => {
   const [a, b] = [luminance(tokens[fg]), luminance(tokens[bg])].sort((x, y) => y - x);
   const ratio = (a + 0.05) / (b + 0.05);
   expect(ratio).toBeGreaterThanOrEqual(4.5);
   console.log(`${fg}/${bg} : ${ratio.toFixed(2)}:1`);
+});
+
+it('--erreur reste lisible sur le fond des champs de formulaire (crème mélangé à 45 % de blanc)', () => {
+  const champ = '#' + [1, 3, 5].map(i => Math.round(parseInt(tokens.creme.slice(i, i + 2), 16) * 0.55 + 255 * 0.45).toString(16).padStart(2, '0')).join('');
+  const [a, b] = [luminance(tokens.erreur), luminance(champ)].sort((x, y) => y - x);
+  expect((a + 0.05) / (b + 0.05)).toBeGreaterThanOrEqual(4.5);
 });

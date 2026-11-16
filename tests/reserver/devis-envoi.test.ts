@@ -56,6 +56,10 @@ describe('lignes du devis affichées', () => {
   it('affiche l’identifiant brut plutôt que rien si un libellé manque', () => {
     expect(lignesVue({ ...devis, lignes: [{ ...devis.lignes[1], id: 'nouveau_tarif' }] }, textes, {})[0].libelle).toBe('nouveau_tarif');
   });
+  it('ne répète pas le nom de la chambre quand il est identique au libellé de la ligne', () => {
+    const v = lignesVue({ ...devis, lignes: [{ ...devis.lignes[0], id: 'chambre_partagee', unite: 'chambre_2' }] }, { ...textes, lines: { chambre_partagee: 'Chambre 2' } }, { chambre_2: 'Chambre 2' });
+    expect(v[0].detail).toBe('3 × 75\u00a0€');
+  });
   it('nom court d’une unité', () => expect(nomCourt('Chambre 2, un lit double, sanitaires partagés')).toBe('Chambre 2'));
 });
 

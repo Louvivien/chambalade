@@ -1,5 +1,88 @@
 # Journal d’audit
 
+## Étape 9 — Réservation : parcours client — 2026-11-16
+
+Branche : `etape-9-reserver` · Base : `etape-8-api` (PR #7 ouverte vers `etape-6-lieu`) · Pull request : à créer (voir `docs/avancement.md`).
+
+Fait (page `/reserver/` en français ; pas d’administration ni d’e-mails, étape 10 ; pas d’anglais, étape 12) :
+- Calendrier de séjour accessible : grille ARIA au clavier (flèches, Début/Fin, Page haut/bas),
+  nuits complètes hachurées, barrées et annoncées « complet », arrivée puis départ, départs
+  impossibles signalés, disponibilités lues sur `/api/disponibilites`.
+- Composition du séjour : adultes, enfants, chevaux, chambres, lits en dortoir, dîners et
+  déjeuners par jour. Devis en direct : celui de `/api/devis`, jamais un calcul du navigateur.
+- Coordonnées, consentement, Turnstile, envoi à `/api/demandes`, résumé d’erreurs lié aux champs,
+  messages précis du serveur (« Le dortoir n’a plus que 2 lits libres la nuit du 12 mai »),
+  confirmation avec la référence et le récapitulatif.
+- Textes dans `src/content/reserver/fr.md` ; logique pure dans `src/lib/reserver/` (testée) ;
+  le script du navigateur (`src/scripts/`) relie seulement le DOM, la logique et l’API.
+- Liens « Demander un séjour » de l’accueil, du gîte et du lieu raccordés à `/reserver/`
+  (les mentions « formulaire bientôt disponible » sont retirées).
+- `npm run audit:reserver` : audit navigateur du parcours complet (voir ci-dessous).
+
+Contrôles automatiques : build OK, 4 pages, sans erreur ni avertissement · 318 tests OK
+(64 nouveaux : logique du parcours 62, contrastes 2) · types : 0 erreur, 0 avertissement,
+0 indication · liens : 181 références internes, 0 cassée · inventaire des `TODO(amaelle)` à jour ·
+secrets : aucune valeur réelle ; la clé Turnstile du widget est publique par nature et se règle
+par `PUBLIC_TURNSTILE_SITE_KEY`.
+
+Audit navigateur (`npm run audit:reserver`, sur `wrangler pages dev` avec D1 locale) à 375, 768
+et 1280 px : titre, `h1`, page courante ; aucun prix dans les données de la page ; un seul jour
+dans l’ordre de tabulation ; contour de focus visible ; choix de l’arrivée au clavier ; devis avec
+ses mentions ; résumé d’erreurs (focus, liens vers les champs, disparition des erreurs corrigées) ;
+envoi réel ; confirmation ; **la demande est retrouvée côté serveur** avec le bon statut, les bonnes
+dates, le délai de 48 h et un total identique à celui affiché ; aucun défilement horizontal ;
+aucune animation avec `prefers-reduced-motion` ; seules requêtes hors site : Turnstile ; aucune
+erreur de console ; sans JavaScript, le formulaire reste masqué et un message l’explique.
+Audits d’accueil, du gîte et du lieu rejoués : OK.
+
+Lighthouse mobile (perf / a11y / BP / SEO) :
+| Page | Performance | Accessibilité | Bonnes pratiques | SEO |
+| --- | --- | --- | --- | --- |
+| `/reserver/` (3 mesures) | 96 · 89 · 100 | 100 | 100 | 91 |
+| `/`, `/gite/`, `/le-lieu/` | 100 | 100 | 100 | 100 |
+
+Écarts : (1) performance de `/reserver/` variable (89 à 100) : seul le temps de blocage change
+(54 à 432 ms), probablement le script Turnstile ; une mesure sur trois est sous 90 ; à reconfirmer
+sur Cloudflare. (2) SEO 91 : `robots.txt` absent et `wrangler dev` répond une page HTML en 200,
+d’où l’alerte ; artefact de développement, `robots.txt` et sitemap relèvent de l’étape 13.
+
+Défauts trouvés et corrigés pendant l’étape (vérifiés dans un vrai navigateur) :
+- un clic sur un jour était perdu quand un champ numérique avait le focus (la grille était
+  reconstruite entre l’appui et le relâchement) : elle se met maintenant à jour sur place ;
+- `window.turnstile` existe avant que `render` soit prêt : le script attend et n’empêche plus
+  l’affichage du formulaire en cas de panne ;
+- le devis affichait « Total 0 € » quand tout était « à confirmer » : il affiche « à confirmer » ;
+- ordre des titres (titre du mois en `h3` juste après le `h1`) : c’est un paragraphe ;
+- le résumé d’erreurs restait affiché après correction : il suit les corrections ;
+- sur le gîte, deux liens « Demander un séjour » menaient à deux endroits : tous deux vont à `/reserver/`.
+
+Décisions de conception à valider (aucune ne tranche une question métier) :
+- Calendrier sur mesure (grille de boutons) plutôt que deux champs date natifs, pour griser les
+  nuits complètes. Il est testé au clavier ; **pas testé avec un lecteur d’écran**.
+- JavaScript assumé sur cette page (calendrier, devis, envoi). Sans lui : message et coordonnées.
+- Valeurs de départ : 1 adulte, 0 enfant, 0 cheval (0 cheval tant que la capacité des paddocks est
+  inconnue, sinon l’envoi serait refusé).
+- Les repas cochés valent pour toutes les personnes du séjour (l’API accepte un nombre de personnes
+  par repas ; l’interface ne le demande pas encore).
+- Répartition des personnes par chambre calculée (une au moins par chambre, puis jusqu’à la
+  capacité) : elle ne sert que si le prix d’une chambre devient « par personne » (règle encore
+  inconnue) ; c’est une hypothèse de calcul, pas une information donnée par la cliente.
+- Un calendrier « sans choix d’hébergement » marque une nuit disponible dès qu’une unité l’est ;
+  avec des chevaux, une capacité de paddocks inconnue rend toutes les nuits « inconnu ».
+- Après un refus du serveur pour places prises, le calendrier et le devis sont relus.
+
+Prérequis de déploiement (étape 14) : définir `PUBLIC_TURNSTILE_SITE_KEY` dans les variables de
+construction de Cloudflare Pages ; sans elle, la page se construit mais l’envoi est désactivé avec
+un message visible.
+
+Nouveaux TODO(amaelle) : valider les textes de la page ; confirmer la réponse sous 48 h et le
+blocage provisoire ; accueil des enfants et tarif ; capacité des paddocks (déjà listée) ; lien vers
+la politique de confidentialité (étape 11). Voir `docs/todo-contenus.md`.
+
+À vérifier par Vivien : le parcours à la main sur ordinateur et téléphone (`npm run api:dev`, puis
+http://localhost:8788/reserver/) ; la lisibilité des états du calendrier ; les textes ; l’usage au
+clavier et, si possible, avec un lecteur d’écran.
+
 ## Étape 8 — Réservation : API — 2026-11-16
 
 Branche : `etape-8-api` · Base : `etape-6-lieu` (contient l’étape 7, PR #5) · Pull request : à créer (voir `docs/avancement.md`).

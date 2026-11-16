@@ -7,7 +7,8 @@ terminée donne lieu à un commit après un build sans erreur ni avertissement.
 ## Étape en cours : 9 — Réservation : parcours client — 2026-11-16
 
 Branche : `etape-9-reserver` · Base : `etape-8-api` (PR en attente de création par Vivien).
-Statut : tranches 1 à 4 terminées ; tranche 5 à faire. Une PR dédiée en fin d’étape, sans fusion.
+Statut : tranches 1 à 6 terminées ; étape prête pour revue, sans fusion.
+PR à créer sur GitHub (base `etape-8-api`) : l’outil `gh` n’est pas installé ici. Une PR dédiée en fin d’étape, sans fusion.
 Périmètre (`docs/etapes.md` étape 9, `docs/reservation.md` section 7) : page `/reserver/`
 en français : calendrier, composition du séjour, devis en direct, coordonnées, confirmation.
 Pas d’administration ni d’e-mails (étape 10), pas de version anglaise (étape 12).
@@ -46,9 +47,16 @@ visibles. Turnstile : clé publique en variable `PUBLIC_TURNSTILE_SITE_KEY`.
   précis, confirmation avec référence et récapitulatif. Vérifié dans un vrai navigateur : parcours
   complet (201, `CHB-2026-0001`) et échec « places prises » (409, message du serveur, formulaire
   conservé). Défaut trouvé et corrigé : `window.turnstile` existe avant que `render` soit prêt.
-- [ ] Tranche 5 (15–30 min) — Audit : parcours complet dans un vrai navigateur sur
+- [x] Tranche 5 (15–30 min) — Audit : parcours complet dans un vrai navigateur sur
   `wrangler pages dev`, clavier, 375/768/1280, Lighthouse, build, types, tests, secrets.
-- [ ] Tranche 6 (15–30 min) — Rapport dans `docs/journal-audit.md`, PR.
+  Fait : `npm run audit:reserver` (3 largeurs, parcours complet, demande retrouvée côté serveur),
+  Lighthouse, audits des pages modifiées, contrastes de `--erreur`, 6 défauts trouvés et corrigés.
+- [x] Tranche 6 (15–30 min) — Rapport dans `docs/journal-audit.md`, `docs/rapports/etape-9.json`, PR.
+  Reste : ouverture de la PR.
+
+Dernière action : tranche 6 terminée (audit, rapport).
+Prochaine action : ouvrir la PR (base `etape-8-api`), relecture par Vivien, aucune fusion automatique.
+Étape 10 (administration et e-mails) non commencée.
 
 ## Étape 8 — Réservation : API, prête pour revue — 2026-11-16
 
