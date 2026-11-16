@@ -7,7 +7,8 @@ terminée donne lieu à un commit après un build sans erreur ni avertissement.
 ## Étape en cours : 13 — SEO, accessibilité, performance — 2026-11-16
 
 Branche : `etape-13-seo` · Base : `etape-12-en`.
-Statut : plan écrit, aucune tranche terminée.
+Statut : tranches 1 à 3 terminées ; étape prête pour revue, sans fusion.
+PR à créer sur GitHub (base `etape-12-en`).
 Périmètre (`docs/etapes.md` étape 13) : title/description (déjà posés par page), Open Graph,
 sitemap, `robots.txt`, données structurées `LodgingBusiness`, contrastes et clavier, Lighthouse
 mobile ≥ 90 partout, liste de ce qui reste à corriger.
@@ -27,9 +28,11 @@ restent hors du sitemap et en `noindex` tant que `valide: false` (`src/data/lega
   Fait : `sitemap.xml` (8 pages, alternatives de langue ; pages légales exclues tant que `valide: false`), `robots.txt` (interdit `/admin/` et
   `/api/`), JSON-LD sur l’accueil (nom, adresse, description, image ; aucun téléphone, prix, GPS ni horaire inventé), adresse découpée dans
   `site.yaml`. 27 tests.
-- [ ] Tranche 3 — Accessibilité et performance : contrastes mesurés pour tous les couples de
+- [x] Tranche 3 — Accessibilité et performance : contrastes mesurés pour tous les couples de
   couleurs utilisés, clavier, Lighthouse mobile sur toutes les pages publiques, liste des restes
   à corriger, rapport, `docs/rapports/etape-13.json`.
+  Fait : contrastes mesurés et gardés par test, `public/_headers`, Lighthouse sur 14 pages (tout ≥ 90 sauf SEO 66 voulu sur les pages légales
+  `noindex`), liste des restes dans le journal.
 
 ## Étape précédente : 12 — Version anglaise — 2026-11-16
 
