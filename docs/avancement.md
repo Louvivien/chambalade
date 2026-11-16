@@ -7,7 +7,7 @@ terminée donne lieu à un commit après un build sans erreur ni avertissement.
 ## Étape en cours : 10 — Réservation : administration et e-mails — 2026-11-16
 
 Branche : `etape-10-admin` · Base : `etape-9-reserver` (PR vers `etape-8-api`).
-Statut : tranches 1 à 3 terminées ; tranche 4 à faire. Une PR dédiée en fin d’étape, sans fusion.
+Statut : tranches 1 à 4 terminées ; tranche 5 à faire. Une PR dédiée en fin d’étape, sans fusion.
 Périmètre (`docs/etapes.md` étape 10, `docs/reservation.md` sections 8 et 9) : `/admin/` (demandes,
 fiche, calendrier, blocages) pour Amaëlle, modèles d’e-mails FR/EN branchés sur l’API, protection
 par Cloudflare Access et service d’e-mail documentés, `docs/recette-reservation.md`.
@@ -41,8 +41,12 @@ dans un objet ou un en-tête d’e-mail. Informations inconnues = `TODO(amaelle)
   `AdminLayout`, `/admin/` (onglets, routage par `#`, bandeau d’erreur), client d’API et routes testés,
   route `GET /api/admin/moi` ; 33 tests (418 au total). Vues encore provisoires. À prévoir à
   l’étape 13 : `robots.txt` doit interdire `/admin/`.
-- [ ] Tranche 4 (15–30 min) — Demandes : liste filtrable, fiche, actions (accepter avec acompte,
+- [x] Tranche 4 (15–30 min) — Demandes : liste filtrable, fiche, actions (accepter avec acompte,
   refuser, acompte reçu, annuler, prolonger) ; logique pure testée.
+  Fait : `src/lib/reservation/transitions.ts` (table partagée API et interface), `src/lib/admin/demandes.ts`,
+  vues `demandes` et `fiche` (liste filtrable, fiche, formulaires d’action avec message, acompte en euros,
+  prolongation, résultat et état de l’e-mail), devis de démonstration réalistes ; 43 tests (461 au total).
+  Vérifié dans un vrai navigateur : acceptation avec acompte de bout en bout.
 - [ ] Tranche 5 (15–30 min) — Calendrier mensuel par unité (états lisibles sans la couleur) et
   blocages (création, suppression, conflits signalés) ; logique pure testée.
 - [ ] Tranche 6 (15–30 min) — Documentation (Access, service d’e-mail, variables), recette

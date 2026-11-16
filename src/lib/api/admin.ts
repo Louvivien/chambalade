@@ -1,5 +1,6 @@
 import { z } from 'astro/zod';
 import { unitIds } from '../reservation/config';
+import { TRANSITIONS } from '../reservation/transitions';
 import { dateParis, estDateValide, joursEntre } from '../reservation/dates';
 import { capaciteUnite } from '../reservation/disponibilites';
 import { authentifierAdmin } from './access';
@@ -143,13 +144,6 @@ export async function gererAdmin(request: Request, deps: ApiDeps, chemin: string
   }
 }
 
-const TRANSITIONS = {
-  accepter: { de: ['en_attente'], vers: 'acceptee' },
-  refuser: { de: ['en_attente'], vers: 'refusee' },
-  confirmer: { de: ['acceptee'], vers: 'confirmee' },
-  annuler: { de: ['acceptee', 'confirmee'], vers: 'annulee' },
-  prolonger: { de: ['en_attente', 'acceptee'], vers: null },
-} as const;
 const JOURNAL = { accepter: 'acceptee', refuser: 'refusee', confirmer: 'acompte_recu', annuler: 'annulee', prolonger: 'delai_prolonge' } as const;
 
 const MODELE_EMAIL = { accepter: 'acceptee', refuser: 'refusee', confirmer: 'confirmee', annuler: 'annulee' } as const;

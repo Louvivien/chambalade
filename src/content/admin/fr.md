@@ -60,6 +60,8 @@ demandes:
   horses: '{n} cheval(aux)'
   pending: à confirmer
   openCount: '{n} demande(s) à traiter'
+  refresh: Actualiser
+  period: 'Du {debut} au {fin}'
 fiche:
   stay: Séjour
   arrival: Arrivée
@@ -129,6 +131,8 @@ fiche:
     '72': 3 jours
     '168': 7 jours
   confirm: Confirmer
+  working: Envoi en cours…
+  depositInvalid: 'Montant invalide : saisissez un nombre en euros, par exemple 76,50.'
   done: Fait.
   email:
     envoye: E-mail envoyé à la cliente.
