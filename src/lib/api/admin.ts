@@ -49,6 +49,9 @@ export async function gererAdmin(request: Request, deps: ApiDeps, chemin: string
     // Demandes qui vont expirer : alerte unique par e-mail, au moment où Amaëlle consulte. Sans conséquence si elle échoue.
     if (ressource === 'demandes' && !id && methode === 'GET') await alerterExpirations(deps, origine).catch(() => 0);
 
+    // — Qui est connecté·e (affiché en haut de l’administration) —
+    if (ressource === 'moi' && !id && methode === 'GET') return json({ ok: true, email: auteur });
+
     // — Demandes —
     if (ressource === 'demandes' && !id && methode === 'GET') {
       const statut = url.searchParams.get('statut');
@@ -133,7 +136,7 @@ export async function gererAdmin(request: Request, deps: ApiDeps, chemin: string
       return json({ ok: true });
     }
 
-    return erreur(['demandes', 'calendrier', 'blocages'].includes(ressource ?? '') ? 405 : 404, ['demandes', 'calendrier', 'blocages'].includes(ressource ?? '') ? 'methode_non_autorisee' : 'introuvable', 'Cette adresse n’existe pas.');
+    return erreur(['demandes', 'calendrier', 'blocages', 'moi'].includes(ressource ?? '') ? 405 : 404, ['demandes', 'calendrier', 'blocages', 'moi'].includes(ressource ?? '') ? 'methode_non_autorisee' : 'introuvable', 'Cette adresse n’existe pas.');
   } catch (e) {
     console.error('admin_echec', e instanceof Error ? e.name : 'inconnue');
     return erreur(500, 'erreur_interne', 'Une erreur est survenue. Réessayez dans un instant.');

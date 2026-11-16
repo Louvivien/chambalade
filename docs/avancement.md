@@ -7,7 +7,7 @@ terminée donne lieu à un commit après un build sans erreur ni avertissement.
 ## Étape en cours : 10 — Réservation : administration et e-mails — 2026-11-16
 
 Branche : `etape-10-admin` · Base : `etape-9-reserver` (PR vers `etape-8-api`).
-Statut : tranches 1 et 2 terminées ; tranche 3 à faire. Une PR dédiée en fin d’étape, sans fusion.
+Statut : tranches 1 à 3 terminées ; tranche 4 à faire. Une PR dédiée en fin d’étape, sans fusion.
 Périmètre (`docs/etapes.md` étape 10, `docs/reservation.md` sections 8 et 9) : `/admin/` (demandes,
 fiche, calendrier, blocages) pour Amaëlle, modèles d’e-mails FR/EN branchés sur l’API, protection
 par Cloudflare Access et service d’e-mail documentés, `docs/recette-reservation.md`.
@@ -33,9 +33,14 @@ dans un objet ou un en-tête d’e-mail. Informations inconnues = `TODO(amaelle)
   notifications.ts` (journal sans adresse, alerte d’expiration unique), envois branchés sur la
   création (reçue + nouvelle) et sur accepter/refuser/confirmer/annuler (réponse `email`), acompte
   saisi à l’acceptation ; 29 tests (385 au total).
-- [ ] Tranche 3 (15–30 min) — Protection et socle de `/admin/` : contrôle du jeton Access sur la
+- [x] Tranche 3 (15–30 min) — Protection et socle de `/admin/` : contrôle du jeton Access sur la
   page elle-même (intergiciel), en-têtes `noindex` et sans cache, contenus `admin`, page et
   navigation ; tests.
+  Fait : `functions/admin/_middleware.ts` + `src/lib/api/admin-page.ts` (jeton Access exigé pour la page
+  elle-même, `noindex`, sans cache, `frame-ancestors 'none'`), `src/content/admin/fr.md` + schéma,
+  `AdminLayout`, `/admin/` (onglets, routage par `#`, bandeau d’erreur), client d’API et routes testés,
+  route `GET /api/admin/moi` ; 33 tests (418 au total). Vues encore provisoires. À prévoir à
+  l’étape 13 : `robots.txt` doit interdire `/admin/`.
 - [ ] Tranche 4 (15–30 min) — Demandes : liste filtrable, fiche, actions (accepter avec acompte,
   refuser, acompte reçu, annuler, prolonger) ; logique pure testée.
 - [ ] Tranche 5 (15–30 min) — Calendrier mensuel par unité (états lisibles sans la couleur) et

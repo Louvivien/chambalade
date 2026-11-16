@@ -8,6 +8,8 @@ export interface PagesContext {
   env: ApiEnv;
   params: Record<string, string | string[] | undefined>;
   waitUntil?: (travail: Promise<unknown>) => void;
+  /** Dans un intergiciel (_middleware) : poursuit vers la ressource demandée. */
+  next?: () => Promise<Response>;
 }
 
 let config: ReservationConfig | undefined;

@@ -1,0 +1,66 @@
+---
+import { getEntry } from 'astro:content';
+import AdminLayout from '../../layouts/AdminLayout.astro';
+
+const entry = await getEntry('admin', 'fr');
+if (!entry) throw new Error('Contenu admin/fr absent');
+const text = entry.data;
+const json = JSON.stringify({ text }).replace(/</g, '\\u003c');
+const vues = ['demandes', 'fiche', 'calendrier', 'blocages'] as const;
+---
+<AdminLayout title={text.title} skip={text.header.skip}>
+  <header class="admin-entete">
+    <div class="admin-entete-contenu">
+      <div>
+        <p class="admin-titre">{text.header.title}</p>
+        <p class="admin-moi" id="admin-moi" aria-live="polite"></p>
+      </div>
+      <nav aria-label={text.header.navLabel}>
+        <ul class="admin-onglets">
+          <li><a href="#demandes" data-onglet="demandes">{text.header.nav.demandes}</a></li>
+          <li><a href="#calendrier" data-onglet="calendrier">{text.header.nav.calendrier}</a></li>
+          <li><a href="#blocages" data-onglet="blocages">{text.header.nav.blocages}</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="contenu" class="admin" tabindex="-1">
+    <noscript><p class="admin-bandeau">{text.common.noscript}</p></noscript>
+    <div id="admin-bandeau" class="admin-bandeau" role="alert" hidden>
+      <p id="admin-bandeau-texte"></p>
+      <button type="button" class="bouton-lien" id="admin-reessayer">{text.common.retry}</button>
+    </div>
+    <p id="admin-annonce" class="visuellement-cache" role="status"></p>
+    {vues.map(vue => <section id={`vue-${vue}`} class="admin-vue" hidden aria-labelledby={`titre-${vue}`}>
+      <h1 id={`titre-${vue}`} tabindex="-1">{vue === 'fiche' ? text.demandes.title : text[vue === 'demandes' ? 'demandes' : vue === 'calendrier' ? 'calendrier' : 'blocages'].title}</h1>
+      <div class="admin-vue-contenu" id={`contenu-${vue}`}><p>{text.common.loading}</p></div>
+    </section>)}
+  </main>
+
+  <script type="application/json" id="admin-donnees" set:html={json}></script>
+  <script>
+    import '../../scripts/admin';
+  </script>
+</AdminLayout>
+<style is:global>
+  .visuellement-cache { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; margin: 0; }
+  .admin-entete { background: var(--foret); color: var(--creme); }
+  .admin-entete-contenu { width: min(100% - 2 * var(--gouttiere), var(--largeur-page)); margin-inline: auto; padding-block: var(--espace-4); display: flex; flex-wrap: wrap; gap: var(--espace-3) var(--espace-8); align-items: center; justify-content: space-between; }
+  .admin-entete p { margin: 0; }
+  .admin-titre { font-family: var(--font-titres); font-size: 1.35rem; font-weight: 600; }
+  .admin-moi { font-size: var(--texte-petit); }
+  .admin-onglets { display: flex; flex-wrap: wrap; gap: var(--espace-2); list-style: none; margin: 0; padding: 0; }
+  .admin-onglets a { display: inline-flex; align-items: center; min-height: 44px; padding: 0 var(--espace-4); color: var(--creme); font-weight: 700; text-decoration: none; border-bottom: 3px solid transparent; }
+  .admin-onglets a[aria-current="page"] { border-bottom-color: var(--chene); }
+  .admin-onglets a:hover { text-decoration: underline; }
+  .admin-entete :focus-visible { outline-color: var(--creme); }
+  .admin { width: min(100% - 2 * var(--gouttiere), var(--largeur-page)); margin-inline: auto; padding-block: var(--espace-8) var(--espace-16); }
+  .admin h1 { font-size: var(--titre-2); margin: 0 0 var(--espace-6); }
+  .admin h2 { font-size: var(--titre-3); margin: var(--espace-8) 0 var(--espace-3); }
+  .admin p { max-width: none; }
+  .admin [hidden] { display: none !important; }
+  .admin-bandeau { border: 2px solid var(--erreur); padding: var(--espace-4) var(--espace-6); margin-bottom: var(--espace-6); display: grid; gap: var(--espace-2); justify-items: start; font-weight: 700; }
+  .admin-bandeau p { margin: 0; }
+  .bouton-lien { min-height: 44px; padding: 0; background: none; border: 0; color: inherit; font-weight: 700; text-decoration: underline; text-underline-offset: 0.22em; cursor: pointer; }
+</style>
