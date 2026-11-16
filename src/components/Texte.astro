@@ -1,0 +1,6 @@
+---
+import { segments } from '../lib/legal';
+interface Props { texte: string; }
+const { texte } = Astro.props;
+---
+{segments(texte).map(part => part.type === 'link' ? <a href={part.href}>{part.text}</a> : part.text)}

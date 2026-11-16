@@ -19,5 +19,6 @@ nav:
 legal:
   - { key: mentions, label: Mentions légales }
   - { key: confidentialite, label: Confidentialité }
+  - { key: conditions, label: Conditions de réservation }
 directoryLabel: Tourisme équestre en Isère — CDTE
 ---

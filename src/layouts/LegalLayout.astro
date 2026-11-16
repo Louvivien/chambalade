@@ -1,0 +1,78 @@
+---
+import { getEntry } from 'astro:content';
+import { parse } from 'yaml';
+import BaseLayout from './BaseLayout.astro';
+import Texte from '../components/Texte.astro';
+import rawLegal from '../data/legal.yaml?raw';
+import rawReservation from '../data/reservation.yaml?raw';
+import { z } from 'astro/zod';
+import { parseReservationConfig } from '../lib/reservation/config';
+import { site, legalPagesFr, type PageKey } from '../lib/interface';
+import { estAConfirmer, garnir } from '../lib/legal';
+
+interface Props { page: 'mentions' | 'confidentialite' | 'conditions'; }
+const { page } = Astro.props;
+const entry = await getEntry('legal', page);
+if (!entry) throw new Error(`Contenu legal/${page} absent`);
+const text = entry.data;
+const nullable = z.string().nullable();
+const legal = z.object({
+  editeur: z.object({ nom: nullable, statut: nullable, siret: nullable, publication: nullable }),
+  hebergeur: z.object({ nom: z.string(), adresse: nullable }),
+  mediation: z.object({ nom: nullable }),
+}).parse(parse(rawLegal));
+const config = parseReservationConfig(parse(rawReservation));
+const valeurs = { heures: String(config.holds.pending_hours), jours: String(config.holds.accepted_days), hebergeur: legal.hebergeur.nom };
+const g = (t: string) => garnir(t, valeurs);
+const availablePages = { home: '/', gite: '/gite/', lieu: '/le-lieu/', reserver: '/reserver/', ...legalPagesFr };
+const identite = text.identity ? [
+  [text.identity.rows.name, legal.editeur.nom],
+  [text.identity.rows.status, legal.editeur.statut],
+  [text.identity.rows.siret, legal.editeur.siret],
+  [text.identity.rows.address, `${site.address}, ${site.locality}`],
+  [text.identity.rows.phone, site.phone],
+  [text.identity.rows.email, site.email],
+  [text.identity.rows.publication, legal.editeur.publication],
+] as [string, string | null][] : [];
+---
+<BaseLayout locale="fr" title={text.title} description={text.description} currentPage={page as PageKey} {availablePages}>
+  <Fragment slot="head"><meta name="robots" content="noindex" /></Fragment>
+  <article class="container legal">
+    <header>
+      <h1>{text.hero.title}</h1>
+      <p class="lead">{text.hero.text}</p>
+    </header>
+    <aside class="draft" aria-labelledby="brouillon-titre">
+      <h2 id="brouillon-titre">{text.draft.title}</h2>
+      <p>{text.draft.text}</p>
+    </aside>
+    {text.identity && <section aria-labelledby="identite-titre" id="editeur">
+      <h2 id="identite-titre">{text.identity.title}</h2>
+      <dl>
+        {identite.map(([label, value]) => <div><dt>{label}</dt><dd>{value ?? <span class="pending">{text.identity!.missing}</span>}</dd></div>)}
+      </dl>
+    </section>}
+    {text.sections.map(section => <section id={section.id} aria-labelledby={`${section.id}-titre`}>
+      <h2 id={`${section.id}-titre`}>{section.title}</h2>
+      {section.paragraphs.map(p => <p class:list={{ pending: estAConfirmer(p) }}><Texte texte={g(p)} /></p>)}
+      {section.items && <ul>{section.items.map(i => <li class:list={{ pending: estAConfirmer(i) }}><Texte texte={g(i)} /></li>)}</ul>}
+      {section.after?.map(p => <p class:list={{ pending: estAConfirmer(p) }}><Texte texte={g(p)} /></p>)}
+    </section>)}
+  </article>
+</BaseLayout>
+<style>
+  .legal { max-width: 46rem; }
+  .lead { font-size: 1.15rem; }
+  .draft { margin-block: var(--espace-8); padding: var(--espace-6); background: var(--horizon); color: var(--foret); border-radius: 3px; }
+  .draft h2 { margin-top: 0; font-size: var(--titre-3); }
+  .draft p { margin-bottom: 0; }
+  section { margin-block: var(--espace-8); }
+  h2 { font-size: var(--titre-3); }
+  dl { margin: 0; }
+  dl div { display: grid; gap: var(--espace-1); padding-block: var(--espace-3); border-top: 1px solid var(--chene); }
+  dt { font-weight: 700; }
+  dd { margin: 0; }
+  li { max-width: var(--largeur-lecture); margin-bottom: var(--espace-2); }
+  .pending { padding-inline-start: var(--espace-3); border-inline-start: 3px solid var(--chene); }
+  @media (min-width: 40rem) { dl div { grid-template-columns: 14rem 1fr; gap: var(--espace-6); } }
+</style>

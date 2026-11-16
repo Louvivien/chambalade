@@ -10,7 +10,7 @@ const interfaceContent = defineCollection({
     navigationLabel: z.string(), languagesLabel: z.string(), footerLabel: z.string(),
     homeLabel: z.string(), contactPending: z.string(), logoPending: z.string(),
     nav: z.array(z.object({ key: z.enum(['home', 'gite', 'lieu', 'reserver']), label: z.string() })),
-    legal: z.array(z.object({ key: z.enum(['mentions', 'confidentialite']), label: z.string() })),
+    legal: z.array(z.object({ key: z.enum(['mentions', 'confidentialite', 'conditions']), label: z.string() })),
     directoryLabel: z.string(),
     languages: z.array(z.object({ code: z.enum(['fr', 'en']), label: z.string() })),
   }),
@@ -99,7 +99,7 @@ const reserver = defineCollection({
     meals: z.object({ legend: z.string(), intro: z.string(), dinner: z.string(), lunch: z.string(), noDates: z.string() }),
     contact: z.object({
       legend: z.string(), lastName: z.string(), firstName: z.string(), email: z.string(), phone: z.string(), message: z.string(),
-      messageHint: z.string(), consent: z.string(), consentPrivacy: z.string().startsWith('TODO(amaelle)'), antiRobot: z.string(),
+      messageHint: z.string(), consent: z.string(), consentPrivacy: z.string(), antiRobot: z.string(),
     }),
     quote: z.object({
       title: z.string(), mention: z.string(), provisional: z.string(), incomplete: z.string(), empty: z.string(), pending: z.string(),
@@ -134,4 +134,21 @@ const admin = defineCollection({
   }),
 });
 
-export const collections = { interface: interfaceContent, accueil, gite, lieu, reserver, admin };
+const legal = defineCollection({
+  loader: glob({ pattern: '*.md', base: './src/content/legal' }),
+  schema: z.object({
+    title: texte, description: texte,
+    hero: z.object({ title: texte, text: texte }),
+    draft: z.object({ title: texte, text: texte }),
+    identity: z.object({
+      title: texte, missing: texte,
+      rows: z.object({ name: texte, status: texte, siret: texte, address: texte, phone: texte, email: texte, publication: texte }),
+    }).optional(),
+    sections: z.array(z.object({
+      id: z.string().regex(/^[a-z-]+$/), title: texte,
+      paragraphs: z.array(texte).min(1), items: z.array(texte).optional(), after: z.array(texte).optional(),
+    })).min(1),
+  }),
+});
+
+export const collections = { interface: interfaceContent, accueil, gite, lieu, reserver, admin, legal };

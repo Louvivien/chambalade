@@ -19,5 +19,6 @@ nav:
 legal:
   - { key: mentions, label: Legal notice }
   - { key: confidentialite, label: Privacy }
+  - { key: conditions, label: Booking terms }
 directoryLabel: Horse riding in Isère — CDTE
 ---

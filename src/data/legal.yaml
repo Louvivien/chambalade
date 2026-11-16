@@ -1,0 +1,12 @@
+# Identité de l’éditeur pour les mentions légales. Null = inconnu : la page affiche « à compléter ».
+# Rien n’est inventé ici ; les valeurs viennent d’Amaëlle ou des documents d’immatriculation.
+editeur:
+  nom: null # TODO(amaelle): nom et prénom de l’exploitante, ou raison sociale.
+  statut: null # TODO(amaelle): forme juridique (entreprise individuelle en cours de création d’après docs/brief.md).
+  siret: null # TODO(amaelle): numéro SIRET, dès l’immatriculation de l’entreprise individuelle.
+  publication: null # TODO(amaelle): nom du ou de la responsable de la publication.
+hebergeur:
+  nom: Cloudflare, Inc.
+  adresse: null # TODO(amaelle): adresse du siège de l’hébergeur, à vérifier sur son site avant publication.
+mediation:
+  nom: null # TODO(amaelle): médiateur de la consommation choisi (obligatoire pour un professionnel qui vend à des consommateurs).

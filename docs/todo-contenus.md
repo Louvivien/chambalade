@@ -21,12 +21,13 @@ conditions pratiques, identité légale. Les sources ci-dessous font autorité.
 | `docs/audit.md:29` | `docs/brief.md` ou `src/data/reservation.yaml`. Sinon : `TODO(amaelle)`, jamais une invention. |
 | `docs/audit.md:71` | - [ ] Liste finale des `TODO(amaelle)` restants, classés : bloquant / non bloquant. |
 | `docs/audit.md:87` | Nouveaux TODO(amaelle) : … |
-| `docs/avancement.md:21` | dans un objet ou un en-tête d’e-mail. Informations inconnues = `TODO(amaelle)` visibles. |
-| `docs/avancement.md:85` | navigateur : tout passe par l’API de l’étape 8. Informations inconnues = `TODO(amaelle)` |
-| `docs/avancement.md:90` | l’accueil, du gîte et du lieu raccordés, `.env.example`, `TODO(amaelle)`. |
-| `docs/avancement.md:174` | inventaire des `TODO(amaelle)`, rapport dans `docs/journal-audit.md`, PR. |
-| `docs/avancement.md:191` | Principe sur les inconnues : toute valeur `TODO(amaelle)` reste `null` dans le YAML. La |
-| `docs/avancement.md:220` | des `TODO(amaelle)`, rapport dans `docs/journal-audit.md`, PR. |
+| `docs/avancement.md:17` | manque est `TODO(amaelle)` visible. Les textes décrivent ce que le site fait réellement |
+| `docs/avancement.md:44` | dans un objet ou un en-tête d’e-mail. Informations inconnues = `TODO(amaelle)` visibles. |
+| `docs/avancement.md:108` | navigateur : tout passe par l’API de l’étape 8. Informations inconnues = `TODO(amaelle)` |
+| `docs/avancement.md:113` | l’accueil, du gîte et du lieu raccordés, `.env.example`, `TODO(amaelle)`. |
+| `docs/avancement.md:197` | inventaire des `TODO(amaelle)`, rapport dans `docs/journal-audit.md`, PR. |
+| `docs/avancement.md:214` | Principe sur les inconnues : toute valeur `TODO(amaelle)` reste `null` dans le YAML. La |
+| `docs/avancement.md:243` | des `TODO(amaelle)`, rapport dans `docs/journal-audit.md`, PR. |
 | `docs/brief.md:5` | pas définitifs : les mettre en ligne avec un `TODO(amaelle)`. |
 | `docs/brief.md:22` | - Téléphone : TODO(amaelle). E-mail de contact : TODO(amaelle). |
 | `docs/brief.md:53` | TODO(amaelle) (environ 1 h, à vérifier). |
@@ -70,7 +71,6 @@ conditions pratiques, identité légale. Les sources ci-dessous font autorité.
 | `docs/reservation.md:153` | (TODO(amaelle), proposition : anonymisation 3 ans après le séjour), droits d'accès et |
 | `src/content.config.ts:51` | items: z.record(z.enum(priceIds), z.object({ label: z.string(), pending: z.string().startsWith('TODO(amaelle)').optional() })), |
 | `src/content.config.ts:93` | group: z.object({ legend: z.string(), adults: z.string(), children: z.string(), childrenHint: z.string().startsWith('TODO(amaelle)'), horses: z.string(), horsesHint: z.string().startsWith('TODO(amaelle)') }), |
-| `src/content.config.ts:102` | messageHint: z.string(), consent: z.string(), consentPrivacy: z.string().startsWith('TODO(amaelle)'), antiRobot: z.string(), |
 | `src/content.config.ts:130` | messageLabel: texte, messageHint: texte, depositLabel: texte, depositHint: texte.startsWith('TODO(amaelle)'), extendLabel: texte, extendOptions: dico, confirm: texte, working: texte, depositInvalid: texte, done: texte, email: dico, journalActions: dico, journalBy: dico, |
 | `src/content/accueil/fr.md:58` | <!-- TODO(amaelle): valider les textes proposés de l’accueil, issus du brief. --> |
 | `src/content/accueil/fr.md:59` | <!-- TODO(amaelle): fournir téléphone et e-mail de contact pour joindre Chambalade en dehors du formulaire de réservation. --> |
@@ -100,6 +100,24 @@ conditions pratiques, identité légale. Les sources ci-dessous font autorité.
 | `src/content/interface/en.md:10` | logoPending: 'TODO(amaelle): provide a transparent logo; temporary typographic name.' |
 | `src/content/interface/fr.md:9` | contactPending: 'TODO(amaelle): fournir le téléphone et l’adresse e-mail de contact.' |
 | `src/content/interface/fr.md:10` | logoPending: 'TODO(amaelle): fournir le logo transparent ; nom typographique provisoire.' |
+| `src/content/legal/conditions.md:20` | - 'TODO(amaelle): montant ou pourcentage de l’acompte, et coordonnées bancaires communiquées avec l’e-mail d’acceptation.' |
+| `src/content/legal/conditions.md:26` | - 'TODO(amaelle): préciser si la taxe de séjour s’ajoute aux tarifs, son montant et ses exemptions.' |
+| `src/content/legal/conditions.md:27` | - 'TODO(amaelle): préciser le solde à régler, la date et le moyen de paiement.' |
+| `src/content/legal/conditions.md:31` | - 'TODO(amaelle): horaires d’arrivée et de départ.' |
+| `src/content/legal/conditions.md:32` | - 'TODO(amaelle): linge fourni ou non, animaux de compagnie admis ou non, nombre d’enfants et âge minimal.' |
+| `src/content/legal/conditions.md:37` | - 'TODO(amaelle): documents à présenter à l’arrivée, responsabilité et assurance du cavalier pour son cheval, règles de vie au paddock.' |
+| `src/content/legal/conditions.md:41` | - 'TODO(amaelle): conditions d’annulation et de modification par la cliente, sort de l’acompte, et annulation par Chambalade (par exemple en cas d’imprévu).' |
+| `src/content/legal/conditions.md:42` | - 'TODO(amaelle): faire valider par un professionnel la mention sur le droit de rétractation, qui ne s’applique en principe pas à un hébergement à date déterminée.' |
+| `src/content/legal/confidentialite.md:15` | - 'TODO(amaelle): adresse e-mail à laquelle exercer vos droits.' |
+| `src/content/legal/confidentialite.md:33` | - 'TODO(amaelle): faire valider la base légale. Proposition : les mesures précontractuelles prises à votre demande, complétées par la case que vous cochez avant d’envoyer le formulaire.' |
+| `src/content/legal/confidentialite.md:37` | - 'TODO(amaelle): confirmer la durée de conservation. Proposition de docs/reservation.md : suppression ou anonymisation des demandes 3 ans après le séjour, ou 3 ans après la demande si elle n’a pas abouti.' |
+| `src/content/legal/confidentialite.md:38` | - 'TODO(amaelle): le site ne supprime pas encore les demandes automatiquement. Prévoir la procédure (suppression à la demande, purge périodique) avant l’ouverture.' |
+| `src/content/legal/confidentialite.md:45` | - 'un service d’envoi d’e-mails (Resend, choix provisoire), pour vous écrire et pour prévenir Amaëlle. TODO(amaelle): confirmer le prestataire retenu.' |
+| `src/content/legal/confidentialite.md:47` | - 'TODO(amaelle): vérifier si ces prestataires traitent des données hors de l’Union européenne et indiquer les garanties applicables.' |
+| `src/content/legal/confidentialite.md:56` | - 'La fréquentation sera mesurée avec Cloudflare Web Analytics, qui ne dépose pas de cookie et n’identifie pas les visiteurs. TODO(amaelle): ce service n’est pas encore activé ; confirmer ce paragraphe à l’activation, ainsi que l’absence de cookie de la vérification anti-robot.' |
+| `src/content/legal/mentions.md:26` | - 'TODO(amaelle): adresse complète de l’hébergeur, à reprendre de son site avant publication.' |
+| `src/content/legal/mentions.md:31` | - 'TODO(amaelle): confirmer l’origine des photographies et indiquer les crédits photographiques à afficher.' |
+| `src/content/legal/mentions.md:44` | - 'TODO(amaelle): indiquer le médiateur de la consommation auquel vous pouvez recourir en cas de litige, avec ses coordonnées.' |
 | `src/content/lieu/fr.md:96` | <!-- TODO(amaelle): valider les textes proposés de la page Le lieu. --> |
 | `src/content/lieu/fr.md:97` | <!-- TODO(amaelle): préciser les conditions d’utilisation de la carrière et du PTV, et les conditions d’accueil dans les paddocks. --> |
 | `src/content/lieu/fr.md:98` | <!-- TODO(amaelle): fournir les portraits de Quinoa, Guiness et Saphir et les présentations des chevaux ; aucune race, personnalité ou prestation montée n’est inventée. --> |
@@ -109,10 +127,15 @@ conditions pratiques, identité légale. Les sources ci-dessous font autorité.
 | `src/content/reserver/fr.md:10` | contact: 'TODO(amaelle): fournir le téléphone et l’adresse e-mail de contact.' |
 | `src/content/reserver/fr.md:48` | childrenHint: 'TODO(amaelle): préciser si les enfants sont accueillis et à quel tarif.' |
 | `src/content/reserver/fr.md:50` | horsesHint: 'TODO(amaelle): préciser le nombre de chevaux accueillis en même temps. Tant qu’il est inconnu, les demandes avec un cheval ne peuvent pas être envoyées.' |
-| `src/content/reserver/fr.md:76` | consentPrivacy: 'TODO(amaelle): lier ici la politique de confidentialité une fois rédigée et validée (étape 11).' |
 | `src/content/reserver/fr.md:131` | <!-- TODO(amaelle): valider les textes proposés de la page Réserver. --> |
 | `src/content/reserver/fr.md:132` | <!-- TODO(amaelle): confirmer que la réponse sous 48 h et le blocage provisoire des dates conviennent. --> |
 | `src/data/emails.yaml:4` | # Ces textes sont des propositions à faire valider : TODO(amaelle) relire le ton et les formulations. |
+| `src/data/legal.yaml:4` | nom: null # TODO(amaelle): nom et prénom de l’exploitante, ou raison sociale. |
+| `src/data/legal.yaml:5` | statut: null # TODO(amaelle): forme juridique (entreprise individuelle en cours de création d’après docs/brief.md). |
+| `src/data/legal.yaml:6` | siret: null # TODO(amaelle): numéro SIRET, dès l’immatriculation de l’entreprise individuelle. |
+| `src/data/legal.yaml:7` | publication: null # TODO(amaelle): nom du ou de la responsable de la publication. |
+| `src/data/legal.yaml:10` | adresse: null # TODO(amaelle): adresse du siège de l’hébergeur, à vérifier sur son site avant publication. |
+| `src/data/legal.yaml:12` | nom: null # TODO(amaelle): médiateur de la consommation choisi (obligatoire pour un professionnel qui vend à des consommateurs). |
 | `src/data/reservation.yaml:3` | # Toute valeur TODO(amaelle) reste null : le code ne la remplace jamais par une valeur inventée. |
 | `src/data/reservation.yaml:30` | privatisable: null # TODO(amaelle): le dortoir est-il privatisable en entier, et à quel prix ? |
 | `src/data/reservation.yaml:34` | capacity_horses: null # TODO(amaelle): nombre de chevaux accueillis en même temps. |
@@ -129,3 +152,6 @@ conditions pratiques, identité légale. Les sources ci-dessous font autorité.
 | `src/data/reservation.yaml:72` | unit: null # TODO(amaelle): par chambre ou par personne et par nuit ; prix en occupation seule ? |
 | `src/data/reservation.yaml:92` | unit: null # TODO(amaelle): définir le contenu exact ; forfait exclu du futur devis tant qu’il reste indéfini. |
 | `src/data/reservation.yaml:95` | amount_cents: null # TODO(amaelle): montant par adulte et par nuit ; ne pas assimiler une valeur absente à zéro. |
+| `src/lib/legal.ts:28` | export const estAConfirmer = (texte: string) => texte.includes('TODO(amaelle)'); |
+| `tests/legal/legal.test.ts:34` | it('repère les points à confirmer', () => { expect(estAConfirmer('TODO(amaelle): x')).toBe(true); expect(estAConfirmer('ok')).toBe(false); }); |
+| `tests/legal/legal.test.ts:51` | const sansMarqueur = t.replaceAll('TODO(amaelle):', '').replace(/https:\/\/\S+/g, '').replace(/\]\(\/[^)]*\)/g, ']'); |

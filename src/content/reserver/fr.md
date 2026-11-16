@@ -73,7 +73,7 @@ contact:
   message: Un mot sur votre séjour (facultatif)
   messageHint: Votre cheval, vos habitudes, vos questions.
   consent: J’accepte que Chambalade utilise ces informations pour répondre à ma demande de séjour.
-  consentPrivacy: 'TODO(amaelle): lier ici la politique de confidentialité une fois rédigée et validée (étape 11).'
+  consentPrivacy: 'Vos informations ne servent qu’à traiter votre demande. Voir la [politique de confidentialité](/confidentialite/) et les [conditions de réservation](/conditions-de-reservation/).'
   antiRobot: Vérification anti-robot
 quote:
   title: Votre devis indicatif
