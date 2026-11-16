@@ -4,7 +4,40 @@ Le dernier état est en haut. À chaque reprise, lire ce fichier, `git log -5` e
 `git status`, puis reprendre la première tranche non cochée. Chaque tranche
 terminée donne lieu à un commit après un build sans erreur ni avertissement.
 
-## Étape en cours : 9 — Réservation : parcours client — 2026-11-16
+## Étape en cours : 10 — Réservation : administration et e-mails — 2026-11-16
+
+Branche : `etape-10-admin` · Base : `etape-9-reserver` (PR vers `etape-8-api`).
+Statut : plan committé ; tranche 1 à faire. Une PR dédiée en fin d’étape, sans fusion.
+Périmètre (`docs/etapes.md` étape 10, `docs/reservation.md` sections 8 et 9) : `/admin/` (demandes,
+fiche, calendrier, blocages) pour Amaëlle, modèles d’e-mails FR/EN branchés sur l’API, protection
+par Cloudflare Access et service d’e-mail documentés, `docs/recette-reservation.md`.
+
+Principes : l’API d’administration existe déjà (étape 8) ; cette étape ajoute son interface, les
+e-mails et la protection de la page elle-même. Aucun secret dans le dépôt (clé du service d’e-mail,
+adresse d’expédition, coordonnées bancaires : variables Cloudflare). Un e-mail qui échoue ne fait
+jamais échouer une demande ni une action : l’issue est consignée au journal, sans adresse. Tout
+texte venu d’une cliente est affiché en texte brut (aucun HTML injecté) et assaini avant d’entrer
+dans un objet ou un en-tête d’e-mail. Informations inconnues = `TODO(amaelle)` visibles.
+
+- [ ] Tranche 1 (15–30 min) — Modèles d’e-mails : textes FR/EN dans `src/data/emails.yaml`
+  (exportés en JSON pour les fonctions), modèles (reçue, acceptée, confirmée, refusée, annulée,
+  nouvelle demande, demande bientôt expirée), formats par langue, échappement ; tests.
+- [ ] Tranche 2 (15–30 min) — Envoi et branchement : service d’e-mail (Resend) derrière une
+  interface, migration `0003` (acompte saisi à l’acceptation), envois depuis la création et les
+  actions, alerte d’expiration à la consultation, journal ; tests.
+- [ ] Tranche 3 (15–30 min) — Protection et socle de `/admin/` : contrôle du jeton Access sur la
+  page elle-même (intergiciel), en-têtes `noindex` et sans cache, contenus `admin`, page et
+  navigation ; tests.
+- [ ] Tranche 4 (15–30 min) — Demandes : liste filtrable, fiche, actions (accepter avec acompte,
+  refuser, acompte reçu, annuler, prolonger) ; logique pure testée.
+- [ ] Tranche 5 (15–30 min) — Calendrier mensuel par unité (états lisibles sans la couleur) et
+  blocages (création, suppression, conflits signalés) ; logique pure testée.
+- [ ] Tranche 6 (15–30 min) — Documentation (Access, service d’e-mail, variables), recette
+  `docs/recette-reservation.md`, audit navigateur de l’administration (375/1280, clavier),
+  Lighthouse.
+- [ ] Tranche 7 (15–30 min) — Contrôles finaux, rapport dans `docs/journal-audit.md`, PR.
+
+## Étape 9 — Réservation : parcours client, prête pour revue — 2026-11-16
 
 Branche : `etape-9-reserver` · Base : `etape-8-api` (PR en attente de création par Vivien).
 Statut : tranches 1 à 6 terminées ; étape prête pour revue, sans fusion.
