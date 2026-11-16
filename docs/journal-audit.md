@@ -2,7 +2,7 @@
 
 ## Étape 2 — Photos — 2026-11-16
 
-Branche : `audit/etapes-1-2` · Pull request : à ouvrir après commit des corrections.
+Branche : `audit/etapes-1-2` · Pull request : [#1](https://github.com/Louvivien/chambalade/pull/1).
 
 Fait :
 - Audit rétrospectif du script et des 14 JPEG issus du tableau.
@@ -36,7 +36,7 @@ réaliser aux étapes des pages. Ces critères ne sont pas validés par les test
 
 ## Étape 1 — Initialisation — 2026-11-16
 
-Branche : `audit/etapes-1-2` · Pull request : à ouvrir après commit des corrections.
+Branche : `audit/etapes-1-2` · Pull request : [#1](https://github.com/Louvivien/chambalade/pull/1).
 
 Fait :
 - Lecture de l’AGENTS actualisé et de la grille fournie dans
