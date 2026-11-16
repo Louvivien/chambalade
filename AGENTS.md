@@ -21,6 +21,7 @@ Sources de vérité, à consulter avant d'écrire du contenu :
 - `docs/photos.md` : chaque photo, sa page, son traitement, son texte alternatif, son statut.
 - `docs/reservation.md` : cahier des charges du module de réservation (version 1).
 - `docs/etapes.md` : l'ordre de construction, étape par étape.
+- `docs/audit.md` : les contrôles à appliquer à la fin de chaque étape.
 
 ## Stack et contraintes techniques
 
@@ -103,8 +104,10 @@ Principes :
 - Une étape de `docs/etapes.md` à la fois. Annoncer le plan avant de coder, puis le faire.
 - Petits commits clairs en français (`feat: page gîte`, `fix: contraste bouton`).
 - Avant chaque commit : `npm run build` sans erreur ni avertissement.
-- À la fin de chaque étape : résumer ce qui a été fait, ce qui reste en `TODO(amaelle)`,
-  et ce qu'il faut vérifier visuellement.
+- Une branche et une pull request par étape ; ne jamais fusionner soi-même.
+- À la fin de chaque étape : appliquer `docs/audit.md` et ajouter le rapport en haut de
+  `docs/journal-audit.md` (ce qui a été fait, résultats des contrôles, écarts, nouveaux
+  `TODO(amaelle)`, ce qu'il faut vérifier visuellement).
 - En cas de doute sur un contenu ou un choix de marque, poser la question plutôt que deviner.
 
 ## Définition de « terminé » pour la phase 1
