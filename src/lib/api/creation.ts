@@ -9,6 +9,7 @@ import { erreur, json, lireJson, methodeNonAutorisee } from './http';
 import { chargerInstantane } from './instantane';
 import { adresseIp, compterTentative } from './limites';
 import { demandeSchema, messageDeValidation, sejourDe } from './schemas';
+import { notifier } from './notifications';
 import { verifierTurnstile } from './turnstile';
 import type { ApiDeps, D1Like } from './types';
 
@@ -116,6 +117,10 @@ export async function gererCreationDemande(request: Request, deps: ApiDeps): Pro
       const erreurs = verifierDisponibilites(deps.config, frais, deps.now(), sejour);
       return json({ ok: false, erreurs: erreurs.length > 0 ? erreurs : [{ code: 'indisponible', message: 'Ces dates ne sont plus disponibles.' }] }, 409);
     }
+    // E-mails : accusé de réception à la cliente et alerte à Amaëlle. Leur échec ne change rien à la demande.
+    const origine = new URL(request.url).origin;
+    const envois = Promise.all([notifier(deps, 'recue', resultat.id, { origine }), notifier(deps, 'nouvelle', resultat.id, { origine })]);
+    if (deps.apresReponse) deps.apresReponse(envois); else await envois;
     return json({ ok: true, reference: resultat.reference, statut: preparation.statut, expire_at: preparation.expire_at, devis: preparation.devis }, 201);
   } catch (e) {
     // Jamais de donnée personnelle dans les journaux : seulement le type de l’erreur.

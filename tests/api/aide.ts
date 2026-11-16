@@ -24,7 +24,7 @@ export function inserer(db: ReturnType<typeof creerBase>, opt: { statut?: Statut
   compteur += 1;
   const reference = opt.reference ?? `CHB-2027-${String(9000 + compteur).padStart(4, '0')}`;
   const r = db.sqlite.prepare(`INSERT INTO demandes (reference, statut, date_arrivee, date_depart, nb_adultes, nb_enfants, nb_chevaux, choix, devis, langue, nom, prenom, email, consentement_at, created_at, updated_at, expire_at)
-    VALUES (?, ?, ?, ?, 2, 0, 0, '{}', '{}', 'fr', 'Démo', 'Démo', 'demo@example.invalid', '2027-01-01T00:00:00Z', '2027-01-01T00:00:00Z', '2027-01-01T00:00:00Z', ?)`)
+    VALUES (?, ?, ?, ?, 2, 0, 0, '{"chambres":[],"litsDortoir":0}', '{"lignes":[],"total_cents":0,"complet":true,"provisoire":false,"acompte_cents":null}', 'fr', 'Démo', 'Démo', 'demo@example.invalid', '2027-01-01T00:00:00Z', '2027-01-01T00:00:00Z', '2027-01-01T00:00:00Z', ?)`)
     .run(reference, opt.statut ?? 'confirmee', opt.arrivee, opt.depart, opt.expire_at ?? null);
   const id = Number(r.lastInsertRowid);
   for (const nuit of nuits(opt.arrivee, opt.depart)) for (const [unite, quantite] of opt.unites) {

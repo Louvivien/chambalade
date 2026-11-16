@@ -1,0 +1,19 @@
+---
+import '../styles/global.css';
+interface Props { title: string; skip: string }
+const { title, skip } = Astro.props;
+---
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex, nofollow" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <title>{title}</title>
+  </head>
+  <body>
+    <a class="skip-link" href="#contenu">{skip}</a>
+    <slot />
+  </body>
+</html>

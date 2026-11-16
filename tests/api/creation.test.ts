@@ -38,7 +38,12 @@ describe('création d’une demande', () => {
     expect(JSON.parse(d.devis as string)).toEqual(rep.devis);
     expect(JSON.parse(d.choix as string).chambres).toEqual(['chambre_2']);
     expect(compte(db, 'occupations')).toBe(6);
-    expect(db.sqlite.prepare("SELECT action, auteur, detail FROM journal").all()).toEqual([{ action: 'demande_creee', auteur: 'cliente', detail: null }]);
+    // Sans service d’e-mail configuré, les deux e-mails sont consignés comme ignorés (sans adresse).
+    expect(db.sqlite.prepare("SELECT action, auteur, detail FROM journal").all()).toEqual(expect.arrayContaining([
+      { action: 'demande_creee', auteur: 'cliente', detail: null },
+      { action: 'email_ignore', auteur: 'systeme', detail: 'recue' },
+      { action: 'email_ignore', auteur: 'systeme', detail: 'nouvelle' },
+    ]));
   });
 
   it('la réponse ne renvoie aucune donnée personnelle', async () => {

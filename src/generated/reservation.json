@@ -105,6 +105,7 @@
   },
   "api": {
     "rate_limit_per_hour": 5,
-    "availability_max_days": 62
+    "availability_max_days": 62,
+    "expiry_alert_hours": 12
   }
 }

@@ -1,0 +1,154 @@
+---
+import { getEntry } from 'astro:content';
+import AdminLayout from '../../layouts/AdminLayout.astro';
+
+const entry = await getEntry('admin', 'fr');
+if (!entry) throw new Error('Contenu admin/fr absent');
+const text = entry.data;
+const json = JSON.stringify({ text }).replace(/</g, '\\u003c');
+const vues = ['demandes', 'fiche', 'calendrier', 'blocages'] as const;
+---
+<AdminLayout title={text.title} skip={text.header.skip}>
+  <header class="admin-entete">
+    <div class="admin-entete-contenu">
+      <div>
+        <p class="admin-titre">{text.header.title}</p>
+        <p class="admin-moi" id="admin-moi" aria-live="polite"></p>
+      </div>
+      <nav aria-label={text.header.navLabel}>
+        <ul class="admin-onglets">
+          <li><a href="#demandes" data-onglet="demandes">{text.header.nav.demandes}</a></li>
+          <li><a href="#calendrier" data-onglet="calendrier">{text.header.nav.calendrier}</a></li>
+          <li><a href="#blocages" data-onglet="blocages">{text.header.nav.blocages}</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="contenu" class="admin" tabindex="-1">
+    <noscript><p class="admin-bandeau">{text.common.noscript}</p></noscript>
+    <div id="admin-bandeau" class="admin-bandeau" role="alert" hidden>
+      <p id="admin-bandeau-texte"></p>
+      <button type="button" class="bouton-lien" id="admin-reessayer">{text.common.retry}</button>
+    </div>
+    <p id="admin-annonce" class="visuellement-cache" role="status"></p>
+    {vues.map(vue => <section id={vue} class="admin-vue" hidden aria-labelledby={`titre-${vue}`}>
+      <h1 id={`titre-${vue}`} tabindex="-1">{vue === 'fiche' ? text.demandes.title : text[vue === 'demandes' ? 'demandes' : vue === 'calendrier' ? 'calendrier' : 'blocages'].title}</h1>
+      <div class="admin-vue-contenu" id={`contenu-${vue}`}><p>{text.common.loading}</p></div>
+    </section>)}
+  </main>
+
+  <script type="application/json" id="admin-donnees" set:html={json}></script>
+  <script>
+    import '../../scripts/admin';
+  </script>
+</AdminLayout>
+<style is:global>
+  .visuellement-cache { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; margin: 0; }
+  .admin-entete { background: var(--foret); color: var(--creme); }
+  .admin-entete-contenu { width: min(100% - 2 * var(--gouttiere), var(--largeur-page)); margin-inline: auto; padding-block: var(--espace-4); display: flex; flex-wrap: wrap; gap: var(--espace-3) var(--espace-8); align-items: center; justify-content: space-between; }
+  .admin-entete p { margin: 0; }
+  .admin-titre { font-family: var(--font-titres); font-size: 1.35rem; font-weight: 600; }
+  .admin-moi { font-size: var(--texte-petit); }
+  .admin-onglets { display: flex; flex-wrap: wrap; gap: var(--espace-2); list-style: none; margin: 0; padding: 0; }
+  .admin-onglets a { display: inline-flex; align-items: center; min-height: 44px; padding: 0 var(--espace-4); color: var(--creme); font-weight: 700; text-decoration: none; border-bottom: 3px solid transparent; }
+  .admin-onglets a[aria-current="page"] { border-bottom-color: var(--chene); }
+  .admin-onglets a:hover { text-decoration: underline; }
+  @media (max-width: 47.99rem) { .admin-onglets { gap: 0; } .admin-onglets a { padding: 0 var(--espace-3); } }
+  .admin-entete :focus-visible { outline-color: var(--creme); }
+  .admin { width: min(100% - 2 * var(--gouttiere), var(--largeur-page)); margin-inline: auto; padding-block: var(--espace-8) var(--espace-16); }
+  .admin h1 { font-size: var(--titre-2); margin: 0 0 var(--espace-6); }
+  .admin h2 { font-size: var(--titre-3); margin: var(--espace-8) 0 var(--espace-3); }
+  .admin p { max-width: none; }
+  .admin [hidden] { display: none !important; }
+  .admin-bandeau { border: 2px solid var(--erreur); padding: var(--espace-4) var(--espace-6); margin-bottom: var(--espace-6); display: grid; gap: var(--espace-2); justify-items: start; font-weight: 700; }
+  .admin-bandeau p { margin: 0; }
+  .admin label { font-weight: 700; display: block; margin-bottom: var(--espace-2); }
+  .admin select, .admin input[type="text"], .admin input[type="date"], .admin textarea { width: 100%; max-width: 32rem; min-height: 48px; padding: 0.6rem 0.8rem; border: 1px solid var(--foret); border-radius: 3px; background: color-mix(in srgb, var(--creme) 55%, white); color: var(--foret); }
+  .admin textarea { min-height: 7rem; }
+  .admin .champ { display: grid; gap: var(--espace-2); margin-bottom: var(--espace-4); }
+  .admin .champ label { margin: 0; }
+  .admin .aide { font-size: var(--texte-petit); margin: 0; }
+  .admin .pending { font-size: var(--texte-petit); }
+  .admin .erreur { color: var(--erreur); font-weight: 700; border-left: 4px solid var(--erreur); padding-left: var(--espace-3); margin: 0 0 var(--espace-4); }
+  .bouton, .bouton-secondaire { display: inline-flex; align-items: center; justify-content: center; min-height: 48px; padding: 0.6rem 1.25rem; border: 1px solid var(--kaki-fonce); border-radius: 3px; font-weight: 700; cursor: pointer; }
+  .bouton { background: var(--kaki-fonce); color: var(--creme); }
+  .bouton:hover:not(:disabled) { background: var(--foret); }
+  .bouton-secondaire { background: transparent; color: var(--foret); border-color: var(--foret); }
+  .bouton-secondaire:hover:not(:disabled) { background: var(--foret); color: var(--creme); }
+  .admin button:disabled { opacity: 0.6; cursor: wait; }
+  .barre-outils { display: flex; flex-wrap: wrap; gap: var(--espace-4); align-items: end; justify-content: space-between; margin-bottom: var(--espace-4); }
+  .champ-ligne { display: grid; gap: var(--espace-2); min-width: min(100%, 18rem); }
+  .champ-ligne label { margin: 0; }
+  .resume-liste { font-weight: 700; margin: 0 0 var(--espace-4); min-height: 1.5em; }
+  .liste-demandes { list-style: none; margin: 0; padding: 0; display: grid; gap: var(--espace-3); }
+  .demande-lien { display: grid; gap: var(--espace-1) var(--espace-4); padding: var(--espace-4); border: 1px solid var(--foret); border-radius: 3px; background: color-mix(in srgb, var(--creme) 55%, white); text-decoration: none; color: inherit; }
+  .demande-lien:hover { background: var(--horizon); }
+  .demande-lien.urgente { border-width: 3px; }
+  .demande-reste { font-weight: 700; }
+  .statut { display: inline-block; justify-self: start; padding: 0.1rem 0.6rem; border: 2px solid var(--foret); border-radius: 999px; font-size: var(--texte-petit); font-weight: 700; }
+  .statut-en_attente { background: var(--chene); }
+  .statut-acceptee { background: var(--horizon); }
+  .statut-confirmee { background: var(--kaki-fonce); color: var(--creme); border-color: var(--kaki-fonce); }
+  .statut-refusee, .statut-annulee, .statut-expiree { border-style: dashed; }
+  .fiche-bloc { border-top: 1px solid var(--chene); padding-top: var(--espace-4); margin-top: var(--espace-6); }
+  .fiche-bloc h2 { margin-top: 0; }
+  .fiche-liste { margin: 0; display: grid; gap: var(--espace-2); }
+  .fiche-liste > div { display: grid; grid-template-columns: minmax(7rem, 12rem) 1fr; gap: var(--espace-4); }
+  .fiche-liste dt { font-weight: 700; }
+  .fiche-liste dd { margin: 0; }
+  .message-cliente { white-space: pre-wrap; overflow-wrap: anywhere; }
+  .fiche-statut { display: flex; flex-wrap: wrap; gap: var(--espace-3); align-items: center; font-weight: 700; }
+  .resultat { border: 2px solid var(--kaki-fonce); padding: var(--espace-3) var(--espace-4); font-weight: 700; }
+  .action-boutons { display: flex; flex-wrap: wrap; gap: var(--espace-3); }
+  .action-zone { margin-top: var(--espace-4); }
+  .action-form { border: 2px solid var(--foret); padding: var(--espace-6); display: grid; gap: var(--espace-2); }
+  .action-form h3 { margin: 0; font-size: var(--titre-3); }
+  .journal { padding-left: 1.2rem; display: grid; gap: var(--espace-2); }
+  .journal-detail { overflow-wrap: anywhere; }
+  .devis-lignes { list-style: none; padding: 0; display: grid; gap: var(--espace-2); max-width: 32rem; }
+  .devis-lignes li { display: flex; justify-content: space-between; gap: var(--espace-4); border-bottom: 1px solid color-mix(in srgb, var(--foret) 30%, transparent); padding-bottom: var(--espace-2); }
+  .devis-lignes .detail { display: block; font-size: var(--texte-petit); }
+  .devis-lignes .montant { white-space: nowrap; font-weight: 700; }
+  .devis-total { display: flex; justify-content: space-between; gap: var(--espace-4); font-weight: 700; font-size: 1.25rem; max-width: 32rem; }
+  .devis-recap .alerte { font-weight: 700; }
+  .cal-mois { margin: 0; font-size: var(--titre-3); text-transform: capitalize; }
+  .cal-defile { overflow-x: auto; border: 1px solid var(--foret); background: color-mix(in srgb, var(--creme) 55%, white); }
+  .cal-admin { border-collapse: collapse; min-width: 100%; font-size: var(--texte-petit); }
+  .cal-admin th, .cal-admin td { border: 1px solid color-mix(in srgb, var(--foret) 25%, transparent); padding: 2px; text-align: center; min-width: 1.9rem; }
+  .cal-admin th.cal-unite { position: sticky; left: 0; z-index: 1; background: var(--creme); text-align: left; padding: var(--espace-2) var(--espace-3); min-width: 7.5rem; max-width: 9rem; border-right: 2px solid var(--foret); }
+  .cal-admin thead th { font-weight: 700; padding-block: var(--espace-2); }
+  .cal-sem { display: block; font-weight: 400; font-size: 0.7rem; }
+  .cal-admin .weekend { background: color-mix(in srgb, var(--horizon) 25%, transparent); }
+  .cell { display: inline-flex; align-items: center; justify-content: center; min-width: 1.7rem; min-height: 2rem; padding: 0 3px; border: 1px solid var(--foret); border-radius: 3px; font: inherit; font-weight: 700; font-size: 0.8rem; color: var(--foret); background: var(--creme); }
+  button.cell { cursor: pointer; width: 100%; min-height: 2.4rem; }
+  button.cell:hover { outline: 2px solid var(--foret); }
+  .etat-confirmee { background: var(--kaki-fonce); color: var(--creme); border-color: var(--kaki-fonce); }
+  .etat-acceptee { background: repeating-linear-gradient(135deg, var(--horizon) 0 5px, var(--creme) 5px 9px); }
+  .etat-en_attente { background: var(--chene); border-style: dashed; border-width: 2px; }
+  .etat-bloque { background: repeating-linear-gradient(45deg, var(--foret) 0 3px, var(--creme) 3px 6px), repeating-linear-gradient(-45deg, transparent 0 3px, var(--foret) 3px 4px); color: var(--foret); background-blend-mode: normal; }
+  .etat-bloque { background-color: var(--creme); text-shadow: 0 0 3px var(--creme), 0 0 3px var(--creme), 0 0 3px var(--creme); }
+  .conflit { outline: 3px solid var(--erreur); outline-offset: -3px; }
+  .cal-legende ul { list-style: none; padding: 0; display: flex; flex-wrap: wrap; gap: var(--espace-3) var(--espace-6); }
+  .cal-legende li { display: inline-flex; align-items: center; gap: var(--espace-2); }
+  .cal-legende h3 { font-size: 1.1rem; margin: var(--espace-6) 0 var(--espace-2); }
+  .cal-details { margin-top: var(--espace-4); min-height: 2rem; }
+  .cal-details h3 { font-size: 1.1rem; margin: 0 0 var(--espace-2); }
+  .cal-details-liste { padding-left: 1.2rem; }
+  .liste-blocages { list-style: none; padding: 0; display: grid; gap: var(--espace-3); }
+  .bloc-item { border: 1px solid var(--foret); padding: var(--espace-4); background: color-mix(in srgb, var(--creme) 55%, white); display: grid; gap: var(--espace-2); justify-items: start; }
+  .bloc-item p { margin: 0; }
+  .confirmation-suppression { display: grid; gap: var(--espace-2); }
+  .conflits { border: 2px solid var(--erreur); padding: var(--espace-4); margin-bottom: var(--espace-4); font-weight: 700; }
+  .conflits p { margin: 0 0 var(--espace-2); }
+  @media (min-width: 48rem) {
+    .demande-lien { grid-template-columns: 1.6fr 1.2fr 1.4fr 1fr; align-items: center; }
+    .demande-id { grid-column: 1; }
+    .demande-lien .statut { grid-column: 2; }
+    .demande-dates { grid-column: 3; }
+    .demande-total { grid-column: 4; }
+    .demande-personnes { grid-column: 1; }
+    .demande-reste { grid-column: 2 / -1; }
+  }
+  .bouton-lien { min-height: 44px; padding: 0; background: none; border: 0; color: inherit; font-weight: 700; text-decoration: underline; text-underline-offset: 0.22em; cursor: pointer; }
+</style>

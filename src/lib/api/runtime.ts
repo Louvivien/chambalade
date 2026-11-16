@@ -7,12 +7,15 @@ export interface PagesContext {
   request: Request;
   env: ApiEnv;
   params: Record<string, string | string[] | undefined>;
+  waitUntil?: (travail: Promise<unknown>) => void;
+  /** Dans un intergiciel (_middleware) : poursuit vers la ressource demandée. */
+  next?: () => Promise<Response>;
 }
 
 let config: ReservationConfig | undefined;
 
 /** Valide la configuration une fois par instance : une erreur de configuration fait échouer tôt et clairement. */
-export function contexte(env: ApiEnv): ApiDeps {
+export function contexte(env: ApiEnv, waitUntil?: PagesContext['waitUntil']): ApiDeps {
   config ??= parseReservationConfig(configBrute);
-  return { env, config, now: () => new Date(), fetch: (...args) => fetch(...args) };
+  return { env, config, now: () => new Date(), fetch: (...args) => fetch(...args), apresReponse: waitUntil };
 }

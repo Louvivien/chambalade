@@ -101,7 +101,7 @@ describe('actions sur une demande', () => {
     const id = fiche(db, 'en_attente');
     const r = await appeler('POST', `${ID(id)}/actions`, { action: 'accepter', message: 'Avec plaisir' });
     expect(r.status).toBe(200);
-    expect(await r.json()).toEqual({ ok: true, statut: 'acceptee', expire_at: '2027-03-08T10:00:00.000Z' });
+    expect(await r.json()).toEqual({ ok: true, statut: 'acceptee', expire_at: '2027-03-08T10:00:00.000Z', acompte_cents: null, email: 'non_configure' });
     expect(un('demandes', 'id = ?', id)).toMatchObject({ statut: 'acceptee', expire_at: '2027-03-08T10:00:00.000Z', updated_at: '2027-03-01T10:00:00.000Z' });
     expect(un('journal', 'demande_id = ?', id)).toMatchObject({ action: 'acceptee', auteur: 'amaelle@example.invalid', detail: 'Avec plaisir' });
   });
@@ -123,7 +123,7 @@ describe('actions sur une demande', () => {
   it('prolonger : repousse depuis l’échéance actuelle, sans dépasser 30 jours', async () => {
     const { db, appeler, un } = monter();
     const id = fiche(db, 'en_attente', '2027-03-03T10:00:00.000Z');
-    expect(await (await appeler('POST', `${ID(id)}/actions`, { action: 'prolonger', heures: 24 })).json()).toEqual({ ok: true, statut: 'en_attente', expire_at: '2027-03-04T10:00:00.000Z' });
+    expect(await (await appeler('POST', `${ID(id)}/actions`, { action: 'prolonger', heures: 24 })).json()).toEqual({ ok: true, statut: 'en_attente', expire_at: '2027-03-04T10:00:00.000Z', acompte_cents: null, email: null });
     expect((await (await appeler('POST', `${ID(id)}/actions`, { action: 'prolonger', heures: 720 })).json()).expire_at).toBe('2027-03-31T10:00:00.000Z');
     expect(un('demandes', 'id = ?', id).statut).toBe('en_attente');
     expect(un('journal', "demande_id = ? AND action = 'delai_prolonge'", id)).toBeTruthy();

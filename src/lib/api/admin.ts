@@ -1,8 +1,10 @@
 import { z } from 'astro/zod';
 import { unitIds } from '../reservation/config';
+import { TRANSITIONS } from '../reservation/transitions';
 import { dateParis, estDateValide, joursEntre } from '../reservation/dates';
 import { capaciteUnite } from '../reservation/disponibilites';
 import { authentifierAdmin } from './access';
+import { alerterExpirations, notifier } from './notifications';
 import { expirerDemandes } from './expiration';
 import { erreur, json, lireJson, origineAutorisee } from './http';
 import type { ApiDeps } from './types';
@@ -13,6 +15,8 @@ const date = z.string().regex(/^\d{4}-\d{2}-\d{2}$/);
 const actionSchema = z.object({
   action: z.enum(['accepter', 'refuser', 'confirmer', 'annuler', 'prolonger']),
   message: z.string().trim().max(1000).optional(),
+  /** Acompte demandé, en centimes : saisi par Amaëlle à l’acceptation (le pourcentage n’est pas encore fixé). */
+  acompte_cents: z.number().int().min(0).max(1_000_000).optional(),
   heures: z.number().int().min(1).max(720).optional(),
 });
 const blocageSchema = z.object({
@@ -42,6 +46,12 @@ export async function gererAdmin(request: Request, deps: ApiDeps, chemin: string
 
     if (methode !== 'GET' && !origineAutorisee(request)) return erreur(403, 'origine_refusee', 'Cette requête ne vient pas du site.');
     await expirerDemandes(db, maintenant);
+    const origine = url.origin;
+    // Demandes qui vont expirer : alerte unique par e-mail, au moment où Amaëlle consulte. Sans conséquence si elle échoue.
+    if (ressource === 'demandes' && !id && methode === 'GET') await alerterExpirations(deps, origine).catch(() => 0);
+
+    // — Qui est connecté·e (affiché en haut de l’administration) —
+    if (ressource === 'moi' && !id && methode === 'GET') return json({ ok: true, email: auteur });
 
     // — Demandes —
     if (ressource === 'demandes' && !id && methode === 'GET') {
@@ -75,7 +85,7 @@ export async function gererAdmin(request: Request, deps: ApiDeps, chemin: string
       if (!lecture.ok) return lecture.reponse;
       const a = actionSchema.safeParse(lecture.donnees);
       if (!a.success) return erreur(400, 'donnees_invalides', 'Cette action n’est pas valide.');
-      return await appliquerAction(deps, n, a.data, auteur);
+      return await appliquerAction(deps, n, a.data, auteur, origine);
     }
 
     // — Calendrier —
@@ -84,7 +94,7 @@ export async function gererAdmin(request: Request, deps: ApiDeps, chemin: string
       if (!/^\d{4}-\d{2}$/.test(mois) || !estDateValide(`${mois}-01`)) return erreur(400, 'mois_invalide', 'Indiquez un mois au format AAAA-MM.');
       const du = `${mois}-01`;
       const suivant = new Date(Date.UTC(+mois.slice(0, 4), +mois.slice(5, 7), 1)).toISOString().slice(0, 10);
-      const occ = await db.prepare(`SELECT o.unite, o.nuit, o.quantite, d.id AS demande_id, d.reference, d.statut, d.nom
+      const occ = await db.prepare(`SELECT o.unite, o.nuit, o.quantite, d.id AS demande_id, d.reference, d.statut, d.nom, d.prenom
         FROM occupations o JOIN demandes d ON d.id = o.demande_id
         WHERE o.nuit >= ? AND o.nuit < ? AND (d.statut = 'confirmee' OR (d.statut IN ('en_attente', 'acceptee') AND (d.expire_at IS NULL OR d.expire_at > ?)))
         ORDER BY o.nuit, o.unite`).bind(du, suivant, maintenant.toISOString()).all();
@@ -127,27 +137,22 @@ export async function gererAdmin(request: Request, deps: ApiDeps, chemin: string
       return json({ ok: true });
     }
 
-    return erreur(['demandes', 'calendrier', 'blocages'].includes(ressource ?? '') ? 405 : 404, ['demandes', 'calendrier', 'blocages'].includes(ressource ?? '') ? 'methode_non_autorisee' : 'introuvable', 'Cette adresse n’existe pas.');
+    return erreur(['demandes', 'calendrier', 'blocages', 'moi'].includes(ressource ?? '') ? 405 : 404, ['demandes', 'calendrier', 'blocages', 'moi'].includes(ressource ?? '') ? 'methode_non_autorisee' : 'introuvable', 'Cette adresse n’existe pas.');
   } catch (e) {
     console.error('admin_echec', e instanceof Error ? e.name : 'inconnue');
     return erreur(500, 'erreur_interne', 'Une erreur est survenue. Réessayez dans un instant.');
   }
 }
 
-const TRANSITIONS = {
-  accepter: { de: ['en_attente'], vers: 'acceptee' },
-  refuser: { de: ['en_attente'], vers: 'refusee' },
-  confirmer: { de: ['acceptee'], vers: 'confirmee' },
-  annuler: { de: ['acceptee', 'confirmee'], vers: 'annulee' },
-  prolonger: { de: ['en_attente', 'acceptee'], vers: null },
-} as const;
 const JOURNAL = { accepter: 'acceptee', refuser: 'refusee', confirmer: 'acompte_recu', annuler: 'annulee', prolonger: 'delai_prolonge' } as const;
 
-async function appliquerAction(deps: ApiDeps, id: number, a: z.infer<typeof actionSchema>, auteur: string): Promise<Response> {
+const MODELE_EMAIL = { accepter: 'acceptee', refuser: 'refusee', confirmer: 'confirmee', annuler: 'annulee' } as const;
+
+async function appliquerAction(deps: ApiDeps, id: number, a: z.infer<typeof actionSchema>, auteur: string, origine: string): Promise<Response> {
   const db = deps.env.DB;
   const maintenant = deps.now();
   const t = maintenant.toISOString();
-  const actuelle = await db.prepare('SELECT statut, expire_at FROM demandes WHERE id = ?').bind(id).first<{ statut: string; expire_at: string | null }>();
+  const actuelle = await db.prepare('SELECT statut, expire_at, devis FROM demandes WHERE id = ?').bind(id).first<{ statut: string; expire_at: string | null; devis: string }>();
   if (!actuelle) return erreur(404, 'introuvable', 'Demande introuvable.');
   const regle = TRANSITIONS[a.action];
   if (!(regle.de as readonly string[]).includes(actuelle.statut)) {
@@ -164,14 +169,21 @@ async function appliquerAction(deps: ApiDeps, id: number, a: z.infer<typeof acti
     nouvelleFin = new Date(Math.min(base + a.heures! * 3_600_000, plafond)).toISOString();
   } else nouvelleFin = null;
 
+  // Acompte : celui qu’Amaëlle saisit, à défaut celui du devis (si le pourcentage est connu), sinon aucun.
+  const acompteDuDevis = (() => { try { return (JSON.parse(actuelle.devis) as { acompte_cents?: number | null }).acompte_cents ?? null; } catch { return null; } })();
+  const acompte = a.action === 'accepter' ? a.acompte_cents ?? acompteDuDevis : null;
+
   // Mise à jour gardée : elle ne s’applique que si le statut n’a pas changé et que le délai court encore.
   const resultats = await db.batch([
-    db.prepare(`UPDATE demandes SET statut = ?, expire_at = ?, updated_at = ? WHERE id = ? AND statut = ? AND (expire_at IS NULL OR expire_at > ?)`)
-      .bind(nouveauStatut, nouvelleFin, t, id, actuelle.statut, t),
+    db.prepare(`UPDATE demandes SET statut = ?, expire_at = ?, updated_at = ?, acompte_cents = COALESCE(?, acompte_cents) WHERE id = ? AND statut = ? AND (expire_at IS NULL OR expire_at > ?)`)
+      .bind(nouveauStatut, nouvelleFin, t, acompte, id, actuelle.statut, t),
     db.prepare("INSERT INTO journal (demande_id, action, auteur, detail, created_at) SELECT ?, ?, ?, ?, ? WHERE changes() > 0")
       .bind(id, JOURNAL[a.action], auteur, a.message ?? null, t),
   ]);
   if (resultats[0].meta.changes !== 1) return erreur(409, 'transition_impossible', 'Cette demande vient de changer : rechargez-la avant de recommencer.');
-  return json({ ok: true, statut: nouveauStatut, expire_at: nouvelleFin });
+  // E-mail à la cliente selon l’action (la prolongation n’en envoie pas). Son échec ne défait pas l’action.
+  const modele = a.action in MODELE_EMAIL ? MODELE_EMAIL[a.action as keyof typeof MODELE_EMAIL] : null;
+  const email = modele ? (await notifier(deps, modele, id, { origine, messageAdmin: a.message })).statut : null;
+  return json({ ok: true, statut: nouveauStatut, expire_at: nouvelleFin, acompte_cents: acompte, email });
 }
 

@@ -34,7 +34,7 @@ export const reservationConfigSchema = z.object({
     max_advance_months: positiveInt,
   }),
   holds: z.object({ pending_hours: positiveInt, accepted_days: positiveInt }),
-  api: z.object({ rate_limit_per_hour: positiveInt, availability_max_days: positiveInt }),
+  api: z.object({ rate_limit_per_hour: positiveInt, availability_max_days: positiveInt, expiry_alert_hours: positiveInt }),
   quote: z.object({
     room_pricing: z.enum(['per_room_night', 'per_person_night']).nullable(),
     sheets_pricing: z.enum(['per_bed_stay', 'per_bed_night']).nullable(),

@@ -11,3 +11,11 @@ TURNSTILE_SECRET=1x0000000000000000000000000000000AA
 
 # Sel quelconque pour condenser les adresses IP de la limitation.
 RATE_LIMIT_SALT=sel-local-quelconque
+
+# E-mails (service Resend). Tous facultatifs en local : sans EMAIL_API_KEY ni EMAIL_FROM, aucun
+# e-mail n’est envoyé et l’administration l’indique (« e-mail non envoyé »). Voir docs/api.md.
+# EMAIL_API_KEY=
+# EMAIL_FROM=Chambalade <reservation@exemple.invalid>
+# EMAIL_REPLY_TO=amaelle@exemple.invalid
+# NOTIFY_EMAILS=amaelle@exemple.invalid
+# VIREMENT_INFOS=IBAN et BIC d’exemple (texte libre, sur plusieurs lignes si besoin)

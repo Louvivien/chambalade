@@ -48,7 +48,8 @@ tard ne peut pas oublier la protection.
 | --- | --- |
 | `GET /api/admin/demandes?statut=&du=&au=` | Liste : en attente d'abord, les plus pressées en tête, avec le temps restant. |
 | `GET /api/admin/demandes/:id` | Fiche : coordonnées, choix, devis figé, journal. |
-| `POST /api/admin/demandes/:id/actions` | `accepter`, `refuser`, `confirmer` (acompte reçu), `annuler`, `prolonger` (`heures`, 1 à 720, plafonné à 30 jours). |
+| `POST /api/admin/demandes/:id/actions` | `accepter` (avec `acompte_cents` facultatif), `refuser`, `confirmer` (acompte reçu), `annuler`, `prolonger` (`heures`, 1 à 720, plafonné à 30 jours). Un `message` facultatif est repris dans l’e-mail à la cliente. La réponse indique `email` : `envoye`, `echec`, `non_configure` ou `null` (prolongation). |
+| `GET /api/admin/moi` | Adresse de la personne connectée (affichée en haut de l’administration). |
 | `GET /api/admin/calendrier?mois=AAAA-MM` | Occupations actives par nuit et par unité, blocages. |
 | `GET/POST /api/admin/blocages`, `DELETE /api/admin/blocages/:id` | Blocages de dates (date de fin exclue). Un blocage signale, sans les annuler, les demandes déjà placées. |
 
@@ -86,7 +87,68 @@ La protection de `/admin/` et de `/api/admin/` par une application Access sera d
 | `TURNSTILE_SECRET` | secret Cloudflare | Vérification du jeton anti-robot. Absent : les créations répondent `503`. |
 | `RATE_LIMIT_SALT` | secret Cloudflare | Sel du condensé d'adresse IP de la limitation (l'adresse n'est jamais stockée). |
 | `ACCESS_*`, `ADMIN_EMAILS` | secrets Cloudflare | Voir ci-dessus. |
+| `EMAIL_API_KEY` | secret Cloudflare | Clé du service d’e-mail (Resend), droit d’envoi seulement. Absente : aucun e-mail, l’administration l’indique. |
+| `EMAIL_FROM` | variable Cloudflare | Expéditeur, par ex. `Chambalade <reservation@chambalade.fr>` ; le domaine doit être vérifié chez Resend. TODO(amaelle) : adresse d’expédition. |
+| `EMAIL_REPLY_TO` | variable Cloudflare | Adresse de réponse des e-mails à la cliente (celle d’Amaëlle). |
+| `NOTIFY_EMAILS` | variable Cloudflare | Destinataires des notifications à Amaëlle (nouvelle demande, demande bientôt expirée), séparés par des virgules ; à défaut, `ADMIN_EMAILS`. |
+| `VIREMENT_INFOS` | secret Cloudflare | Coordonnées bancaires pour l’acompte, texte libre repris dans l’e-mail d’acceptation. Jamais dans le dépôt. |
 | `ENVIRONMENT`, `ACCESS_DEV_EMAIL` | `.dev.vars` local seulement | Contournement de développement : actif uniquement si `ENVIRONMENT=development` **et** depuis `localhost` ou `127.0.0.1`. À ne jamais définir en production. |
+
+## E-mails (étape 10)
+
+Les modèles sont dans `src/data/emails.yaml` (français et anglais pour les clientes, français pour
+Amaëlle) ; `npm run config:generer` les exporte pour les fonctions. L’envoi passe par
+`src/lib/emails/envoi.ts` (service Resend) : pour changer de service (Brevo…), seul ce fichier change.
+
+| E-mail | Déclencheur | Destinataire |
+| --- | --- | --- |
+| Demande reçue (« ce n’est pas encore une réservation ») | création d’une demande | la cliente, dans sa langue |
+| Nouvelle demande, avec lien direct vers la fiche | création d’une demande | Amaëlle (`NOTIFY_EMAILS`) |
+| Demande acceptée (acompte, échéance, coordonnées bancaires) | action « Accepter » | la cliente |
+| Réservation confirmée | action « Marquer l’acompte reçu » | la cliente |
+| Demande refusée / réservation annulée | actions « Refuser » / « Annuler » | la cliente |
+| Demande bientôt expirée (moins de 12 h) | consultation de la liste des demandes, une fois par demande | Amaëlle |
+
+Règles : un e-mail qui échoue **ne fait jamais échouer** une demande ni une action ; l’issue
+(`email_envoye`, `email_echec`, `email_ignore`) est consignée au journal avec le nom du modèle et
+jamais d’adresse ; sans service configuré, rien n’est envoyé et l’administration le dit à Amaëlle
+(« écrivez directement à la cliente »). Les noms et messages des clientes sont échappés dans le HTML et
+assainis dans les objets (aucun retour à la ligne : pas d’injection d’en-tête).
+
+### Brancher le service d’e-mail (Resend)
+
+1. Créer un compte sur resend.com ; y ajouter le domaine `chambalade.fr` et copier les enregistrements
+   DNS demandés (SPF, DKIM) dans le DNS du domaine (zone Cloudflare), puis lancer la vérification.
+2. Créer une clé d’API **limitée à l’envoi**, la copier une seule fois.
+3. Dans Cloudflare Pages, projet → Paramètres → Variables et secrets (production et aperçus) :
+   secrets `EMAIL_API_KEY` et `VIREMENT_INFOS` ; variables `EMAIL_FROM`, `EMAIL_REPLY_TO`,
+   `NOTIFY_EMAILS`. En ligne de commande : `npx wrangler@4.156.1 pages secret put EMAIL_API_KEY --project-name chambalade`.
+4. Envoyer une demande d’essai (voir `docs/recette-reservation.md`) et vérifier l’arrivée, le dossier
+   des indésirables et le rendu sur téléphone. Les quotas de l’offre gratuite sont à vérifier chez le
+   service au moment du choix.
+
+## Protéger `/admin/` avec Cloudflare Access (étape 10)
+
+L’administration repose sur **deux verrous** : Cloudflare Access devant le site, et le contrôle du jeton
+Access dans les fonctions elles-mêmes (page `/admin/` par `functions/admin/_middleware.ts`, API par
+`gererAdmin`). Si Access était mal réglé ou désactivé, les fonctions refuseraient quand même tout.
+
+1. Cloudflare → Zero Trust → Access → Applications → Ajouter une application → **Auto-hébergée**.
+2. Nom : « Chambalade, administration ». Destinations : domaine `chambalade.fr`, chemins `admin` et
+   `api/admin` (avec tout ce qui suit). **Ajouter aussi les adresses d’aperçu** (`*.pages.dev` du projet) ou
+   désactiver les déploiements d’aperçu publics : sinon l’administration y resterait ouverte au niveau Access
+   (les fonctions la refuseraient tout de même).
+3. Politique : action « Autoriser », règle « adresses e-mail » : celles d’Amaëlle et de Vivien. La connexion
+   se fait par code reçu par e-mail (aucun mot de passe géré par le site).
+4. Dans l’application, relever la balise d’audience (**AUD**), et dans Zero Trust → Paramètres le domaine
+   d’équipe (`<équipe>.cloudflareaccess.com`).
+5. Renseigner dans Cloudflare Pages les variables `ACCESS_TEAM_DOMAIN`, `ACCESS_AUD` et `ADMIN_EMAILS`
+   (mêmes adresses que la politique). Sans elles, toute l’administration répond `503`.
+6. Vérifier : en navigation privée, `/admin/` demande un code e-mail ; une adresse non listée est refusée ;
+   `curl -i https://chambalade.fr/api/admin/demandes` répond `401` sans jeton.
+
+Les noms exacts des menus Cloudflare évoluent : en cas d’écart, se fier à la documentation « Cloudflare
+Access, self-hosted application ».
 
 ## Travailler en local
 

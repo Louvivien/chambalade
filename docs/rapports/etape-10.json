@@ -1,0 +1,71 @@
+{
+  "step": 10,
+  "date": "2026-11-16",
+  "branch": "etape-10-admin",
+  "build": {
+    "pages": 5,
+    "errors": 0,
+    "warnings": 0
+  },
+  "astroCheck": {
+    "errors": 0,
+    "warnings": 0,
+    "hints": 0
+  },
+  "unitTests": {
+    "passed": 477,
+    "newInStep10": 159,
+    "files": {
+      "admin": 86,
+      "emails": 43,
+      "api.notifications": 21,
+      "api.admin-page": 6
+    }
+  },
+  "internalLinks": {
+    "checked": 184,
+    "broken": 0
+  },
+  "browserAudit": {
+    "admin": "375 et 1280 px : en-têtes, refus hors localhost, injection, liste, fiche, actions, calendrier, blocages, clavier",
+    "reserver": "ok",
+    "accueil": "ok",
+    "gite": "ok",
+    "lieu": "ok"
+  },
+  "lighthouse": {
+    "/admin/ (2 mesures)": [
+      {
+        "scores": {
+          "performance": 100,
+          "accessibility": 100,
+          "best-practices": 100,
+          "seo": 45
+        },
+        "metrics": {
+          "lcp_ms": 1540,
+          "tbt_ms": 0,
+          "cls": 0.014
+        }
+      },
+      {
+        "scores": {
+          "performance": 100,
+          "accessibility": 100,
+          "best-practices": 100,
+          "seo": 45
+        },
+        "metrics": {
+          "lcp_ms": 1536,
+          "tbt_ms": 0,
+          "cls": 0.023
+        }
+      }
+    ]
+  },
+  "lighthouseNote": "SEO 45 sur /admin/ : voulu (noindex, pas de description, pas de robots.txt en dev) ; page privée",
+  "notTested": [
+    "envoi réel par Resend (aucun compte, requête testée contre un faux service)",
+    "Cloudflare Access réel (jetons de test signés localement)"
+  ]
+}

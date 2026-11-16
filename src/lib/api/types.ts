@@ -30,6 +30,16 @@ export interface ApiEnv {
   /** « development » autorise ACCESS_DEV_EMAIL, uniquement depuis localhost. */
   ENVIRONMENT?: string;
   ACCESS_DEV_EMAIL?: string;
+  /** Clé du service d’e-mail (Resend). Absente : aucun e-mail n’est envoyé, l’issue est consignée au journal. */
+  EMAIL_API_KEY?: string;
+  /** Expéditeur, par ex. « Chambalade <reservation@chambalade.fr> » (domaine vérifié chez le service d’e-mail). */
+  EMAIL_FROM?: string;
+  /** Adresse de réponse des e-mails à la cliente (celle d’Amaëlle). */
+  EMAIL_REPLY_TO?: string;
+  /** Destinataires des notifications à Amaëlle, séparés par des virgules ; à défaut, ADMIN_EMAILS. */
+  NOTIFY_EMAILS?: string;
+  /** Coordonnées bancaires pour l’acompte, texte libre repris dans l’e-mail d’acceptation. */
+  VIREMENT_INFOS?: string;
 }
 
 /** Tout ce dont un gestionnaire a besoin, injecté pour pouvoir le tester sans réseau. */
@@ -38,4 +48,6 @@ export interface ApiDeps {
   config: ReservationConfig;
   now: () => Date;
   fetch: typeof fetch;
+  /** Poursuit un travail après la réponse (e-mails), quand la plateforme le permet ; sinon on l’attend. */
+  apresReponse?: (travail: Promise<unknown>) => void;
 }

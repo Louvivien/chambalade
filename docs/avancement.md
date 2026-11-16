@@ -4,7 +4,71 @@ Le dernier état est en haut. À chaque reprise, lire ce fichier, `git log -5` e
 `git status`, puis reprendre la première tranche non cochée. Chaque tranche
 terminée donne lieu à un commit après un build sans erreur ni avertissement.
 
-## Étape en cours : 9 — Réservation : parcours client — 2026-11-16
+## Étape en cours : 10 — Réservation : administration et e-mails — 2026-11-16
+
+Branche : `etape-10-admin` · Base : `etape-9-reserver` (PR vers `etape-8-api`).
+Statut : tranches 1 à 7 terminées ; étape prête pour revue, sans fusion.
+PR à créer sur GitHub (base `etape-9-reserver`) : l’outil `gh` n’est pas installé ici. Une PR dédiée en fin d’étape, sans fusion.
+Périmètre (`docs/etapes.md` étape 10, `docs/reservation.md` sections 8 et 9) : `/admin/` (demandes,
+fiche, calendrier, blocages) pour Amaëlle, modèles d’e-mails FR/EN branchés sur l’API, protection
+par Cloudflare Access et service d’e-mail documentés, `docs/recette-reservation.md`.
+
+Principes : l’API d’administration existe déjà (étape 8) ; cette étape ajoute son interface, les
+e-mails et la protection de la page elle-même. Aucun secret dans le dépôt (clé du service d’e-mail,
+adresse d’expédition, coordonnées bancaires : variables Cloudflare). Un e-mail qui échoue ne fait
+jamais échouer une demande ni une action : l’issue est consignée au journal, sans adresse. Tout
+texte venu d’une cliente est affiché en texte brut (aucun HTML injecté) et assaini avant d’entrer
+dans un objet ou un en-tête d’e-mail. Informations inconnues = `TODO(amaelle)` visibles.
+
+- [x] Tranche 1 (15–30 min) — Modèles d’e-mails : textes FR/EN dans `src/data/emails.yaml`
+  (exportés en JSON pour les fonctions), modèles (reçue, acceptée, confirmée, refusée, annulée,
+  nouvelle demande, demande bientôt expirée), formats par langue, échappement ; tests.
+  Fait : `src/data/emails.yaml` (FR/EN), `src/generated/emails.json` (exporté avec la configuration),
+  `src/lib/emails/{formats,modeles}.ts` (7 modèles, texte brut et HTML, échappement, objet assaini),
+  38 tests (356 au total). Défaut trouvé et corrigé : les montants avec centimes s’écrivaient
+  « 76,5 € » (page Réserver, tarifs du gîte, e-mails) ; ils s’écrivent « 76,50 € ».
+- [x] Tranche 2 (15–30 min) — Envoi et branchement : service d’e-mail (Resend) derrière une
+  interface, migration `0003` (acompte saisi à l’acceptation), envois depuis la création et les
+  actions, alerte d’expiration à la consultation, journal ; tests.
+  Fait : `migrations/0003_acompte.sql`, `src/lib/emails/envoi.ts` (Resend, ne lève jamais), `src/lib/api/
+  notifications.ts` (journal sans adresse, alerte d’expiration unique), envois branchés sur la
+  création (reçue + nouvelle) et sur accepter/refuser/confirmer/annuler (réponse `email`), acompte
+  saisi à l’acceptation ; 29 tests (385 au total).
+- [x] Tranche 3 (15–30 min) — Protection et socle de `/admin/` : contrôle du jeton Access sur la
+  page elle-même (intergiciel), en-têtes `noindex` et sans cache, contenus `admin`, page et
+  navigation ; tests.
+  Fait : `functions/admin/_middleware.ts` + `src/lib/api/admin-page.ts` (jeton Access exigé pour la page
+  elle-même, `noindex`, sans cache, `frame-ancestors 'none'`), `src/content/admin/fr.md` + schéma,
+  `AdminLayout`, `/admin/` (onglets, routage par `#`, bandeau d’erreur), client d’API et routes testés,
+  route `GET /api/admin/moi` ; 33 tests (418 au total). Vues encore provisoires. À prévoir à
+  l’étape 13 : `robots.txt` doit interdire `/admin/`.
+- [x] Tranche 4 (15–30 min) — Demandes : liste filtrable, fiche, actions (accepter avec acompte,
+  refuser, acompte reçu, annuler, prolonger) ; logique pure testée.
+  Fait : `src/lib/reservation/transitions.ts` (table partagée API et interface), `src/lib/admin/demandes.ts`,
+  vues `demandes` et `fiche` (liste filtrable, fiche, formulaires d’action avec message, acompte en euros,
+  prolongation, résultat et état de l’e-mail), devis de démonstration réalistes ; 43 tests (461 au total).
+  Vérifié dans un vrai navigateur : acceptation avec acompte de bout en bout.
+- [x] Tranche 5 (15–30 min) — Calendrier mensuel par unité (états lisibles sans la couleur) et
+  blocages (création, suppression, conflits signalés) ; logique pure testée.
+  Fait : `src/lib/admin/{calendrier,blocages}.ts`, vues `calendrier` (une ligne par unité, lettres et
+  motifs, détail de la case, navigation de mois, tient à 1280 px, défile dans son cadre sur mobile) et
+  `blocages` (création avec contrôles, conflits signalés, suppression en deux temps) ; 16 tests
+  (477 au total). Vérifié dans un vrai navigateur.
+- [x] Tranche 6 (15–30 min) — Documentation (Access, service d’e-mail, variables), recette
+  `docs/recette-reservation.md`, audit navigateur de l’administration (375/1280, clavier),
+  Lighthouse.
+  Fait : `docs/api.md` (e-mails, variables, Access pas à pas, service d’e-mail), `docs/recette-reservation.md`,
+  `npm run audit:admin` (en-têtes, refus hors localhost, **test d’injection**, liste, fiche, actions,
+  calendrier, blocages, clavier, 375/1280 px), Lighthouse `/admin/` : perf 100, a11y 100, BP 100 (SEO sans objet).
+- [x] Tranche 7 (15–30 min) — Contrôles finaux, rapport dans `docs/journal-audit.md`, PR.
+  Fait : 477 tests, build et types sans alerte, 184 liens, audits des pages rejoués, rapport,
+  `docs/rapports/etape-10.json`. Reste : ouverture de la PR.
+
+Dernière action : tranche 7 terminée (contrôles et rapport).
+Prochaine action : ouvrir la PR (base `etape-9-reserver`), relecture par Vivien, aucune fusion
+automatique. Étape 11 (pages légales) non commencée.
+
+## Étape 9 — Réservation : parcours client, prête pour revue — 2026-11-16
 
 Branche : `etape-9-reserver` · Base : `etape-8-api` (PR en attente de création par Vivien).
 Statut : tranches 1 à 6 terminées ; étape prête pour revue, sans fusion.
