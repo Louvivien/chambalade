@@ -7,7 +7,7 @@ terminée donne lieu à un commit après un build sans erreur ni avertissement.
 ## Étape en cours : 8 — Réservation : API — 2026-11-16
 
 Branche : `etape-8-api` · Base : `etape-7-reservation` (déjà fusionnée dans `etape-6-lieu`, PR #5).
-Statut : tranche 1 terminée ; tranche 2 à faire. Une PR dédiée en fin d’étape, sans fusion.
+Statut : tranches 1 et 2 terminées ; tranche 3 à faire. Une PR dédiée en fin d’étape, sans fusion.
 Périmètre (`docs/etapes.md`, étape 8) : Pages Functions de l’API (disponibilités, devis,
 création de demande avec transaction, Turnstile et limitation par IP, actions
 d’administration) et wrangler avec un D1 local et des données de démonstration. Pas
@@ -26,8 +26,11 @@ compatible D1, pour exercer le SQL réel. Aucun secret dans le dépôt ; la prot
   Fait : `src/lib/api/{types,http}.ts`, `tests/api/d1.ts` (façade SQLite), `src/generated/reservation.json`
   (`npm run config:generer` / `config:verifier`), `migrations/0002_limites.sql`, bloc `api` du YAML ;
   121 tests au total. Suite : disponibilités et devis.
-- [ ] Tranche 2 (15–30 min) — API publique en lecture : `GET /api/disponibilites`,
+- [x] Tranche 2 (15–30 min) — API publique en lecture : `GET /api/disponibilites`,
   `POST /api/devis`, chargement de l’instantané depuis la base, adaptateurs `functions/`.
+  Fait : `src/lib/api/{schemas,instantane,runtime,disponibilites,devis}.ts`, adaptateurs
+  `functions/api/{disponibilites,devis}.ts`, 23 tests (144 au total). Les champs inconnus sont
+  ignorés (montant du navigateur sans effet). Suite : création de demande.
 - [ ] Tranche 3 (15–30 min) — Création de demande : validation stricte, Turnstile,
   limitation par IP, expiration à la lecture, insertion gardée dans un seul `batch`,
   référence `CHB-AAAA-NNNN` ; tests de concurrence sur du SQL réel.
