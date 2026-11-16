@@ -1,5 +1,92 @@
 # Journal d’audit
 
+## Étape 10 — Réservation : administration et e-mails — 2026-11-16
+
+Branche : `etape-10-admin` · Base : `etape-9-reserver` · Pull request : à créer (voir `docs/avancement.md`).
+
+Fait :
+- **Administration `/admin/`** (français), pour Amaëlle, utilisable au téléphone : liste des demandes
+  (en attente d’abord, temps restant, filtre par statut), fiche (séjour, coordonnées, devis enregistré,
+  historique), actions (accepter avec acompte et mot pour la cliente, refuser, marquer l’acompte reçu,
+  annuler, prolonger), calendrier mensuel par unité (lettre **et** motif par état, détail de la case,
+  lien vers la demande), blocages de dates (création, conflits signalés, suppression en deux temps).
+  Chaque fiche a un lien direct (`#demande-12`), repris dans l’e-mail « nouvelle demande ».
+- **E-mails** FR/EN : demande reçue, acceptée, confirmée, refusée, annulée (à la cliente, dans sa
+  langue) ; nouvelle demande et demande bientôt expirée (à Amaëlle). Envoyés à la création et à chaque
+  action, via Resend derrière une interface (`src/lib/emails/envoi.ts`).
+- **Protection** : la page `/admin/` elle-même exige le jeton Cloudflare Access dans la fonction
+  (`functions/admin/_middleware.ts`), en plus des routes `/api/admin/**` ; en-têtes `noindex`,
+  sans cache, `frame-ancestors 'none'`.
+- Migration `0003` (acompte saisi à l’acceptation), route `GET /api/admin/moi`, table de transitions
+  partagée entre l’API et l’interface.
+- Documentation : e-mails, variables, protection par Access pas à pas (`docs/api.md`) ; recette manuelle
+  complète (`docs/recette-reservation.md`).
+
+Contrôles automatiques : build OK, 5 pages, sans erreur ni avertissement · 477 tests OK (159 nouveaux :
+administration 86, e-mails 43, notifications 21, protection de la page 6, divers) · types : 0 erreur,
+0 avertissement, 0 indication · liens : 184 références internes, 0 cassée · configuration des fonctions
+et inventaire des `TODO(amaelle)` à jour · secrets : aucune valeur réelle.
+
+Audit navigateur `npm run audit:admin` (`wrangler pages dev`, D1 locale) à 375 et 1280 px : en-têtes de
+sécurité ; **refus (401/503) de la page et de l’API hors localhost** ; **test d’injection** (une demande
+dont le nom, le prénom et le message sont du HTML et du JavaScript est affichée comme du texte, rien
+n’est exécuté) ; liste, filtre, fiche, acceptation avec acompte (76,50 €) retrouvée côté serveur,
+confirmation, annulation ; calendrier et navigation de mois ; blocages avec conflit ; clavier ;
+aucun défilement horizontal de la page ; aucune requête externe ; aucune erreur de console ; sans
+JavaScript, un message l’explique. Audits d’accueil, du gîte, du lieu et de la réservation rejoués : OK
+(l’accueil, le gîte et le lieu ont échoué une fois au premier essai, par aléa de démarrage du serveur,
+puis réussi à la reprise).
+
+Lighthouse mobile de `/admin/` (perf / a11y / BP) : **100 / 100 / 100** sur deux mesures. SEO 45 :
+voulu, la page est privée (`noindex`, pas de description).
+
+Défauts trouvés et corrigés pendant l’étape :
+- **Montants avec centimes** : « 76,5 € » au lieu de « 76,50 € ». Le défaut existait déjà dans la page
+  Réserver et les tarifs du gîte (livrés aux étapes 5 et 9) ; corrigé aux trois endroits, avec tests.
+- Un clic sur un onglet de l’administration pointait vers une ancre absente (contrôle de liens) :
+  les sections portent maintenant l’identifiant de leur adresse.
+- Le calendrier n’affichait que le nom de famille d’une cliente : le prénom est ajouté.
+- Le devis d’une fiche répétait « Pas encore fixé » : une seule mention.
+
+**Ce qui n’a pas pu être testé** (à faire pendant la recette) :
+- L’**envoi réel** par Resend : aucun compte n’existe encore. La requête (adresse, en-têtes, corps JSON
+  `from`, `to`, `subject`, `text`, `html`, `reply_to`) est écrite d’après la documentation du service et
+  testée contre un faux service ; elle est à confirmer avec un vrai envoi (recette D1 à D7).
+- **Cloudflare Access réel** : le contrôle du jeton est testé avec des jetons signés localement, pas
+  avec un vrai jeton Cloudflare (recette C1 et C2).
+- Le rendu des e-mails dans de vrais clients de messagerie (HTML volontairement simple, texte brut fourni).
+
+Décisions de conception à valider (aucune ne tranche une question métier) :
+- **Service d’e-mail : Resend** (le cahier des charges disait Brevo ou Resend). Changer de service ne
+  touche qu’un fichier.
+- **Acompte saisi à l’acceptation** : le pourcentage étant inconnu, Amaëlle tape le montant en euros ;
+  vide, l’e-mail ne chiffre rien et dit qu’elle précisera. Si un pourcentage est configuré plus tard,
+  il pré-remplit le montant.
+- **Un e-mail qui échoue ne défait rien** : la demande ou l’action réussit, l’administration affiche
+  « l’e-mail n’a pas pu être envoyé : écrivez directement à la cliente », le journal le consigne (modèle
+  seulement, jamais d’adresse). Sans service configuré, même comportement.
+- **Alerte d’expiration** : envoyée à Amaëlle une seule fois par demande, quand elle ouvre la liste et que
+  la demande expire dans moins de 12 h (paramètre `api.expiry_alert_hours`).
+- **Pas d’e-mail à la prolongation** d’un délai.
+- Les notifications à Amaëlle sont **toujours en français** ; celles aux clientes suivent leur langue.
+- Les e-mails à la cliente partent **après la réponse** de la page quand la plateforme le permet
+  (`waitUntil`), pour ne pas la faire attendre.
+- La politique de sécurité de contenu de `/admin/` se limite à `frame-ancestors`, `base-uri`, `object-src`,
+  `form-action` : une règle `script-src` stricte demanderait de vérifier les scripts en ligne d’Astro.
+- Une seule page d’administration avec adresses en `#` (un lien direct par fiche) plutôt que plusieurs pages.
+
+Prérequis de déploiement (étape 14) : variables d’e-mail et d’Access (`docs/api.md`), application Access
+sur `/admin/*` et `/api/admin/*` **y compris les adresses d’aperçu**, `robots.txt` interdisant `/admin/`
+(étape 13), `ENVIRONMENT` et `ACCESS_DEV_EMAIL` jamais définis en production.
+
+Nouveaux TODO(amaelle) : valider les textes de l’administration ; relire le ton des e-mails
+(`src/data/emails.yaml`) ; adresse d’expédition et adresse de réponse ; coordonnées bancaires pour
+l’acompte ; pourcentage d’acompte (déjà listé). Voir `docs/todo-contenus.md`.
+
+À vérifier par Vivien : l’administration à la main sur ordinateur et téléphone (`npm run api:dev`, puis
+http://localhost:8788/admin/ ; en local, l’accès passe par `ACCESS_DEV_EMAIL`) ; le ton des e-mails ;
+la liste des décisions ci-dessus.
+
 ## Étape 9 — Réservation : parcours client — 2026-11-16
 
 Branche : `etape-9-reserver` · Base : `etape-8-api` (PR #7 ouverte vers `etape-6-lieu`) · Pull request : à créer (voir `docs/avancement.md`).

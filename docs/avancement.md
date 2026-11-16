@@ -7,7 +7,8 @@ terminée donne lieu à un commit après un build sans erreur ni avertissement.
 ## Étape en cours : 10 — Réservation : administration et e-mails — 2026-11-16
 
 Branche : `etape-10-admin` · Base : `etape-9-reserver` (PR vers `etape-8-api`).
-Statut : tranches 1 à 6 terminées ; tranche 7 (rapport et PR) à faire. Une PR dédiée en fin d’étape, sans fusion.
+Statut : tranches 1 à 7 terminées ; étape prête pour revue, sans fusion.
+PR à créer sur GitHub (base `etape-9-reserver`) : l’outil `gh` n’est pas installé ici. Une PR dédiée en fin d’étape, sans fusion.
 Périmètre (`docs/etapes.md` étape 10, `docs/reservation.md` sections 8 et 9) : `/admin/` (demandes,
 fiche, calendrier, blocages) pour Amaëlle, modèles d’e-mails FR/EN branchés sur l’API, protection
 par Cloudflare Access et service d’e-mail documentés, `docs/recette-reservation.md`.
@@ -59,7 +60,13 @@ dans un objet ou un en-tête d’e-mail. Informations inconnues = `TODO(amaelle)
   Fait : `docs/api.md` (e-mails, variables, Access pas à pas, service d’e-mail), `docs/recette-reservation.md`,
   `npm run audit:admin` (en-têtes, refus hors localhost, **test d’injection**, liste, fiche, actions,
   calendrier, blocages, clavier, 375/1280 px), Lighthouse `/admin/` : perf 100, a11y 100, BP 100 (SEO sans objet).
-- [ ] Tranche 7 (15–30 min) — Contrôles finaux, rapport dans `docs/journal-audit.md`, PR.
+- [x] Tranche 7 (15–30 min) — Contrôles finaux, rapport dans `docs/journal-audit.md`, PR.
+  Fait : 477 tests, build et types sans alerte, 184 liens, audits des pages rejoués, rapport,
+  `docs/rapports/etape-10.json`. Reste : ouverture de la PR.
+
+Dernière action : tranche 7 terminée (contrôles et rapport).
+Prochaine action : ouvrir la PR (base `etape-9-reserver`), relecture par Vivien, aucune fusion
+automatique. Étape 11 (pages légales) non commencée.
 
 ## Étape 9 — Réservation : parcours client, prête pour revue — 2026-11-16
 
