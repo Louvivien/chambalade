@@ -2,7 +2,7 @@
 
 ## Étape 5 — Le gîte français — 2026-11-16
 
-Branche : `etape-5-gite` · Pull request : à renseigner après création.
+Branche : `etape-5-gite` · Pull request : [#4](https://github.com/Louvivien/chambalade/pull/4).
 Base : `etape-4-accueil` (PR #3), sans fusion dans main.
 
 Fait :
