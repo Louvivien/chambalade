@@ -90,7 +90,7 @@ stay:
   title: Prendre le temps de rester
   text: Le gîte ouvrira au printemps 2027. Retrouvez les couchages, les repas et les tarifs proposés pour préparer votre séjour avec votre cheval.
   lodgeLink: Découvrir le gîte
-  requestLink: Voir les informations de demande
+  requestLink: Demander un séjour
 ---
 
 <!-- TODO(amaelle): valider les textes proposés de la page Le lieu. -->

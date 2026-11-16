@@ -4,7 +4,61 @@ Le dernier état est en haut. À chaque reprise, lire ce fichier, `git log -5` e
 `git status`, puis reprendre la première tranche non cochée. Chaque tranche
 terminée donne lieu à un commit après un build sans erreur ni avertissement.
 
-## Étape en cours : 8 — Réservation : API — 2026-11-16
+## Étape en cours : 9 — Réservation : parcours client — 2026-11-16
+
+Branche : `etape-9-reserver` · Base : `etape-8-api` (PR en attente de création par Vivien).
+Statut : tranches 1 à 6 terminées ; étape prête pour revue, sans fusion.
+PR à créer sur GitHub (base `etape-8-api`) : l’outil `gh` n’est pas installé ici. Une PR dédiée en fin d’étape, sans fusion.
+Périmètre (`docs/etapes.md` étape 9, `docs/reservation.md` section 7) : page `/reserver/`
+en français : calendrier, composition du séjour, devis en direct, coordonnées, confirmation.
+Pas d’administration ni d’e-mails (étape 10), pas de version anglaise (étape 12).
+
+Principes : textes dans `src/content/reserver/fr.md` ; logique pure (état du formulaire →
+requête, état des nuits du calendrier, formatage) dans `src/lib/reserver/`, testée sous
+Vitest ; le script du navigateur ne fait que relier le DOM à cette logique et à l’API.
+JavaScript côté client assumé ici (calendrier, devis, envoi) ; sans lui, la page affiche
+un message et les coordonnées. Prix, disponibilités et devis ne viennent jamais du
+navigateur : tout passe par l’API de l’étape 8. Informations inconnues = `TODO(amaelle)`
+visibles. Turnstile : clé publique en variable `PUBLIC_TURNSTILE_SITE_KEY`.
+
+- [x] Tranche 1 (15–30 min) — Contenus et page : collection `reserver`, page `/reserver/`
+  (structure HTML complète des champs, accessible, sans script), liens « Réserver » de
+  l’accueil, du gîte et du lieu raccordés, `.env.example`, `TODO(amaelle)`.
+  Fait : `src/content/reserver/fr.md` + schéma, `src/pages/reserver.astro` (champs complets, aide,
+  erreurs, devis, confirmation, message sans JavaScript), liens de l’accueil, du gîte et du lieu
+  raccordés à `/reserver/`, audits d’accueil et du gîte adaptés, `.env.example`, jeton `--erreur`.
+  Le script `src/scripts/reserver.ts` est provisoire (affiche le formulaire). Suite : logique pure.
+- [x] Tranche 2 (15–30 min) — Logique pure : état du formulaire, requête `sejour`
+  (dont personnes par chambre dérivées), statut des nuits, formatage, messages ; tests.
+  Fait : `src/lib/reserver/{types,formats,sejour,calendrier,devis,envoi}.ts`, 61 tests (315 au total).
+  Hypothèse signalée : la répartition des personnes par chambre (utile seulement si le prix de la
+  chambre est « par personne ») est calculée, pas demandée. Suite : calendrier accessible.
+- [x] Tranche 3 (15–30 min) — Calendrier accessible : grille mensuelle au clavier, choix
+  arrivée/départ, nuits complètes grisées d’après `/api/disponibilites`.
+  Fait : `src/scripts/{dom,calendrier,reserver}.ts`, grille ARIA au clavier (flèches, Début/Fin,
+  Page haut/bas), nuits complètes hachurées et annoncées, départ possible/impossible, repas par jour.
+  Vérifié dans un vrai navigateur sur `wrangler pages dev`. Défaut trouvé et corrigé : un clic sur un
+  jour était perdu quand un champ numérique avait le focus (la grille était reconstruite entre
+  l’appui et le relâchement) ; la grille se met maintenant à jour sur place. Suite : devis et envoi.
+- [x] Tranche 4 (15–30 min) — Devis en direct, validation, Turnstile, envoi, erreurs
+  précises, écran de confirmation avec référence.
+  Fait : `src/scripts/{devis,envoi}.ts` : devis en direct (API, jamais un calcul local), résumé
+  d’erreurs lié aux champs, Turnstile explicite (jeton à usage unique réinitialisé), envoi, messages
+  précis, confirmation avec référence et récapitulatif. Vérifié dans un vrai navigateur : parcours
+  complet (201, `CHB-2026-0001`) et échec « places prises » (409, message du serveur, formulaire
+  conservé). Défaut trouvé et corrigé : `window.turnstile` existe avant que `render` soit prêt.
+- [x] Tranche 5 (15–30 min) — Audit : parcours complet dans un vrai navigateur sur
+  `wrangler pages dev`, clavier, 375/768/1280, Lighthouse, build, types, tests, secrets.
+  Fait : `npm run audit:reserver` (3 largeurs, parcours complet, demande retrouvée côté serveur),
+  Lighthouse, audits des pages modifiées, contrastes de `--erreur`, 6 défauts trouvés et corrigés.
+- [x] Tranche 6 (15–30 min) — Rapport dans `docs/journal-audit.md`, `docs/rapports/etape-9.json`, PR.
+  Reste : ouverture de la PR.
+
+Dernière action : tranche 6 terminée (audit, rapport).
+Prochaine action : ouvrir la PR (base `etape-8-api`), relecture par Vivien, aucune fusion automatique.
+Étape 10 (administration et e-mails) non commencée.
+
+## Étape 8 — Réservation : API, prête pour revue — 2026-11-16
 
 Branche : `etape-8-api` · Base : `etape-7-reservation` (déjà fusionnée dans `etape-6-lieu`, PR #5).
 Statut : tranches 1 à 6 terminées ; étape prête pour revue, sans fusion.

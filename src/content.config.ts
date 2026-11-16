@@ -31,7 +31,7 @@ const accueil = defineCollection({
       }),
       reasons: z.object({ title: z.string(), items: z.array(z.object({ title: z.string(), text: z.string() })), photo }),
       region: z.object({ title: z.string(), text: z.string(), location: z.string() }),
-      stay: z.object({ title: z.string(), text: z.string(), pending: z.string() }),
+      stay: z.object({ title: z.string(), text: z.string(), requestLink: z.string() }),
     });
   },
 });
@@ -76,4 +76,40 @@ const lieu = defineCollection({
   },
 });
 
-export const collections = { interface: interfaceContent, accueil, gite, lieu };
+const reserver = defineCollection({
+  loader: glob({ pattern: '*.md', base: './src/content/reserver' }),
+  schema: z.object({
+    title: z.string(), description: z.string(),
+    hero: z.object({ title: z.string(), text: z.string(), opening: z.string() }),
+    noscript: z.object({ text: z.string(), contact: z.string() }),
+    dates: z.object({
+      legend: z.string(), instructions: z.string(), calendarLabel: z.string(), previousMonth: z.string(), nextMonth: z.string(),
+      arrival: z.string(), departure: z.string(), loadErrorDev: z.string(), retry: z.string(), none: z.string(), nightsOne: z.string(), nightsMany: z.string(), clear: z.string(),
+      keyAvailable: z.string(), keyFull: z.string(), keyChosen: z.string(), full: z.string(), loading: z.string(), loadError: z.string(),
+      pickDeparture: z.string(), tooEarly: z.string(), weekdays: z.array(z.string()).length(7),
+      stateAvailable: z.string(), stateClosed: z.string(), stateUnknown: z.string(), stateArrival: z.string(), stateDeparture: z.string(), stateInStay: z.string(),
+      stateDeparturePossible: z.string(), stateDepartureImpossible: z.string(), selectedArrival: z.string(), selectedStay: z.string(),
+    }),
+    group: z.object({ legend: z.string(), adults: z.string(), children: z.string(), childrenHint: z.string().startsWith('TODO(amaelle)'), horses: z.string(), horsesHint: z.string().startsWith('TODO(amaelle)') }),
+    lodging: z.object({
+      legend: z.string(), intro: z.string(),
+      rooms: z.object({ chambre_privee: z.string(), chambre_2: z.string(), chambre_3: z.string() }),
+      dormitory: z.string(), dormitoryCount: z.string(), breakfast: z.string(),
+    }),
+    meals: z.object({ legend: z.string(), intro: z.string(), dinner: z.string(), lunch: z.string(), noDates: z.string() }),
+    contact: z.object({
+      legend: z.string(), lastName: z.string(), firstName: z.string(), email: z.string(), phone: z.string(), message: z.string(),
+      messageHint: z.string(), consent: z.string(), consentPrivacy: z.string().startsWith('TODO(amaelle)'), antiRobot: z.string(),
+    }),
+    quote: z.object({
+      title: z.string(), mention: z.string(), provisional: z.string(), incomplete: z.string(), empty: z.string(), pending: z.string(),
+      included: z.string(), total: z.string(), deposit: z.string(), depositUnknown: z.string(), availabilityWarning: z.string(),
+      updating: z.string(), error: z.string(), lines: z.record(z.enum(priceIds), z.string()),
+    }),
+    submit: z.object({ label: z.string(), sending: z.string(), summaryTitle: z.string(), missingKey: z.string() }),
+    errors: z.object({ fields: z.object({ nom: z.string(), prenom: z.string(), email: z.string() }), required: z.string(), email: z.string(), noDates: z.string(), noLodging: z.string(), consent: z.string(), antiRobot: z.string(), network: z.string(), server: z.string(), rateLimit: z.string() }),
+    confirmation: z.object({ title: z.string(), reference: z.string(), next: z.string(), notBooking: z.string(), recap: z.string(), again: z.string() }),
+  }),
+});
+
+export const collections = { interface: interfaceContent, accueil, gite, lieu, reserver };

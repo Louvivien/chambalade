@@ -1,0 +1,255 @@
+---
+import { getEntry } from 'astro:content';
+import { parse } from 'yaml';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import rawReservation from '../data/reservation.yaml?raw';
+import { parseReservationConfig } from '../lib/reservation/config';
+import { site } from '../lib/interface';
+
+const config = parseReservationConfig(parse(rawReservation));
+const entry = await getEntry('reserver', 'fr');
+if (!entry) throw new Error('Contenu reserver/fr absent');
+const heures = String(config.holds.pending_hours);
+const garnir = (texte: string) => texte.replaceAll('{heures}', heures);
+const text = entry.data;
+const siteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY ?? '';
+const availablePages = { home: '/', gite: '/gite/', lieu: '/le-lieu/', reserver: '/reserver/' };
+
+// Données publiques transmises au script : textes du contenu et règles de séjour de la configuration.
+const donnees = {
+  text: { ...text, hero: { ...text.hero, text: garnir(text.hero.text) }, confirmation: { ...text.confirmation, next: garnir(text.confirmation.next) } },
+  regles: {
+    premiereNuit: config.stay.first_night, nuitsMin: config.stay.min_nights, nuitsMax: config.stay.max_nights,
+    veillesMin: config.stay.last_booking_days_before, moisMax: config.stay.max_advance_months,
+    fenetreMax: config.api.availability_max_days, litsDortoir: config.units.dortoir.capacity_beds,
+    capacitesChambre: { chambre_privee: config.units.chambre_privee.capacity_people, chambre_2: config.units.chambre_2.capacity_people, chambre_3: config.units.chambre_3.capacity_people },
+  },
+  siteKey,
+};
+const json = JSON.stringify(donnees).replace(/</g, '\\u003c');
+const chambres = ['chambre_privee', 'chambre_2', 'chambre_3'] as const;
+---
+<BaseLayout locale="fr" title={text.title} description={text.description} currentPage="reserver" {availablePages}>
+  <Fragment slot="head">
+    <script is:inline src="https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit" async defer></script>
+  </Fragment>
+
+  <section class="hero container" aria-labelledby="reserver-titre">
+    <h1 id="reserver-titre">{text.hero.title}</h1>
+    <div>
+      <p>{garnir(text.hero.text)}</p>
+      <p class="opening">{text.hero.opening}</p>
+    </div>
+  </section>
+
+  <div class="container reserver">
+    <noscript>
+      <div class="notice">
+        <p>{text.noscript.text}</p>
+        <p class="pending">{text.noscript.contact}</p>
+        {site.phone && <p>{site.phone}</p>}
+        {site.email && <p>{site.email}</p>}
+      </div>
+    </noscript>
+
+    <div id="confirmation" class="confirmation" tabindex="-1" hidden aria-labelledby="confirmation-titre">
+      <h2 id="confirmation-titre">{text.confirmation.title}</h2>
+      <p class="reference-ligne">{text.confirmation.reference} : <strong id="confirmation-reference"></strong></p>
+      <p>{garnir(text.confirmation.next)}</p>
+      <p>{text.confirmation.notBooking}</p>
+      <h3>{text.confirmation.recap}</h3>
+      <div id="confirmation-recap"></div>
+      <button type="button" class="button secondary" id="refaire">{text.confirmation.again}</button>
+    </div>
+
+    <form id="formulaire" class="formulaire" novalidate hidden>
+      <div id="resume-erreurs" class="resume-erreurs" role="alert" tabindex="-1" hidden>
+        <h2>{text.submit.summaryTitle}</h2>
+        <ul></ul>
+      </div>
+
+      <fieldset class="bloc" id="bloc-dates">
+        <legend>{text.dates.legend}</legend>
+        <p class="aide" id="dates-aide">{text.dates.instructions}</p>
+        <div id="calendrier" class="calendrier" data-etat="chargement">
+          <p class="calendrier-statut" role="status">{text.dates.loading}</p>
+        </div>
+        <ul class="legende" aria-hidden="true">
+          <li><span class="pastille libre"></span>{text.dates.keyAvailable}</li>
+          <li><span class="pastille complet"></span>{text.dates.keyFull}</li>
+          <li><span class="pastille choisi"></span>{text.dates.keyChosen}</li>
+        </ul>
+        <dl class="dates-choisies" aria-live="polite">
+          <div><dt>{text.dates.arrival}</dt><dd id="date-arrivee">{text.dates.none}</dd></div>
+          <div><dt>{text.dates.departure}</dt><dd id="date-depart">{text.dates.none}</dd></div>
+          <div><dt class="visuellement-cache">{text.dates.keyChosen}</dt><dd id="nombre-nuits"></dd></div>
+        </dl>
+        <button type="button" class="lien" id="effacer-dates" hidden>{text.dates.clear}</button>
+        <p class="erreur" id="erreur-dates" hidden></p>
+      </fieldset>
+
+      <fieldset class="bloc" id="bloc-groupe">
+        <legend>{text.group.legend}</legend>
+        <div class="nombres">
+          <div class="champ"><label for="adultes">{text.group.adults}</label><input id="adultes" name="adultes" type="number" inputmode="numeric" min="1" max="30" value="1" required /></div>
+          <div class="champ"><label for="enfants">{text.group.children}</label><input id="enfants" name="enfants" type="number" inputmode="numeric" min="0" max="30" value="0" aria-describedby="enfants-aide" /></div>
+          <div class="champ"><label for="chevaux">{text.group.horses}</label><input id="chevaux" name="chevaux" type="number" inputmode="numeric" min="0" max="30" value="0" aria-describedby="chevaux-aide" /></div>
+        </div>
+        <p class="aide pending" id="enfants-aide">{text.group.childrenHint}</p>
+        <p class="aide pending" id="chevaux-aide">{text.group.horsesHint}</p>
+      </fieldset>
+
+      <fieldset class="bloc" id="bloc-hebergement">
+        <legend>{text.lodging.legend}</legend>
+        <p class="aide">{text.lodging.intro}</p>
+        <ul class="cases">
+          {chambres.map(id => <li><label class="case"><input type="checkbox" name="chambres" value={id} /><span>{text.lodging.rooms[id]}</span></label></li>)}
+        </ul>
+        <div class="champ dortoir">
+          <label for="lits">{text.lodging.dormitory}</label>
+          <input id="lits" name="lits" type="number" inputmode="numeric" min="0" max={config.units.dortoir.capacity_beds} value="0" aria-label={`${text.lodging.dormitoryCount} : ${text.lodging.dormitory}`} />
+        </div>
+        <p class="aide">{text.lodging.breakfast}</p>
+        <p class="erreur" id="erreur-hebergement" hidden></p>
+      </fieldset>
+
+      <fieldset class="bloc" id="bloc-repas">
+        <legend>{text.meals.legend}</legend>
+        <p class="aide">{text.meals.intro}</p>
+        <div id="repas" class="repas"><p class="aide">{text.meals.noDates}</p></div>
+      </fieldset>
+
+      <aside class="devis" id="devis" aria-labelledby="devis-titre">
+        <h2 id="devis-titre">{text.quote.title}</h2>
+        <div id="devis-contenu" aria-live="polite"><p class="aide">{text.quote.empty}</p></div>
+        <p class="mention">{text.quote.mention}</p>
+      </aside>
+
+      <fieldset class="bloc" id="bloc-contact">
+        <legend>{text.contact.legend}</legend>
+        <div class="champ"><label for="nom">{text.contact.lastName}</label><input id="nom" name="nom" type="text" autocomplete="family-name" maxlength="100" required /><p class="erreur" id="erreur-nom" hidden></p></div>
+        <div class="champ"><label for="prenom">{text.contact.firstName}</label><input id="prenom" name="prenom" type="text" autocomplete="given-name" maxlength="100" required /><p class="erreur" id="erreur-prenom" hidden></p></div>
+        <div class="champ"><label for="email">{text.contact.email}</label><input id="email" name="email" type="email" autocomplete="email" maxlength="200" required /><p class="erreur" id="erreur-email" hidden></p></div>
+        <div class="champ"><label for="telephone">{text.contact.phone}</label><input id="telephone" name="telephone" type="tel" autocomplete="tel" maxlength="30" /></div>
+        <div class="champ"><label for="message">{text.contact.message}</label><textarea id="message" name="message" rows="4" maxlength="2000" aria-describedby="message-aide"></textarea><p class="aide" id="message-aide">{text.contact.messageHint}</p></div>
+        <label class="case consentement"><input id="consentement" name="consentement" type="checkbox" required aria-describedby="consentement-aide" /><span>{text.contact.consent}</span></label>
+        <p class="aide pending" id="consentement-aide">{text.contact.consentPrivacy}</p>
+        <p class="erreur" id="erreur-consentement" hidden></p>
+        <div class="anti-robot">
+          <p class="aide" id="anti-robot-label">{text.contact.antiRobot}</p>
+          <div id="turnstile" role="group" aria-labelledby="anti-robot-label"></div>
+          <p class="erreur" id="erreur-antirobot" hidden></p>
+        </div>
+      </fieldset>
+
+      <div class="envoi">
+        <button type="submit" class="button" id="envoyer">{text.submit.label}</button>
+        <p class="erreur" id="erreur-envoi" role="alert" hidden></p>
+      </div>
+    </form>
+  </div>
+
+  <script type="application/json" id="reserver-donnees" set:html={json}></script>
+  <script>
+    import '../scripts/reserver';
+  </script>
+</BaseLayout>
+<style is:global>
+  .reserver { padding-block: var(--espace-8) var(--espace-section); }
+  .reserver h1, .reserver h2, .reserver h3, .reserver p, .reserver dl, .reserver dd, .reserver ul { margin: 0; }
+  .reserver .pending { font-size: var(--texte-petit); }
+  .reserver .notice { border: 1px solid var(--chene); padding: var(--espace-6); }
+  .reserver .visuellement-cache { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+
+  .formulaire { display: grid; gap: var(--espace-8); }
+  .bloc { border: 0; border-top: 1px solid var(--chene); margin: 0; padding: var(--espace-6) 0 0; min-width: 0; display: grid; gap: var(--espace-4); align-content: start; }
+  .bloc > legend { font-family: var(--font-titres); font-weight: 600; font-size: var(--titre-3); padding: 0 var(--espace-3) 0 0; }
+  .aide { font-size: var(--texte-petit); }
+  .champ { display: grid; gap: var(--espace-2); }
+  .champ label { font-weight: 700; }
+  .champ input, .champ textarea { width: 100%; min-height: 48px; padding: 0.6rem 0.8rem; border: 1px solid var(--foret); border-radius: 3px; background: color-mix(in srgb, var(--creme) 55%, white); color: var(--foret); }
+  .champ textarea { min-height: 7rem; resize: vertical; }
+  .champ input[aria-invalid="true"], .champ textarea[aria-invalid="true"] { border-width: 2px; border-color: var(--erreur); }
+  .nombres { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--espace-4); }
+  .nombres input { text-align: center; }
+  .cases { list-style: none; padding: 0; display: grid; gap: var(--espace-2); }
+  .case { display: flex; gap: var(--espace-3); align-items: flex-start; min-height: 44px; padding-block: var(--espace-2); cursor: pointer; }
+  .case input { flex: none; width: 1.4rem; height: 1.4rem; margin: 0.15rem 0 0; accent-color: var(--kaki-fonce); }
+  .dortoir { max-width: 22rem; }
+  .erreur { color: var(--erreur); font-weight: 700; font-size: var(--texte-petit); border-left: 4px solid var(--erreur); padding-left: var(--espace-3); }
+  .resume-erreurs { border: 2px solid var(--erreur); padding: var(--espace-4) var(--espace-6); }
+  .resume-erreurs h2 { font-size: var(--titre-3); }
+  .resume-erreurs ul { padding-left: 1.2rem; margin-top: var(--espace-2); }
+  .resume-erreurs a { font-weight: 700; }
+  .envoi { display: grid; gap: var(--espace-3); justify-items: start; }
+  .button.secondary { background: transparent; color: var(--foret); border-color: var(--foret); }
+  .button.secondary:hover { background: var(--foret); color: var(--creme); }
+  .button[disabled] { opacity: 0.6; cursor: wait; }
+  button.lien { justify-self: start; min-height: 44px; padding: 0; background: none; border: 0; color: inherit; font-weight: 700; text-decoration: underline; text-underline-offset: 0.22em; cursor: pointer; }
+
+  .dates-choisies { display: flex; flex-wrap: wrap; gap: var(--espace-4) var(--espace-8); }
+  .dates-choisies dt { font-size: var(--texte-petit); font-weight: 700; }
+  .dates-choisies dd { font-weight: 700; }
+  .legende { list-style: none; padding: 0; display: flex; flex-wrap: wrap; gap: var(--espace-2) var(--espace-6); font-size: var(--texte-petit); }
+  .legende li { display: inline-flex; align-items: center; gap: var(--espace-2); }
+  .pastille { width: 1rem; height: 1rem; border: 1px solid var(--foret); display: inline-block; }
+  .pastille.complet { background: repeating-linear-gradient(135deg, transparent 0 3px, var(--foret) 3px 4px); }
+  .pastille.choisi { background: var(--kaki-fonce); }
+
+  /* Calendrier */
+  .calendrier { max-width: 28rem; min-height: 26rem; }
+  .cal-entete { display: flex; align-items: center; justify-content: space-between; gap: var(--espace-4); margin-bottom: var(--espace-3); }
+  .cal-titre { font-family: var(--font-texte); font-size: 1.125rem; text-transform: capitalize; }
+  .cal-nav { width: 48px; height: 48px; font-size: 1.6rem; line-height: 1; background: transparent; border: 1px solid var(--foret); border-radius: 3px; color: var(--foret); cursor: pointer; }
+  .cal-nav:hover:not(:disabled) { background: var(--foret); color: var(--creme); }
+  .cal-nav:disabled { opacity: 0.35; cursor: not-allowed; }
+  .cal-grille { width: 100%; border-collapse: separate; border-spacing: 2px; table-layout: fixed; }
+  .cal-grille th { font-size: var(--texte-petit); font-weight: 700; padding-block: var(--espace-2); }
+  .cal-grille td { padding: 0; }
+  .cal-jour { width: 100%; min-height: 44px; aspect-ratio: 1; padding: 0; border: 1px solid transparent; border-radius: 3px; background: color-mix(in srgb, var(--creme) 55%, white); color: var(--foret); font-weight: 700; cursor: pointer; }
+  .cal-jour.libre, .cal-jour.depart-possible { border-color: color-mix(in srgb, var(--foret) 45%, transparent); }
+  .cal-jour:hover:not([aria-disabled="true"]) { border-color: var(--foret); background: var(--horizon); }
+  .cal-erreur { border: 2px solid var(--erreur); padding: var(--espace-4); margin-bottom: var(--espace-4); display: grid; gap: var(--espace-2); justify-items: start; font-weight: 700; }
+  .cal-jour:focus-visible { outline: 3px solid var(--foret); outline-offset: 2px; z-index: 1; position: relative; }
+  .cal-jour[aria-disabled="true"] { cursor: not-allowed; color: color-mix(in srgb, var(--foret) 65%, var(--creme)); font-weight: 400; }
+  .cal-jour.complet { background: repeating-linear-gradient(135deg, transparent 0 4px, color-mix(in srgb, var(--foret) 55%, transparent) 4px 5px), var(--creme); text-decoration: line-through; }
+  .cal-jour.ferme, .cal-jour.inconnu { background: transparent; border-color: color-mix(in srgb, var(--foret) 25%, transparent); border-style: dashed; }
+  .cal-jour.impossible { background: transparent; border-style: dashed; border-color: color-mix(in srgb, var(--foret) 25%, transparent); }
+  .cal-jour.dedans { background: var(--horizon); }
+  .cal-jour.arrivee, .cal-jour.depart { background: var(--kaki-fonce); color: var(--creme); border-color: var(--kaki-fonce); text-decoration: none; font-weight: 700; }
+  .calendrier-statut { min-height: 1.5em; margin-top: var(--espace-3); font-size: var(--texte-petit); }
+
+  .repas { display: grid; gap: var(--espace-1); }
+  .repas-jour { display: grid; gap: var(--espace-1); border-top: 1px solid color-mix(in srgb, var(--chene) 55%, transparent); padding-block: var(--espace-3); }
+
+  .devis { border: 1px solid var(--foret); background: var(--horizon); padding: var(--espace-6); display: grid; gap: var(--espace-4); align-content: start; }
+  .devis h2 { font-size: var(--titre-3); }
+  .devis-lignes { list-style: none; padding: 0; display: grid; gap: var(--espace-2); }
+  .devis-lignes li { display: flex; justify-content: space-between; gap: var(--espace-4); border-bottom: 1px solid color-mix(in srgb, var(--foret) 30%, transparent); padding-bottom: var(--espace-2); }
+  .devis-lignes .detail { display: block; font-size: var(--texte-petit); }
+  .devis-lignes .montant { white-space: nowrap; font-weight: 700; }
+  .devis-total { display: flex; justify-content: space-between; gap: var(--espace-4); font-weight: 700; font-size: 1.25rem; }
+  .devis .mention { font-size: var(--texte-petit); }
+  .devis .alerte { font-weight: 700; }
+
+  .confirmation { border: 2px solid var(--kaki-fonce); padding: var(--espace-8); display: grid; gap: var(--espace-4); justify-items: start; }
+  .reserver [hidden] { display: none !important; }
+  .recap { display: grid; gap: var(--espace-2); }
+  .recap > div { display: grid; grid-template-columns: minmax(7rem, 11rem) 1fr; gap: var(--espace-4); border-bottom: 1px solid color-mix(in srgb, var(--chene) 55%, transparent); padding-bottom: var(--espace-2); }
+  .recap dt { font-weight: 700; }
+  .devis-recap { max-width: 30rem; }
+  .reference-ligne strong { font-size: 1.35rem; letter-spacing: 0.02em; }
+
+  @media (min-width: 64rem) {
+    .formulaire { grid-template-columns: minmax(0, 1fr) 24rem; column-gap: var(--espace-16); }
+    .formulaire > * { grid-column: 1; }
+    .formulaire > .devis { grid-column: 2; grid-row: 1 / span 8; align-self: start; position: sticky; top: var(--espace-6); }
+  }
+</style>
+<style>
+  :global(.site-main) { padding-block: 0; }
+  .hero { display: grid; gap: var(--espace-8); padding-block: var(--espace-section) var(--espace-8); }
+  h1 { margin: 0; max-width: 16ch; }
+  .opening { margin-top: var(--espace-4); font-weight: 700; }
+  @media (min-width: 48rem) { .hero { grid-template-columns: 1fr 1fr; gap: var(--espace-16); align-items: end; } }
+</style>

@@ -77,11 +77,13 @@ try {
     }
     await page.getByRole('link', { name: content.hero.ratesLink, exact: true }).click();
     assert.equal(new URL(page.url()).hash, '#tarifs');
-    await page.getByRole('link', { name: content.hero.requestLink, exact: true }).click();
-    assert.equal(new URL(page.url()).hash, '#demande');
-    await page.getByRole('link', { name: content.stay.link, exact: true }).click();
-    assert.equal(new URL(page.url()).pathname, '/');
-    assert.equal(new URL(page.url()).hash, '#sejour');
+    // Le lien du bandeau et le bouton de fin de page portent le même nom et mènent au même endroit.
+    assert.equal(await page.getByRole('link', { name: content.hero.requestLink, exact: true }).evaluateAll(l => [...new Set(l.map(a => a.getAttribute('href')))].join()), '/reserver/');
+    await page.locator('.hero').getByRole('link', { name: content.hero.requestLink, exact: true }).click();
+    assert.equal(new URL(page.url()).pathname, '/reserver/');
+    await page.goto(origin + '/gite/', { waitUntil: 'networkidle' });
+    await page.locator('#demande').getByRole('link', { name: content.stay.link, exact: true }).click();
+    assert.equal(new URL(page.url()).pathname, '/reserver/');
     await page.goto(origin + '/gite/', { waitUntil: 'networkidle' });
     // Charger la photo différée avant la capture intégrale.
     await page.locator('.practical').scrollIntoViewIfNeeded();

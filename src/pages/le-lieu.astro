@@ -7,7 +7,7 @@ import { site } from '../lib/interface';
 const entry = await getEntry('lieu', 'fr');
 if (!entry) throw new Error('Contenu lieu/fr absent');
 const text = entry.data;
-const availablePages = { home: '/', gite: '/gite/', lieu: '/le-lieu/', reserver: '/#sejour' };
+const availablePages = { home: '/', gite: '/gite/', lieu: '/le-lieu/', reserver: '/reserver/' };
 const mapUrl = new URL('https://www.google.com/maps/search/');
 mapUrl.search = new URLSearchParams({ api: '1', query: `${site.address}, ${site.locality}` }).toString();
 ---
@@ -91,7 +91,7 @@ mapUrl.search = new URLSearchParams({ api: '1', query: `${site.address}, ${site.
   <section class="stay section" aria-labelledby="rester-titre">
     <div class="container">
       <h2 id="rester-titre">{text.stay.title}</h2><p>{text.stay.text}</p>
-      <div class="actions"><a class="button" href="/gite/">{text.stay.lodgeLink}</a><a class="text-link" href="/#sejour">{text.stay.requestLink}</a></div>
+      <div class="actions"><a class="button" href="/gite/">{text.stay.lodgeLink}</a><a class="text-link" href="/reserver/">{text.stay.requestLink}</a></div>
     </div>
   </section>
 </BaseLayout>
