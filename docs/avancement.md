@@ -4,7 +4,47 @@ Le dernier état est en haut. À chaque reprise, lire ce fichier, `git log -5` e
 `git status`, puis reprendre la première tranche non cochée. Chaque tranche
 terminée donne lieu à un commit après un build sans erreur ni avertissement.
 
-## Étape en cours : 11 — Pages légales (FR) — 2026-11-16
+## Étape en cours : 12 — Version anglaise — 2026-11-16
+
+Branche : `etape-12-en` · Base : `etape-11-legal`.
+Statut : tranches 1 à 6 terminées ; étape prête pour revue, sans fusion.
+PR à créer sur GitHub (base `etape-11-legal`).
+Périmètre (`docs/etapes.md` étape 12) : toutes les pages publiques en anglais sous `/en/`
+(`/en/`, `/en/guesthouse/`, `/en/the-place/`, `/en/book/`, `/en/legal/`, `/en/privacy/`,
+`/en/booking-terms/`), `hreflang`, sélecteur de langue. Traduction naturelle, mêmes informations,
+prix en €. `/admin/` reste en français (usage d’Amaëlle seule). Les `TODO(amaelle)` sont repris
+à l’identique dans les contenus anglais.
+
+Principes : mêmes composants pour les deux langues (les pages deviennent des « vues » qui
+reçoivent la langue), aucune route ni aucun texte en dur ; table de routes unique
+`src/lib/routes.ts` ; la langue de la demande (`langue`) part à l’API et pilote l’e-mail à la
+cliente ; formats de dates et de montants selon la langue.
+
+- [x] Tranche 1 — Fondations : table de routes, `hreflang`/`lang` dans `BaseLayout`, en-tête,
+  pied de page, interface EN complète, pages converties en vues paramétrées par la langue
+  (le français ne change pas) ; tests des routes.
+  Fait : `src/lib/routes.ts`, vues `src/views/*` (une vue par page, langue en paramètre), `hreflang` et x-default dans `BaseLayout`,
+  contenus légaux déplacés dans `src/content/legal/fr/`, 5 tests de routes (501 au total). Les pages `/en/*` sont créées avec leur contenu
+  dans les tranches suivantes : en attendant, le sélecteur de langue pointe vers des pages anglaises pas encore construites.
+  Défaut des audits corrigé : une requête abandonnée par une navigation (`ERR_ABORTED`) était comptée comme panne.
+- [x] Tranche 2 — Accueil et gîte en anglais (`en.md`, tarifs en €).
+  Fait : `accueil/en.md`, `gite/en.md`, pages `/en/` et `/en/guesthouse/`, montants « €76.50 » (`formatEuros(cents, locale)`),
+  test de parité FR/EN (`tests/parite.test.ts` : mêmes clés, mêmes images, mêmes TODO).
+- [x] Tranche 3 — Le lieu en anglais.
+  Fait : `lieu/en.md`, page `/en/the-place/` ; repères G / A / M (guesthouse, arena, meadows) ; parité vérifiée par test.
+- [x] Tranche 4 — Réserver en anglais : formulaire, calendrier, devis, messages d’erreur du
+  serveur, langue envoyée à l’API ; tests.
+  Fait : `reserver/en.md`, `/en/book/`, formats de dates et de montants par langue (`fixerLangue`), messages d’erreur de l’API traduits
+  par code (`src/lib/reserver/messages.ts` ; un code inconnu n’affiche jamais de français), langue de la demande envoyée à l’API
+  (donc e-mails en anglais), langue du widget anti-robot. `AUDIT_LANG=en npm run audit:reserver` : parcours complet réussi en anglais.
+- [x] Tranche 5 — Pages légales en anglais.
+  Fait : `legal/en/*.md`, `/en/legal/`, `/en/privacy/`, `/en/booking-terms/` ; mêmes ancres qu’en français, bandeau « Draft awaiting validation » piloté
+  par le même interrupteur `valide` ; textes signalés comme traduits pour information (la version française fait foi).
+- [x] Tranche 6 — Audit : hreflang réciproques, parité FR/EN des contenus (tests), navigateur,
+  Lighthouse, rapport, `docs/rapports/etape-12.json`.
+  Fait : `npm run audit:langues`, audit de réservation en anglais, Lighthouse 100 partout (96 en bonnes pratiques sur `/en/book/`), rapport.
+
+## Étape précédente : 11 — Pages légales (FR) — 2026-11-16
 
 Branche : `etape-11-legal` · Base : `etape-10-admin`.
 Statut : tranches 1 à 3 terminées ; étape prête pour revue, sans fusion.

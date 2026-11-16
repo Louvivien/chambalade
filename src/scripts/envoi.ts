@@ -1,5 +1,6 @@
 import { corpsDemande, messagesDErreur, validerFormulaire, type ProblemeChamp, type TextesErreurs } from '../lib/reserver/envoi';
-import { dateComplete } from '../lib/reserver/formats';
+import { dateComplete, langue } from '../lib/reserver/formats';
+import type { ErreurApi } from '../lib/reserver/messages';
 import { nomCourt, type DevisApi } from '../lib/reserver/devis';
 import { sejourDepuisEtat } from '../lib/reserver/sejour';
 import type { Contact, EtatFormulaire, Regles } from '../lib/reserver/types';
@@ -12,6 +13,7 @@ declare global { interface Window { turnstile?: Turnstile } }
 interface OptionsEnvoi {
   etat: EtatFormulaire; regles: Regles; text: Record<string, any>; siteKey: string;
   nomsUnites: Record<string, string>;
+  traduire: (erreur: ErreurApi) => string | null;
   /** Après un refus du serveur sur les places : relire les disponibilités et le devis. */
   apresConflit: () => void;
 }
@@ -39,7 +41,7 @@ export function brancherEnvoi(o: OptionsEnvoi) {
     }
     try {
       widget = window.turnstile.render('#turnstile', {
-        sitekey: siteKey, language: 'fr',
+        sitekey: siteKey, language: langue(),
         callback: (t: string) => { jeton = t; cacher('erreur-antirobot'); },
         'expired-callback': () => { jeton = null; },
         'error-callback': () => { jeton = null; },
@@ -112,7 +114,7 @@ export function brancherEnvoi(o: OptionsEnvoi) {
       // Un jeton Turnstile ne sert qu’une fois, quelle que soit l’issue.
       reinitialiserTurnstile();
       if (reponse.status === 201) { afficherConfirmation(corps as { reference: string; devis: DevisApi }); return; }
-      const messages = messagesDErreur(reponse.status, corps, Number(reponse.headers.get('Retry-After')) || null, e);
+      const messages = messagesDErreur(reponse.status, corps, Number(reponse.headers.get('Retry-After')) || null, e, o.traduire);
       const zone = trouver('erreur-envoi');
       vider(zone);
       zone.append(...messages.flatMap((m, i) => (i === 0 ? [m] : [el('br'), m])));

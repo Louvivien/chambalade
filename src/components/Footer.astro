@@ -1,8 +1,7 @@
 ---
-import { getInterface, legalPagesFr, site, type Locale, type AvailablePages } from '../lib/interface';
+import { getInterface, site, type Locale, type AvailablePages } from '../lib/interface';
 interface Props { locale: Locale; availablePages?: AvailablePages; }
 const { locale, availablePages = {} } = Astro.props;
-const legalPages = { ...(locale === 'fr' ? legalPagesFr : {}), ...availablePages };
 const text = await getInterface(locale);
 ---
 <footer class="site-footer" aria-label={text.footerLabel}>
@@ -19,7 +18,7 @@ const text = await getInterface(locale);
       <a href={site.directoryUrl}>{text.directoryLabel}</a>
       <ul>
         {text.legal.map(({ key, label }) => <li>
-          {legalPages[key] ? <a href={legalPages[key]}>{label}</a> : <span aria-disabled="true">{label}</span>}
+          {availablePages[key] ? <a href={availablePages[key]}>{label}</a> : <span aria-disabled="true">{label}</span>}
         </li>)}
       </ul>
     </div>

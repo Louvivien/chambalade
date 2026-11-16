@@ -1,0 +1,132 @@
+---
+import { route, type Locale } from '../lib/routes';
+interface Props { locale: Locale; }
+const { locale } = Astro.props;
+import { getEntry } from 'astro:content';
+import { Picture } from 'astro:assets';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import AccueilBandeau from '../components/AccueilBandeau.astro';
+const entry = await getEntry('accueil', locale);
+if (!entry) throw new Error(`Contenu accueil/${locale} absent`);
+const text = entry.data;
+---
+<BaseLayout {locale} title={text.title} description={text.description} currentPage="home">
+  <section class="hero" aria-labelledby="accueil-titre">
+    <div class="hero-copy">
+      <h1 id="accueil-titre">{text.hero.title}</h1>
+      <p>{text.hero.introduction}</p>
+      <div class="hero-actions">
+        <a class="button" href={route(locale, 'gite')}>{text.hero.discover}</a>
+        <a class="text-link" href={route(locale, 'reserver')}>{text.hero.request}</a>
+      </div>
+    </div>
+    <AccueilBandeau desktop={text.hero.desktop} mobile={text.hero.mobile} />
+  </section>
+
+  <section class="introduction container section" aria-labelledby="introduction-titre">
+    <div class="introduction-copy">
+      <h2 id="introduction-titre">{text.introduction.title}</h2>
+      <p>{text.introduction.text}</p>
+    </div>
+    <figure>
+      <Picture src={text.introduction.photo.src} alt={text.introduction.photo.alt} formats={['avif', 'webp']} widths={[360, 720, 1080]} sizes="(min-width: 64rem) 360px, (min-width: 48rem) 40vw, 100vw" quality={65} loading="lazy" />
+      <figcaption>{text.introduction.caption}</figcaption>
+    </figure>
+  </section>
+
+  <section class="activities section" id="gite" aria-labelledby="activites-titre">
+    <div class="container">
+      <h2 id="activites-titre">{text.activities.title}</h2>
+      <article class="lodge">
+        <h3>{text.activities.lodgeTitle}</h3>
+        <div>
+          <p>{text.activities.lodgeText}</p>
+          <a class="button" href={route(locale, 'reserver')}>{text.activities.lodgeLink}</a>
+        </div>
+      </article>
+      <div class="upcoming">
+        {text.activities.upcoming.map(activity => <article>
+          <p class="status">{text.activities.soon}</p>
+          <h3>{activity.title}</h3>
+          <p>{activity.text}</p>
+        </article>)}
+      </div>
+      <a class="text-link" href="#sejour">{text.activities.interestLink}</a>
+    </div>
+  </section>
+
+  <section class="reasons container section" aria-labelledby="raisons-titre">
+    <div>
+      <h2 id="raisons-titre">{text.reasons.title}</h2>
+      <ul>
+        {text.reasons.items.map(item => <li><h3>{item.title}</h3><p>{item.text}</p></li>)}
+      </ul>
+    </div>
+    <Picture src={text.reasons.photo.src} alt={text.reasons.photo.alt} formats={['avif', 'webp']} widths={[480, 960, 1440]} sizes="(min-width: 64rem) 50vw, 100vw" quality={65} loading="lazy" />
+  </section>
+
+  <section class="region section" id="le-lieu" aria-labelledby="region-titre">
+    <div class="container region-inner">
+      <h2 id="region-titre">{text.region.title}</h2>
+      <div><p>{text.region.text}</p><p class="location">{text.region.location}</p></div>
+    </div>
+  </section>
+
+  <section class="stay section" id="sejour" aria-labelledby="sejour-titre">
+    <div class="container">
+      <h2 id="sejour-titre">{text.stay.title}</h2>
+      <p>{text.stay.text}</p>
+      <a class="button stay-request" href={route(locale, 'reserver')}>{text.stay.requestLink}</a>
+    </div>
+  </section>
+</BaseLayout>
+<style>
+  :global(.site-main) { padding-block: 0; }
+  .section { padding-block: var(--espace-section); }
+  h1, h2, h3, p, figure { margin: 0; }
+  p + p { margin-top: var(--espace-4); }
+  h2 + p, h3 + p { margin-top: var(--espace-6); }
+  .hero-copy { padding: var(--espace-8) var(--gouttiere) var(--espace-12); }
+  .hero-copy p { margin-top: var(--espace-6); }
+  .hero-actions { display: flex; flex-wrap: wrap; align-items: center; gap: var(--espace-4) var(--espace-6); margin-top: var(--espace-8); }
+  .text-link { display: inline-flex; align-items: center; min-height: 48px; font-weight: 700; }
+  .introduction, .reasons { display: grid; gap: var(--espace-12); align-items: center; }
+  figure { max-width: 28rem; }
+  figure :global(img) { display: block; width: 100%; }
+  figcaption { margin-top: var(--espace-3); font-size: var(--texte-petit); }
+  .activities { border-block: 1px solid var(--chene); }
+  .lodge { display: grid; gap: var(--espace-6); margin-top: var(--espace-12); }
+  .lodge h3 { font-size: var(--titre-2); }
+  .lodge .button { margin-top: var(--espace-6); }
+  .upcoming { display: grid; gap: var(--espace-8); margin-block: var(--espace-12) var(--espace-4); padding-top: var(--espace-8); border-top: 1px solid var(--chene); }
+  .status { display: inline-block; background: var(--horizon); padding: .15rem .6rem; font-size: var(--texte-petit); font-weight: 700; margin-bottom: var(--espace-4); }
+  .upcoming h3 + p { margin-top: var(--espace-4); }
+  .reasons ul { list-style: none; padding: 0; margin: var(--espace-8) 0 0; }
+  .reasons li + li { margin-top: var(--espace-6); }
+  .reasons h3 { font: 700 var(--texte-courant)/1.5 var(--font-texte); }
+  .reasons h3 + p { margin-top: var(--espace-1); }
+  .reasons :global(img) { display: block; width: 100%; }
+  .region { background: var(--horizon); }
+  .region-inner { display: grid; gap: var(--espace-8); }
+  .location { font-weight: 700; }
+  .stay { background: var(--foret); color: var(--creme); }
+  .stay h2 { max-width: 22ch; }
+  .stay-request { margin-top: var(--espace-8); background: var(--creme); color: var(--foret); border-color: var(--creme); }
+  .stay-request:hover { background: var(--horizon); border-color: var(--horizon); color: var(--foret); }
+  .stay a:focus-visible { outline-color: var(--creme); }
+  @media (min-width: 48rem) {
+    .hero-copy { max-width: 54rem; margin-inline: auto; }
+    .introduction { grid-template-columns: 2fr 3fr; gap: var(--espace-16); }
+    .introduction figure { grid-column: 1; grid-row: 1; }
+    .introduction-copy { grid-column: 2; }
+    .upcoming { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--espace-16); }
+    .lodge, .region-inner { grid-template-columns: 1fr 1.5fr; gap: var(--espace-16); }
+  }
+  @media (min-width: 64rem) {
+    .hero { position: relative; height: clamp(44rem, 56vw, 58rem); }
+    .hero-copy { position: absolute; z-index: 1; right: var(--gouttiere); top: var(--espace-8); width: 43%; max-width: 35rem; padding: var(--espace-8); background: var(--creme); }
+    .hero h1 { font-size: clamp(2.4rem, 3.6vw, 3.5rem); }
+    .introduction { grid-template-columns: 360px 1fr; max-width: 64rem; }
+    .reasons { grid-template-columns: 1fr 1.1fr; gap: var(--espace-16); }
+  }
+</style>

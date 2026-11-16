@@ -1,5 +1,47 @@
 # Journal d’audit
 
+## Étape 12 — Version anglaise — 2026-11-16
+
+Branche : `etape-12-en` · Base : `etape-11-legal` · Pull request : à créer (voir `docs/avancement.md`).
+
+Fait :
+- **Sept pages en anglais** : `/en/`, `/en/guesthouse/`, `/en/the-place/`, `/en/book/`, `/en/legal/`, `/en/privacy/`,
+  `/en/booking-terms/` (arborescence de `docs/brief.md`). Traduction naturelle, mêmes informations, mêmes photos (textes
+  alternatifs traduits), prix en euros (« €76.50 »), `TODO(amaelle)` repris à l’identique en anglais.
+- **Un seul code pour les deux langues** : chaque page est une vue (`src/views/*`, `src/layouts/LegalLayout.astro`) qui reçoit la
+  langue ; table de routes unique `src/lib/routes.ts` ; contenus `en.md` à côté des `fr.md`.
+- **hreflang** (fr, en, x-default) en adresses absolues dans chaque page, **sélecteur de langue** vers la même page de l’autre langue,
+  pied de page et liens internes dans la langue de la page.
+- **Réservation en anglais** : formulaire, calendrier (mois, jours, annonces), devis (« €76.50 »), résumé, confirmation ; les messages
+  d’erreur de l’API sont traduits par code (`src/lib/reserver/messages.ts`) et un code inconnu n’affiche jamais de français ;
+  la langue de la demande part à l’API (les e-mails à la cliente sont donc en anglais) ; le widget anti-robot suit la langue.
+- Pages légales anglaises : mêmes ancres, même interrupteur `valide`, mention « traduction pour information, la version française fait foi ».
+- Correction hors périmètre : les audits d’accueil, du gîte et du lieu comptaient comme « panne » une requête abandonnée par une
+  navigation (`ERR_ABORTED`) ; ils échouaient de façon répétée au lieu d’aléatoire. Seules les vraies pannes et les codes ≥ 400 sont comptés.
+  Un import inutilisé retiré.
+
+Contrôles automatiques : build OK, 15 pages, sans erreur ni avertissement · 548 tests OK (47 nouveaux : routes, parité FR/EN, langue de
+la réservation, légal anglais) · types : 0 erreur, 0 avertissement, 1 indication (`erreurEnvoi` inutilisée, étape 9) · liens : 475 références
+internes, 0 cassée · configuration des fonctions et inventaire des points à confirmer à jour · secrets : rien.
+Parité FR/EN testée : mêmes clés, mêmes types, mêmes tailles de listes, mêmes images, autant de `TODO(amaelle)` ; une page anglaise oubliée casse le test.
+Audits navigateur : `npm run audit:langues` (7 pages × 2 langues × 375/1280 px, JavaScript désactivé) — hreflang réciproques, sélecteur,
+tous les liens internes dans la langue de la page et valides, aucun mot français sur une page anglaise (titre, description, texte, alt),
+pas de défilement horizontal, aucune requête externe ; `AUDIT_LANG=en npm run audit:reserver` (wrangler, D1 locale) — parcours complet en
+anglais, demande enregistrée avec `langue = en` ; audits français (accueil, gîte, lieu, réserver, légal, gabarit) rejoués : OK.
+Lighthouse mobile (perf / a11y / BP / SEO) : `/en/` 100 / 100 / 100 / 100 · `/en/guesthouse/` 100 / 100 / 100 / 100 ·
+`/en/the-place/` 100 / 100 / 100 / 100 · `/en/book/` 100 / 100 / 96 / 100 (96 : le script externe de la vérification anti-robot, prévu).
+Contenu : conforme · écarts : aucun.
+
+Points à connaître :
+- `/admin/` reste en français (outil d’Amaëlle) ; les e-mails à Amaëlle aussi.
+- Les pages légales anglaises sont des traductions de brouillons : à relire avec la version française.
+- Le titre « Chez Amaëlle » du portail et l’adresse postale restent en français (nom propre et adresse).
+- Les `<title>` anglais, `hreflang` et x-default sont posés ; `sitemap.xml`, `robots.txt`, Open Graph et données structurées arrivent à l’étape 13.
+
+Nouveaux TODO(amaelle) : aucun nouveau point métier (les `TODO` français ont leur pendant anglais).
+À vérifier visuellement par Vivien : les sept pages anglaises sur téléphone, le formulaire `/en/book/` (calendrier, devis, messages), et relire
+les textes anglais pour le ton (je ne suis pas locuteur natif) ; en particulier « guesthouse » pour « gîte ».
+
 ## Étape 11 — Pages légales (FR) — 2026-11-16
 
 Branche : `etape-11-legal` · Base : `etape-10-admin` · Pull request : à créer (voir `docs/avancement.md`).

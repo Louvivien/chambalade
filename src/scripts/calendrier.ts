@@ -1,6 +1,6 @@
 import { ajouterJours, ajouterMois } from '../lib/reservation/dates';
 import { bornesArrivee, clicSurJour, estSelectionnable, fenetreDuMois, grilleDuMois, moisDe, sejourPossible, statutNuit } from '../lib/reserver/calendrier';
-import { dateComplete, remplir } from '../lib/reserver/formats';
+import { dateComplete, moisAnnee, remplir } from '../lib/reserver/formats';
 import type { EtatFormulaire, LibresParNuit, Regles, StatutNuit } from '../lib/reserver/types';
 import { el, vider } from './dom';
 
@@ -22,7 +22,6 @@ export interface OptionsCalendrier {
   onSelection: (arrivee: string | null, depart: string | null) => void;
 }
 
-const MOIS = new Intl.DateTimeFormat('fr-FR', { month: 'long', year: 'numeric', timeZone: 'UTC' });
 
 /**
  * Calendrier de séjour : une grille de boutons, un seul dans l’ordre de tabulation (tabindex
@@ -114,7 +113,7 @@ export function creerCalendrier(o: OptionsCalendrier) {
   }
 
   function dessiner(redonnerFocus = false) {
-    titre.textContent = MOIS.format(new Date(Date.UTC(affiche.annee, affiche.mois - 1, 1)));
+    titre.textContent = moisAnnee(affiche.annee, affiche.mois);
     precedent.disabled = ordre(affiche.annee, affiche.mois) <= ordre(premierMois.annee, premierMois.mois);
     suivant.disabled = ordre(affiche.annee, affiche.mois) >= ordre(dernierMois.annee, dernierMois.mois);
     const cle = cleMois(affiche.annee, affiche.mois);

@@ -109,6 +109,9 @@ const reserver = defineCollection({
     submit: z.object({ label: z.string(), sending: z.string(), summaryTitle: z.string(), missingKey: z.string() }),
     errors: z.object({ fields: z.object({ nom: z.string(), prenom: z.string(), email: z.string() }), required: z.string(), email: z.string(), noDates: z.string(), noLodging: z.string(), consent: z.string(), antiRobot: z.string(), network: z.string(), server: z.string(), rateLimit: z.string() }),
     confirmation: z.object({ title: z.string(), reference: z.string(), next: z.string(), notBooking: z.string(), recap: z.string(), again: z.string() }),
+    // Seulement en anglais : en français, l’API répond déjà dans la langue de la page.
+    unitNames: z.record(z.enum(['chambre_privee', 'chambre_2', 'chambre_3', 'dortoir', 'paddocks']), z.string()).optional(),
+    serverErrors: z.record(z.string(), z.string()).optional(),
   }),
 });
 
@@ -135,7 +138,7 @@ const admin = defineCollection({
 });
 
 const legal = defineCollection({
-  loader: glob({ pattern: '*.md', base: './src/content/legal' }),
+  loader: glob({ pattern: '**/*.md', base: './src/content/legal' }),
   schema: z.object({
     title: texte, description: texte,
     hero: z.object({ title: texte, text: texte }),

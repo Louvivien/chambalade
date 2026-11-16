@@ -21,7 +21,8 @@ try {
       if (/pres-de-la-trappe|foret-chambaran/.test(request.url())) photos.push(request.url());
     });
     page.on('response', response => { if (response.status() >= 400) failedRequests.push(response.url()); });
-    page.on('requestfailed', request => failedRequests.push(request.url()));
+    // Une requête abandonnée par une navigation (ERR_ABORTED) n'est pas une panne ; les vraies pannes et les codes >= 400 restent comptés.
+    page.on('requestfailed', request => { if (request.failure()?.errorText !== 'net::ERR_ABORTED') failedRequests.push(request.url()); });
     assert.equal((await page.goto(origin, { waitUntil: 'networkidle' })).status(), 200);
     await page.evaluate(() => document.fonts.ready);
     assert.equal(await page.locator('html').getAttribute('lang'), 'fr');

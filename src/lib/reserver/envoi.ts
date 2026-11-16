@@ -1,4 +1,5 @@
-import { remplir } from './formats';
+import { langue, remplir } from './formats';
+import type { ErreurApi } from './messages';
 import type { Contact, EtatFormulaire } from './types';
 
 export interface TextesErreurs { required: string; email: string; noDates: string; noLodging: string; consent: string; antiRobot: string; network: string; server: string; rateLimit: string }
@@ -29,20 +30,20 @@ export function corpsDemande(sejour: unknown, contact: Contact, jeton: string) {
   return {
     sejour,
     contact: { nom: contact.nom.trim(), prenom: contact.prenom.trim(), email: contact.email.trim(), telephone: facultatif(contact.telephone), message: facultatif(contact.message) },
-    langue: 'fr' as const,
+    langue: langue(),
     consentement: true as const,
     turnstile_token: jeton,
   };
 }
 
-interface ReponseApi { ok?: boolean; erreur?: { code?: string; message?: string }; erreurs?: Array<{ message?: string }> }
+interface ReponseApi { ok?: boolean; erreur?: ErreurApi; erreurs?: ErreurApi[] }
 
 /** Messages à montrer après un échec, du plus précis au plus général. */
-export function messagesDErreur(status: number | null, corps: unknown, retryAfter: number | null, textes: TextesErreurs): string[] {
+export function messagesDErreur(status: number | null, corps: unknown, retryAfter: number | null, textes: TextesErreurs, traduire: (e: ErreurApi) => string | null = e => e.message ?? null): string[] {
   if (status === null) return [textes.network];
   const c = (corps && typeof corps === 'object' ? corps : {}) as ReponseApi;
   if (status === 429) return [remplir(textes.rateLimit, { minutes: Math.max(1, Math.ceil((retryAfter ?? 3600) / 60)) })];
-  const precis = [...(c.erreurs ?? []).map(e => e.message), c.erreur?.message].filter((m): m is string => typeof m === 'string' && m.length > 0);
+  const precis = [...new Set([...(c.erreurs ?? []), ...(c.erreur ? [c.erreur] : [])].map(traduire).filter((m): m is string => typeof m === 'string' && m.length > 0))];
   if (status >= 500 && status !== 503) return [textes.server];
   if (precis.length > 0) return precis;
   return [textes.server];

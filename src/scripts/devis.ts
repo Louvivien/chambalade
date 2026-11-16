@@ -1,5 +1,6 @@
 import { nomCourt, lignesVue, messagesDisponibilite, type DevisApi, type TextesDevis } from '../lib/reserver/devis';
-import { euros } from '../lib/reserver/formats';
+import { deuxPoints, euros } from '../lib/reserver/formats';
+import type { ErreurApi } from '../lib/reserver/messages';
 import type { DemandeSejour } from '../lib/reservation/types';
 import { el, vider } from './dom';
 
@@ -20,7 +21,7 @@ export function dessinerDevis(zone: HTMLElement, devis: DevisApi, t: TextesDevis
   }
   zone.append(liste);
   zone.append(el('p', { class: 'devis-total' }, [el('span', {}, [t.total]), el('span', {}, [devis.total_cents === 0 && !devis.complet ? t.pending : euros(devis.total_cents)])]));
-  const acompte = devis.acompte_cents !== null ? `${t.deposit} : ${euros(devis.acompte_cents)}` : t.depositUnknown;
+  const acompte = devis.acompte_cents !== null ? `${t.deposit}${deuxPoints()}${euros(devis.acompte_cents)}` : t.depositUnknown;
   if (acompte) zone.append(el('p', { class: 'aide' }, [acompte]));
   if (devis.provisoire) zone.append(el('p', { class: 'aide alerte' }, [t.provisional]));
   if (!devis.complet) zone.append(el('p', { class: 'aide alerte' }, [t.incomplete]));
@@ -33,6 +34,8 @@ interface OptionsDevis {
   zone: HTMLElement;
   textes: TextesDevisDom;
   nomsUnites: Record<string, string>;
+  /** Dit une erreur de l’API dans la langue de la page ; null si on ne sait pas la dire. */
+  traduire: (erreur: ErreurApi) => string | null;
   sejour: () => DemandeSejour | null;
 }
 
@@ -49,13 +52,13 @@ export function creerDevis(o: OptionsDevis) {
     o.zone.setAttribute('aria-busy', 'true');
     try {
       const reponse = await fetch('/api/devis', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(sejour), signal: requete.signal });
-      const corps = await reponse.json().catch(() => null) as { ok?: boolean; devis?: DevisApi; disponibilite?: { erreurs: Array<{ message: string }> }; erreurs?: Array<{ message: string }>; erreur?: { message?: string } } | null;
+      const corps = await reponse.json().catch(() => null) as { ok?: boolean; devis?: DevisApi; disponibilite?: { erreurs: ErreurApi[] }; erreurs?: ErreurApi[]; erreur?: ErreurApi } | null;
       if (reponse.ok && corps?.devis) {
-        dessinerDevis(o.zone, corps.devis, o.textes, o.nomsUnites, messagesDisponibilite(corps.disponibilite?.erreurs ?? []));
+        dessinerDevis(o.zone, corps.devis, o.textes, o.nomsUnites, messagesDisponibilite(corps.disponibilite?.erreurs ?? [], o.traduire));
       } else {
         // Séjour hors règles : on dit précisément pourquoi (message de l’API), sinon message général.
         vider(o.zone);
-        const messages = [...(corps?.erreurs ?? []).map(e => e.message), corps?.erreur?.message].filter((m): m is string => !!m);
+        const messages = [...new Set([...(corps?.erreurs ?? []), ...(corps?.erreur ? [corps.erreur] : [])].map(o.traduire).filter((m): m is string => !!m))];
         o.zone.append(el('div', { class: 'alerte' }, messages.length > 0 ? [el('ul', {}, messages.map(m => el('li', {}, [m])))] : [el('p', {}, [o.textes.error])]));
       }
     } catch (e) {

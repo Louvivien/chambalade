@@ -7,13 +7,14 @@ import rawLegal from '../data/legal.yaml?raw';
 import rawReservation from '../data/reservation.yaml?raw';
 import { z } from 'astro/zod';
 import { parseReservationConfig } from '../lib/reservation/config';
-import { site, legalPagesFr, type PageKey } from '../lib/interface';
+import { site } from '../lib/interface';
+import type { Locale, PageKey } from '../lib/routes';
 import { estAConfirmer, garnir } from '../lib/legal';
 
-interface Props { page: 'mentions' | 'confidentialite' | 'conditions'; }
-const { page } = Astro.props;
-const entry = await getEntry('legal', page);
-if (!entry) throw new Error(`Contenu legal/${page} absent`);
+interface Props { page: 'mentions' | 'confidentialite' | 'conditions'; locale: Locale; }
+const { page, locale } = Astro.props;
+const entry = await getEntry('legal', `${locale}/${page}`);
+if (!entry) throw new Error(`Contenu legal/${locale}/${page} absent`);
 const text = entry.data;
 const nullable = z.string().nullable();
 const legal = z.object({
@@ -25,7 +26,6 @@ const legal = z.object({
 const config = parseReservationConfig(parse(rawReservation));
 const valeurs = { heures: String(config.holds.pending_hours), jours: String(config.holds.accepted_days), hebergeur: legal.hebergeur.nom };
 const g = (t: string) => garnir(t, valeurs);
-const availablePages = { home: '/', gite: '/gite/', lieu: '/le-lieu/', reserver: '/reserver/', ...legalPagesFr };
 const identite = text.identity ? [
   [text.identity.rows.name, legal.editeur.nom],
   [text.identity.rows.status, legal.editeur.statut],
@@ -36,7 +36,7 @@ const identite = text.identity ? [
   [text.identity.rows.publication, legal.editeur.publication],
 ] as [string, string | null][] : [];
 ---
-<BaseLayout locale="fr" title={text.title} description={text.description} currentPage={page as PageKey} {availablePages}>
+<BaseLayout {locale} title={text.title} description={text.description} currentPage={page as PageKey}>
   {!legal.valide && <Fragment slot="head"><meta name="robots" content="noindex" /></Fragment>}
   <article class="container legal">
     <header>
