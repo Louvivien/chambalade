@@ -20,6 +20,7 @@ const legal = z.object({
   editeur: z.object({ nom: nullable, statut: nullable, siret: nullable, publication: nullable }),
   hebergeur: z.object({ nom: z.string(), adresse: nullable }),
   mediation: z.object({ nom: nullable }),
+  valide: z.boolean(),
 }).parse(parse(rawLegal));
 const config = parseReservationConfig(parse(rawReservation));
 const valeurs = { heures: String(config.holds.pending_hours), jours: String(config.holds.accepted_days), hebergeur: legal.hebergeur.nom };
@@ -36,16 +37,16 @@ const identite = text.identity ? [
 ] as [string, string | null][] : [];
 ---
 <BaseLayout locale="fr" title={text.title} description={text.description} currentPage={page as PageKey} {availablePages}>
-  <Fragment slot="head"><meta name="robots" content="noindex" /></Fragment>
+  {!legal.valide && <Fragment slot="head"><meta name="robots" content="noindex" /></Fragment>}
   <article class="container legal">
     <header>
       <h1>{text.hero.title}</h1>
       <p class="lead">{text.hero.text}</p>
     </header>
-    <aside class="draft" aria-labelledby="brouillon-titre">
+    {!legal.valide && <aside class="draft" aria-labelledby="brouillon-titre">
       <h2 id="brouillon-titre">{text.draft.title}</h2>
       <p>{text.draft.text}</p>
-    </aside>
+    </aside>}
     {text.identity && <section aria-labelledby="identite-titre" id="editeur">
       <h2 id="identite-titre">{text.identity.title}</h2>
       <dl>

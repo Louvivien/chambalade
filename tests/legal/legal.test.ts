@@ -66,3 +66,8 @@ describe('contenus légaux', () => {
     }
   });
 });
+
+it('tant que les textes ne sont pas validés, `valide` reste false (bandeau et noindex)', () => {
+  const legal = parse(readFileSync(new URL('../../src/data/legal.yaml', import.meta.url), 'utf8'));
+  expect(legal.valide).toBe(false);
+});

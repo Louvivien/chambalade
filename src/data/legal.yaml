@@ -10,3 +10,7 @@ hebergeur:
   adresse: null # TODO(amaelle): adresse du siège de l’hébergeur, à vérifier sur son site avant publication.
 mediation:
   nom: null # TODO(amaelle): médiateur de la consommation choisi (obligatoire pour un professionnel qui vend à des consommateurs).
+# Tant que c’est false : bandeau « Brouillon à faire valider » affiché et pages non indexées (noindex).
+# Passer à true seulement après relecture par Amaëlle (et un professionnel du droit) et une fois
+# tous les TODO(amaelle) des trois pages levés. L’étape 13 (SEO) doit le vérifier.
+valide: false

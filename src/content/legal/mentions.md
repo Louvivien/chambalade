@@ -22,7 +22,7 @@ sections:
   - id: hebergement
     title: Hébergement du site
     paragraphs:
-      - 'Le site est hébergé par {hebergeur}.'
+      - 'Le site est hébergé par {hebergeur}'
       - 'TODO(amaelle): adresse complète de l’hébergeur, à reprendre de son site avant publication.'
   - id: propriete
     title: Propriété des contenus

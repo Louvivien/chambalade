@@ -136,6 +136,7 @@ conditions pratiques, identité légale. Les sources ci-dessous font autorité.
 | `src/data/legal.yaml:7` | publication: null # TODO(amaelle): nom du ou de la responsable de la publication. |
 | `src/data/legal.yaml:10` | adresse: null # TODO(amaelle): adresse du siège de l’hébergeur, à vérifier sur son site avant publication. |
 | `src/data/legal.yaml:12` | nom: null # TODO(amaelle): médiateur de la consommation choisi (obligatoire pour un professionnel qui vend à des consommateurs). |
+| `src/data/legal.yaml:15` | # tous les TODO(amaelle) des trois pages levés. L’étape 13 (SEO) doit le vérifier. |
 | `src/data/reservation.yaml:3` | # Toute valeur TODO(amaelle) reste null : le code ne la remplace jamais par une valeur inventée. |
 | `src/data/reservation.yaml:30` | privatisable: null # TODO(amaelle): le dortoir est-il privatisable en entier, et à quel prix ? |
 | `src/data/reservation.yaml:34` | capacity_horses: null # TODO(amaelle): nombre de chevaux accueillis en même temps. |
