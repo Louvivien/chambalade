@@ -7,7 +7,8 @@ terminée donne lieu à un commit après un build sans erreur ni avertissement.
 ## Étape en cours : 8 — Réservation : API — 2026-11-16
 
 Branche : `etape-8-api` · Base : `etape-7-reservation` (déjà fusionnée dans `etape-6-lieu`, PR #5).
-Statut : tranches 1 à 5 terminées ; tranche 6 (audit et livraison) à faire. Une PR dédiée en fin d’étape, sans fusion.
+Statut : tranches 1 à 6 terminées ; étape prête pour revue, sans fusion.
+PR à créer sur GitHub (base `etape-6-lieu`) : l’outil `gh` n’est pas installé ici. Une PR dédiée en fin d’étape, sans fusion.
 Périmètre (`docs/etapes.md`, étape 8) : Pages Functions de l’API (disponibilités, devis,
 création de demande avec transaction, Turnstile et limitation par IP, actions
 d’administration) et wrangler avec un D1 local et des données de démonstration. Pas
@@ -51,8 +52,14 @@ compatible D1, pour exercer le SQL réel. Aucun secret dans le dépôt ; la prot
   Fait : `wrangler.toml`, `seed/demo.sql`, `.dev.vars.example`, scripts `api:*` (wrangler épinglé
   en 4.156.1), `docs/api.md`, 4 tests de démo (254 au total). Vérifié sur `wrangler pages dev` :
   migrations, devis, création, concurrence réelle (201 + 409), administration, refus hors localhost.
-- [ ] Tranche 6 (15–30 min) — Audit et livraison : build, types, tests, secrets, liens,
+- [x] Tranche 6 (15–30 min) — Audit et livraison : build, types, tests, secrets, liens,
   inventaire des `TODO(amaelle)`, rapport dans `docs/journal-audit.md`, PR.
+  Fait : 254 tests, build et types sans alerte, 170 liens, inventaire à jour, rapport en tête de
+  `docs/journal-audit.md`, résumé `docs/rapports/etape-8.json`. Reste : ouverture de la PR.
+
+Dernière action : tranche 6 terminée (audit et rapport).
+Prochaine action : ouvrir la PR (base `etape-6-lieu`), relecture par Vivien, aucune fusion
+automatique. Étape 9 (parcours client) non commencée.
 
 ## Étape 7 — Réservation : données et règles, fusionnée (PR #5) — 2026-11-16
 

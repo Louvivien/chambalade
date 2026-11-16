@@ -1,5 +1,75 @@
 # Journal d’audit
 
+## Étape 8 — Réservation : API — 2026-11-16
+
+Branche : `etape-8-api` · Base : `etape-6-lieu` (contient l’étape 7, PR #5) · Pull request : à créer (voir `docs/avancement.md`).
+
+Fait (aucune interface, aucun e-mail : étapes 9 et 10) :
+- API publique : `GET /api/disponibilites`, `POST /api/devis`, `POST /api/demandes`
+  (validation stricte, limitation par adresse IP, Turnstile, insertion gardée).
+- Administration : `/api/admin/**` derrière un point d’entrée unique qui authentifie avant tout
+  routage ; liste et fiche des demandes, actions (accepter, refuser, confirmer, annuler,
+  prolonger), calendrier, blocages ; journal de chaque action.
+- Jeton Cloudflare Access vérifié dans la fonction (RS256, émetteur, audience, expiration,
+  liste blanche d’adresses) ; `503` si Access n’est pas configuré.
+- `wrangler.toml`, scripts `api:migrer`, `api:demo`, `api:dev`, `seed/demo.sql` (personnes
+  fictives), `.dev.vars.example`, migration `0002_limites.sql`, documentation `docs/api.md`.
+- Logique dans `src/lib/api/` (fonctions pures qui reçoivent base, configuration, horloge et
+  `fetch`) ; `functions/` ne contient que de minces adaptateurs.
+
+Contrôles automatiques : build OK, 3 pages, sans erreur ni avertissement · 254 tests OK
+(146 nouveaux : jeton Access 21, administration 55, création 30, démonstration 4, fondations 13,
+API publique 23) · types : 0 erreur, 0 avertissement, 0 indication · liens : 170 références,
+0 cassée · inventaire des `TODO(amaelle)` à jour (93 lignes) · configuration des fonctions
+synchronisée avec le YAML · secrets : aucune valeur réelle (noms de variables et documentation
+seulement) · `.dev.vars` et `.wrangler/` ignorés par Git. Lighthouse et rendus : non rejoués,
+aucune page ni aucun asset du site modifié.
+
+Vérifié aussi sur `wrangler pages dev` (moteur D1 de Cloudflare, wrangler 4.156.1), pas
+seulement sur SQLite : migrations appliquées ; devis ; création avec appel réel à Turnstile
+(clé de test) ; deux demandes simultanées sur les dernières places → un `201` et un `409` avec
+« Le dortoir n’a plus que 2 lits libres la nuit du 4 octobre » ; administration ; refus `503`
+hors localhost sans Access configuré. Cela confirme `changes()`, `json_each` et `WITH … INSERT`
+dans un batch D1.
+
+Couverture de la section 4 de `docs/audit.md` : chaque règle de `docs/reservation.md` testée,
+dont capacités, dortoir au lit, chevaux, blocages, durées, expiration, demandes concurrentes,
+devis figé · devis et disponibilité recalculés côté serveur, un montant du navigateur est ignoré
+(test à l’appui) · création en un seul batch gardé · entrées validées, erreurs précises sans
+détail technique · routes d’administration refusées sans jeton Access valide, vérifié dans la
+fonction · aucune donnée personnelle dans les URL ni dans les journaux (les `console.error`
+n’écrivent que le type d’erreur) · prix et paramètres lus dans `reservation.yaml`.
+
+Décisions de conception à valider (aucune ne tranche une question métier) :
+- La référence `CHB-AAAA-NNNN` porte l’année de **création** de la demande (le cahier des
+  charges donne l’exemple `CHB-2027-0001` sans préciser). Les références de démonstration
+  portent 2027, la création locale donne l’année en cours.
+- Limitation : 5 demandes par adresse IP et par heure (`api.rate_limit_per_hour`), **chaque
+  tentative compte**, y compris une demande invalide ; l’adresse n’est jamais stockée, seulement
+  un condensé salé.
+- Refus, annulation et expiration conservent les lignes d’occupation (historique) ; seules
+  les demandes en attente, acceptées ou confirmées non expirées retirent des places.
+- « Prolonger » repousse depuis l’échéance actuelle, plafonnée à 30 jours après l’action.
+  « Accepter » fixe le délai de 7 jours de la configuration.
+- Un blocage n’annule rien : la réponse liste les demandes déjà placées sur ces nuits.
+- Sans capacité connue pour les paddocks, toute création avec cheval répond `409`.
+- wrangler est lancé par `npx` en version épinglée plutôt qu’ajouté aux dépendances, pour ne
+  pas toucher au `package-lock.json`. À réévaluer à l’étape 14.
+- La clé de test Turnstile de `.dev.vars.example` est à contrôler dans la documentation
+  Cloudflare ; elle ne sert qu’au développement local.
+
+Points d’attention pour les étapes suivantes :
+- Étape 9/10 : échapper toute donnée venue d’une cliente à l’affichage (nom, message) ; les
+  réponses de l’API sont du JSON brut, non assaini.
+- Étape 10 (e-mails) : nom et prénom acceptent les retours à la ligne ; les assainir avant de
+  les mettre dans un objet ou un en-tête d’e-mail.
+- Étape 14 : créer la base D1 de production (remplacer le `database_id` de test), définir les
+  secrets Cloudflare listés dans `docs/api.md`, créer l’application Access sur `/admin/*` et
+  `/api/admin/*`, ne jamais définir `ENVIRONMENT` ni `ACCESS_DEV_EMAIL` en production.
+
+Nouveaux TODO(amaelle) : aucun. À vérifier par Vivien : les décisions ci-dessus, en particulier
+l’année de la référence et la limite de 5 demandes par heure.
+
 ## Étape 7 — Réservation : données et règles — 2026-11-16
 
 Branche : `etape-7-reservation` · Base : `etape-6-lieu` · Pull request : à créer (voir `docs/avancement.md`).
