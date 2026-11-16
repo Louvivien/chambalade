@@ -95,3 +95,8 @@ prices:
     amount_cents: null # TODO(amaelle): montant par adulte et par nuit ; ne pas assimiler une valeur absente à zéro.
     unit: adult_night
     validated: false
+
+# Paramètres de l’API (étape 8).
+api:
+  rate_limit_per_hour: 5 # demandes envoyées par adresse IP et par heure
+  availability_max_days: 62 # fenêtre maximale d’une requête de disponibilités

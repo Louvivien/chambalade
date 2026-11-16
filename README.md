@@ -14,6 +14,7 @@ Cloudflare Pages. Les instructions pour l'agent de développement sont dans `AGE
 - `docs/brief.md` : marque, textes, tarifs, questions ouvertes.
 - `docs/photos.md` : plan d'utilisation des photos.
 - `docs/reservation.md` : cahier des charges du module de réservation.
+- `docs/api.md` : API de réservation (routes, administration, secrets, travail en local).
 - `docs/etapes.md` : ordre de construction.
 - `docs/audit.md` : contrôles de fin d'étape ; résultats dans `docs/journal-audit.md`.
 - `docs/avancement.md` : état de l'étape en cours, tranche par tranche, pour reprendre après

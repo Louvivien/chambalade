@@ -26,9 +26,9 @@ beforeEach(() => {
   for (const file of readdirSync(dir).filter(name => name.endsWith('.sql')).sort()) db.exec(readFileSync(new URL(file, dir), 'utf8'));
 });
 
-it('crée les quatre tables du modèle de données', () => {
+it('crée les tables du modèle de données et de la limitation', () => {
   const names = db.prepare("SELECT name FROM sqlite_master WHERE type = 'table' AND name NOT LIKE 'sqlite_%'").all().map(r => r.name);
-  expect(names.sort()).toEqual(['blocages', 'demandes', 'journal', 'occupations']);
+  expect(names.sort()).toEqual(['blocages', 'demandes', 'journal', 'limites', 'occupations']);
 });
 
 it('accepte une demande valide', () => {

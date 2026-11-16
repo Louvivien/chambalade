@@ -1,0 +1,39 @@
+{
+  "step": 8,
+  "date": "2026-11-16",
+  "branch": "etape-8-api",
+  "build": {
+    "pages": 3,
+    "errors": 0,
+    "warnings": 0
+  },
+  "astroCheck": {
+    "errors": 0,
+    "warnings": 0,
+    "hints": 0
+  },
+  "unitTests": {
+    "passed": 254,
+    "newInStep8": 146,
+    "files": {
+      "access": 21,
+      "admin": 55,
+      "creation": 30,
+      "demo": 4,
+      "fondations": 13,
+      "publique": 23
+    }
+  },
+  "internalLinks": {
+    "checked": 170,
+    "broken": 0
+  },
+  "wranglerLocal": {
+    "version": "4.156.1",
+    "migrations": "ok",
+    "concurrentCreation": "201 + 409 (message précis)",
+    "turnstile": "clé de test, réponse valide",
+    "adminOutsideLocalhost": "503 (Access non configuré)"
+  },
+  "lighthouse": "non rejoué : aucune page ni aucun asset du site modifié"
+}

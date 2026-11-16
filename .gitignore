@@ -9,3 +9,7 @@ photos-originales/
 .vitest/
 .audit/
 coverage/
+
+# Secrets locaux et état de wrangler
+.dev.vars
+.wrangler/

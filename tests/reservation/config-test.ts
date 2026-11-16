@@ -24,6 +24,7 @@ export function testConfig(overrides: Partial<{ [K in keyof ReservationConfig]: 
     },
     stay: { first_night: '2027-04-01', min_nights: 1, max_nights: 14, last_booking_days_before: 1, max_advance_months: 12 },
     holds: { pending_hours: 48, accepted_days: 7 },
+    api: { rate_limit_per_hour: 5, availability_max_days: 62 },
     quote: { room_pricing: 'per_room_night', sheets_pricing: 'per_bed_stay', rider_package_enabled: false, deposit_percent: 30, children_accepted: true },
     ...overrides,
   };

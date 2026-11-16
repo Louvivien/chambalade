@@ -4,7 +4,64 @@ Le dernier état est en haut. À chaque reprise, lire ce fichier, `git log -5` e
 `git status`, puis reprendre la première tranche non cochée. Chaque tranche
 terminée donne lieu à un commit après un build sans erreur ni avertissement.
 
-## Étape en cours : 7 — Réservation : données et règles — 2026-11-16
+## Étape en cours : 8 — Réservation : API — 2026-11-16
+
+Branche : `etape-8-api` · Base : `etape-7-reservation` (déjà fusionnée dans `etape-6-lieu`, PR #5).
+Statut : tranches 1 à 6 terminées ; étape prête pour revue, sans fusion.
+PR à créer sur GitHub (base `etape-6-lieu`) : l’outil `gh` n’est pas installé ici. Une PR dédiée en fin d’étape, sans fusion.
+Périmètre (`docs/etapes.md`, étape 8) : Pages Functions de l’API (disponibilités, devis,
+création de demande avec transaction, Turnstile et limitation par IP, actions
+d’administration) et wrangler avec un D1 local et des données de démonstration. Pas
+d’interface publique (étape 9), pas d’administration visuelle ni d’e-mails (étape 10).
+
+Principes : la logique vit dans `src/lib/api/` (fonctions pures qui reçoivent la base, la
+configuration, l’horloge et `fetch` en paramètres) ; `functions/` ne contient que de minces
+adaptateurs. Les tests passent par une vraie base SQLite en mémoire derrière une façade
+compatible D1, pour exercer le SQL réel. Aucun secret dans le dépôt ; la protection de
+`/admin/` est vérifiée aussi dans les fonctions (jeton Cloudflare Access).
+
+- [x] Tranche 1 (15–30 min) — Fondations : types, façade D1 de test (SQLite en mémoire),
+  configuration exportée pour les fonctions avec test de dérive, utilitaires HTTP (JSON,
+  origine, type de contenu, taille), migration `0002` de limitation par IP, paramètres
+  d’API dans le YAML.
+  Fait : `src/lib/api/{types,http}.ts`, `tests/api/d1.ts` (façade SQLite), `src/generated/reservation.json`
+  (`npm run config:generer` / `config:verifier`), `migrations/0002_limites.sql`, bloc `api` du YAML ;
+  121 tests au total. Suite : disponibilités et devis.
+- [x] Tranche 2 (15–30 min) — API publique en lecture : `GET /api/disponibilites`,
+  `POST /api/devis`, chargement de l’instantané depuis la base, adaptateurs `functions/`.
+  Fait : `src/lib/api/{schemas,instantane,runtime,disponibilites,devis}.ts`, adaptateurs
+  `functions/api/{disponibilites,devis}.ts`, 23 tests (144 au total). Les champs inconnus sont
+  ignorés (montant du navigateur sans effet). Suite : création de demande.
+- [x] Tranche 3 (15–30 min) — Création de demande : validation stricte, Turnstile,
+  limitation par IP, expiration à la lecture, insertion gardée dans un seul `batch`,
+  référence `CHB-AAAA-NNNN` ; tests de concurrence sur du SQL réel.
+  Fait : `turnstile.ts`, `limites.ts`, `expiration.ts`, `creation.ts`, `functions/api/demandes.ts` ;
+  insertion gardée en un seul `batch` (lignes passées en JSON pour rester sous les 100 paramètres
+  de D1, `changes()` pour n’écrire que si la demande a été insérée) ; 30 tests (174 au total).
+  À confirmer sur wrangler local (tranche 5) : `changes()` et `json_each` dans un batch D1.
+- [x] Tranche 4 (15–30 min) — Administration : vérification du jeton Cloudflare Access,
+  liste et fiche des demandes, actions (accepter, refuser, confirmer, annuler, prolonger),
+  calendrier, blocages ; journal ; tests.
+  Fait : `access.ts` (RS256, audience, émetteur, expiration, liste blanche, 503 si non configuré,
+  contournement local limité à localhost), `admin.ts` (point d’entrée unique qui authentifie
+  avant toute route : demandes, fiche, actions gardées, calendrier, blocages),
+  `functions/api/admin/[[chemin]].ts` ; 76 tests (250 au total). Suite : wrangler et démo.
+- [x] Tranche 5 (15–30 min) — wrangler et démonstration : `wrangler.toml`, scripts D1
+  local, données de démonstration, `.dev.vars.example`, vérification du bundle des
+  fonctions, documentation.
+  Fait : `wrangler.toml`, `seed/demo.sql`, `.dev.vars.example`, scripts `api:*` (wrangler épinglé
+  en 4.156.1), `docs/api.md`, 4 tests de démo (254 au total). Vérifié sur `wrangler pages dev` :
+  migrations, devis, création, concurrence réelle (201 + 409), administration, refus hors localhost.
+- [x] Tranche 6 (15–30 min) — Audit et livraison : build, types, tests, secrets, liens,
+  inventaire des `TODO(amaelle)`, rapport dans `docs/journal-audit.md`, PR.
+  Fait : 254 tests, build et types sans alerte, 170 liens, inventaire à jour, rapport en tête de
+  `docs/journal-audit.md`, résumé `docs/rapports/etape-8.json`. Reste : ouverture de la PR.
+
+Dernière action : tranche 6 terminée (audit et rapport).
+Prochaine action : ouvrir la PR (base `etape-6-lieu`), relecture par Vivien, aucune fusion
+automatique. Étape 9 (parcours client) non commencée.
+
+## Étape 7 — Réservation : données et règles, fusionnée (PR #5) — 2026-11-16
 
 Branche : `etape-7-reservation` · Base : `etape-6-lieu` (étape 6 prête, PR ouverte par Vivien).
 Statut : tranches 1 à 5 terminées ; étape prête pour revue, sans fusion.

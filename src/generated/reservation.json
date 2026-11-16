@@ -1,0 +1,110 @@
+{
+  "currency": "EUR",
+  "capacity": 12,
+  "timezone": "Europe/Paris",
+  "units": {
+    "chambre_privee": {
+      "type": "chambre",
+      "label": "Chambre avec salle de bain privée",
+      "capacity_people": 2,
+      "price": "chambre_privee"
+    },
+    "chambre_2": {
+      "type": "chambre",
+      "label": "Chambre 2",
+      "capacity_people": 2,
+      "price": "chambre_partagee"
+    },
+    "chambre_3": {
+      "type": "chambre",
+      "label": "Chambre 3",
+      "capacity_people": 2,
+      "price": "chambre_partagee"
+    },
+    "dortoir": {
+      "type": "dortoir",
+      "label": "Dortoir",
+      "capacity_beds": 6,
+      "privatisable": null
+    },
+    "paddocks": {
+      "type": "paddock",
+      "label": "Paddocks",
+      "capacity_horses": null
+    }
+  },
+  "stay": {
+    "first_night": null,
+    "min_nights": 1,
+    "max_nights": 14,
+    "last_booking_days_before": 1,
+    "max_advance_months": 12
+  },
+  "holds": {
+    "pending_hours": 48,
+    "accepted_days": 7
+  },
+  "quote": {
+    "room_pricing": null,
+    "sheets_pricing": null,
+    "rider_package_enabled": false,
+    "deposit_percent": null,
+    "children_accepted": null
+  },
+  "prices": {
+    "dortoir": {
+      "amount_cents": 3500,
+      "unit": "person_night",
+      "validated": false
+    },
+    "draps_dortoir": {
+      "amount_cents": 500,
+      "unit": null,
+      "validated": false
+    },
+    "chambre_partagee": {
+      "amount_cents": 7500,
+      "unit": null,
+      "validated": false
+    },
+    "chambre_privee": {
+      "amount_cents": 8000,
+      "unit": null,
+      "validated": false
+    },
+    "petit_dejeuner": {
+      "amount_cents": 0,
+      "unit": "included",
+      "validated": false
+    },
+    "dejeuner": {
+      "amount_cents": 1500,
+      "unit": "person_day",
+      "validated": false
+    },
+    "diner": {
+      "amount_cents": 2000,
+      "unit": "person_evening",
+      "validated": false
+    },
+    "cheval": {
+      "amount_cents": 1000,
+      "unit": "horse_night",
+      "validated": false
+    },
+    "forfait_cavalier": {
+      "amount_cents": 7000,
+      "unit": null,
+      "validated": false
+    },
+    "taxe_sejour": {
+      "amount_cents": null,
+      "unit": "adult_night",
+      "validated": false
+    }
+  },
+  "api": {
+    "rate_limit_per_hour": 5,
+    "availability_max_days": 62
+  }
+}
