@@ -1,5 +1,49 @@
 # Journal d’audit
 
+## Étape 14 — Déploiement (préparation) — 2026-11-16
+
+Branche : `etape-14-deploiement` · Base : `etape-13-seo` · Pull request : à créer (voir `docs/avancement.md`).
+
+**Limite : rien n’est déployé.** Je n’ai accès à aucun compte Cloudflare, Resend ni au domaine, et je n’en demande pas. L’étape prépare et
+vérifie tout ce que le dépôt peut vérifier ; les actions sur les comptes se font en suivant le guide, puis se contrôlent par script.
+
+Fait :
+- **Guide pas à pas** `docs/deploiement.md` (12 étapes + données personnelles) : projet Pages (commande `npm run build`, dossier `dist`, variables de
+  construction), base D1 de production et migrations `--remote`, base d’aperçu séparée, Turnstile, secrets (commandes `wrangler pages secret put`),
+  Resend, Cloudflare Access (aperçus compris), prévisualisation et recette, domaine `chambalade.fr` (DNS, redirection `www`, précautions pour la messagerie
+  et pour la bascule depuis Wix), ouverture, après l’ouverture, retour arrière. Section « Mettre en ligne » du `README.md` avec les étapes du domaine.
+  Les points qu’on ne peut pas vérifier sans compte sont marqués « à vérifier ».
+- **Contrôle avant mise en ligne** `npm run deploiement:verifier [-- --strict --ouverture]` : `database_id` réel, aucune variable de développement ni secret
+  dans `wrangler.toml`, migrations sans trou, fichiers attendus dans `dist`, clé Turnstile publique présente et **jamais une clé de test**, aucun secret
+  reconnaissable dans le site construit, aucun fichier sensible suivi par Git, et la liste de ce qui reste à régler avant l’ouverture au public (pages légales,
+  contacts, identité, tarifs, points à confirmer). Résultat aujourd’hui : 3 points bloquants attendus (identifiant D1 de test, deux pages avec la clé Turnstile de test).
+- **Contrôle du site déployé** `npm run deploiement:smoke -- <adresse>` : 14 pages, langue/hreflang/canonical, 404 en `noindex`, `robots.txt`, sitemap,
+  en-têtes, cache des fichiers à empreinte, **administration fermée sans connexion**, API de disponibilités et de devis (lecture seule : aucune écriture,
+  aucune demande créée). Essayé contre `wrangler pages dev` : 23/23.
+- **Page 404** (`src/pages/404.astro`, FR et EN, `noindex`) : il n’y en avait pas.
+- **Données personnelles** : `npm run rgpd -- anonymiser|supprimer|apercu|purger` (affiche seulement, sans `--executer` ; base locale sans `--remote`).
+  Une demande active n’est jamais touchée ; les nuits restent bloquées ; le journal garde une ligne sans donnée personnelle. Politique de confidentialité
+  (FR/EN) mise à jour : l’anonymisation se lance à la main.
+- Recette (`docs/recette-reservation.md`) : section F complétée avec ces contrôles.
+
+Contrôles automatiques : build OK, 16 pages, sans erreur ni avertissement · 611 tests OK (36 nouveaux : contrôles de déploiement 13, effacement 10,
+smoke 7, conformité des pages) · types : 0 erreur, 0 avertissement, 1 indication (`erreurEnvoi`, étape 9) · liens : 487 références internes, 0 cassée ·
+configuration des fonctions et inventaire des points à confirmer à jour · secrets : rien. Requêtes d’effacement essayées sur SQLite **et** sur la D1 locale
+(wrangler). Audits navigateur rejoués (langues, légal, gîte) : OK. Lighthouse `/404.html` : 100 / 100 / 100 / 66 (SEO 66 voulu : `noindex`).
+
+Non vérifié (impossible sans comptes) : déploiement réel de Pages ; liaison D1 distante ; Turnstile avec une vraie clé ; envoi réel d’e-mails (Resend) ;
+Cloudflare Access avec un vrai jeton ; syntaxe exacte des environnements `preview`/`production` d’un `wrangler.toml` de Pages ; version de Node disponible
+dans l’image de build ; comportement de l’injection de Web Analytics ; offres gratuites (limites d’Access, de D1). Tout cela est dans le guide, marqué
+« à vérifier », et couvert par le smoke test dès que le site existe.
+
+Points à connaître :
+- `wrangler.toml` contient encore l’identifiant D1 de test : c’est volontaire (le mode local en a besoin) et c’est le premier point bloquant du contrôle.
+- Les clés de test de Turnstile dans `.env` local suffisent au développement ; en production, la variable de construction doit porter la vraie clé.
+- Aucune CSP : elle risquerait de bloquer Turnstile ; à envisager après une première mise en ligne stable.
+
+Nouveaux TODO(amaelle) : aucun (la durée de conservation et le rythme de la purge restent à décider ; ils figurent déjà dans la politique de confidentialité).
+À faire par Vivien : suivre `docs/deploiement.md` de l’étape 1 à 9 sur l’adresse de prévisualisation, puis lancer `npm run deploiement:smoke`.
+
 ## Étape 13 — SEO, accessibilité, performance — 2026-11-16
 
 Branche : `etape-13-seo` · Base : `etape-12-en` · Pull request : à créer (voir `docs/avancement.md`).

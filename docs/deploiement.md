@@ -184,7 +184,8 @@ npm run deploiement:smoke -- https://chambalade.pages.dev
 
 Le script vérifie, sans rien écrire dans la base : pages en français et en anglais, 404, `hreflang`,
 `robots.txt`, `sitemap.xml`, en-têtes, administration fermée (`/admin/` et `/api/admin/` refusent sans Access),
-API de disponibilités, absence de clé de test.
+API de disponibilités, absence de clé de test. Depuis `localhost` (`wrangler pages dev`), la fermeture de l’administration
+n’est pas jugée, puisque le contournement de développement y est voulu ; ajouter `--autoriser-cle-test` pour un essai local.
 
 ## 10. Domaine `chambalade.fr`
 

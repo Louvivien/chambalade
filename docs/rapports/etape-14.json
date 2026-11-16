@@ -1,0 +1,13 @@
+{
+  "step": 14,
+  "date": "2026-11-16",
+  "branch": "etape-14-deploiement",
+  "deployed": false,
+  "build": { "pages": 16, "errors": 0, "warnings": 0 },
+  "astroCheck": { "errors": 0, "warnings": 0, "hints": 1 },
+  "unitTests": { "passed": 611, "new": 36 },
+  "internalLinks": { "checked": 487, "broken": 0 },
+  "preflight": { "command": "npm run deploiement:verifier", "blocking": 3, "beforeOpening": 5 },
+  "smokeLocal": { "command": "npm run deploiement:smoke -- http://127.0.0.1:8788 --autoriser-cle-test", "passed": 23, "total": 23 },
+  "lighthouse": { "/404.html": [100, 100, 100, 66], "order": "performance, accessibility, best-practices, seo", "note": "SEO 66 voulu : noindex." }
+}

@@ -7,7 +7,8 @@ terminée donne lieu à un commit après un build sans erreur ni avertissement.
 ## Étape en cours : 14 — Déploiement — 2026-11-16
 
 Branche : `etape-14-deploiement` · Base : `etape-13-seo`.
-Statut : plan écrit, aucune tranche terminée.
+Statut : tranches 1 à 4 terminées ; étape prête pour revue, sans fusion. **Rien n’est déployé** : la mise en ligne reste à faire par Vivien avec `docs/deploiement.md`.
+PR à créer sur GitHub (base `etape-13-seo`).
 Périmètre (`docs/etapes.md` étape 14) : préparer le déploiement sur Cloudflare Pages (commande de
 build, dossier `dist`, base D1 de production, secrets, Cloudflare Access sur `/admin/`) et écrire
 dans `README.md` les étapes pour brancher le domaine chambalade.fr.
@@ -35,9 +36,11 @@ tester ici sont écrits comme tels.
   périodique (SQL testé sur SQLite, script `scripts/rgpd.mjs`), texte de confidentialité mis à jour.
   Fait : `scripts/rgpd/sql.mjs` + `scripts/rgpd.mjs` (`npm run rgpd -- anonymiser|supprimer|apercu|purger`, affichage seul sans `--executer`, base locale
   sans `--remote`), 10 tests sur SQLite, essai réel sur la D1 locale, section 13 du guide, politique de confidentialité FR/EN mise à jour.
-- [ ] Tranche 4 — Contrôle après mise en ligne : `npm run deploiement:smoke -- <url>` (pages, hreflang,
+- [x] Tranche 4 — Contrôle après mise en ligne : `npm run deploiement:smoke -- <url>` (pages, hreflang,
   robots, sitemap, en-têtes, administration fermée, API), essai contre `wrangler pages dev`, recette
   mise à jour, rapport, `docs/rapports/etape-14.json`.
+  Fait : `scripts/deploiement/smoke.mjs` + `scripts/verifier-site.mjs` (`npm run deploiement:smoke -- <adresse>`), 7 tests, essai réel contre `wrangler pages dev` (23/23),
+  recette complétée, rapport.
 
 ## Étape précédente : 13 — SEO, accessibilité, performance — 2026-11-16
 
