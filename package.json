@@ -21,7 +21,8 @@
     "build:audit": "ASTRO_AUDIT=1 astro build --outDir .audit/dist",
     "dev:audit": "ASTRO_AUDIT=1 astro dev",
     "audit:front": "node scripts/audit-front.mjs",
-    "audit:accueil": "node scripts/audit-accueil.mjs"
+    "audit:accueil": "node scripts/audit-accueil.mjs",
+    "audit:gite": "node scripts/audit-gite.mjs"
   },
   "dependencies": {
     "@fontsource/lora": "^5.3.0",

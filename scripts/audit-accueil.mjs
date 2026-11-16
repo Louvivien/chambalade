@@ -74,7 +74,9 @@ try {
       assert.notEqual(focus.outline, 'none');
     }
     await page.getByRole('link', { name: content.hero.discover, exact: true }).click();
-    assert.equal(new URL(page.url()).hash, '#gite');
+    assert.equal(new URL(page.url()).pathname, '/gite/');
+    assert.equal((await page.locator('h1').textContent()).length > 0, true);
+    await page.goto(origin, { waitUntil: 'networkidle' });
     await page.getByRole('link', { name: content.hero.request, exact: true }).click();
     assert.equal(new URL(page.url()).hash, '#sejour');
     assert(await page.locator('#sejour').isVisible());

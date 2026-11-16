@@ -59,10 +59,11 @@ conditions pratiques, identité légale. Les sources ci-dessous font autorité.
 | `docs/etapes.md:31` | > restent visibles avec TODO(amaelle) et sont listées dans docs/todo-contenus.md. |
 | `docs/etapes.md:38` | > avec les TODO(amaelle)), les migrations D1, et une bibliothèque pure (sans accès réseau) qui |
 | `docs/initialisation.md:48` | des routes de contrôle séparées via `npm run dev:audit`. Aucun nouveau `TODO(amaelle)` à cette étape ; les |
-| `docs/journal-audit.md:65` | Nouveaux TODO(amaelle) : quatre notes dans le contenu — validation des textes, |
-| `docs/journal-audit.md:137` | Nouveaux TODO(amaelle) : marqueurs FR/EN de contact et logo dans |
-| `docs/journal-audit.md:174` | Nouveaux TODO(amaelle) : aucun ; inventaire des points existants créé. |
-| `docs/journal-audit.md:207` | Nouveaux TODO(amaelle) : aucun ; les inconnues métier restent dans les sources. |
+| `docs/journal-audit.md:76` | Nouveaux TODO(amaelle) : validation des dix lignes tarifaires, bases de calcul des |
+| `docs/journal-audit.md:149` | Nouveaux TODO(amaelle) : quatre notes dans le contenu — validation des textes, |
+| `docs/journal-audit.md:221` | Nouveaux TODO(amaelle) : marqueurs FR/EN de contact et logo dans |
+| `docs/journal-audit.md:258` | Nouveaux TODO(amaelle) : aucun ; inventaire des points existants créé. |
+| `docs/journal-audit.md:291` | Nouveaux TODO(amaelle) : aucun ; les inconnues métier restent dans les sources. |
 | `docs/photos.md:22` | \| cascade de Roybon.HEIC \| cascade-roybon.jpg \| Le lieu, les alentours \| Distance et accès à cheval : TODO(amaelle) \| Cascade de Roybon dans un sous-bois \| À utiliser \| |
 | `docs/reservation.md:4` | étapes 7 à 10). Les valeurs marquées `TODO(amaelle)` sont des paramètres à obtenir : le code doit |
 | `docs/reservation.md:33` | Cloudflare. Expéditeur : adresse sur le domaine chambalade.fr, TODO(amaelle). |
@@ -77,11 +78,36 @@ conditions pratiques, identité légale. Les sources ci-dessous font autorité.
 | `docs/reservation.md:71` | \| Acompte \| pourcentage du total \| TODO(amaelle) (proposition : 30 %) \| |
 | `docs/reservation.md:142` | l'acompte, coordonnées bancaires TODO(amaelle) et date limite ; réservation confirmée ; |
 | `docs/reservation.md:153` | (TODO(amaelle), proposition : anonymisation 3 ans après le séjour), droits d'accès et |
+| `src/content.config.ts:51` | items: z.record(z.enum(priceIds), z.object({ label: z.string(), pending: z.string().startsWith('TODO(amaelle)').optional() })), |
 | `src/content/accueil/fr.md:58` | <!-- TODO(amaelle): valider les textes proposés de l’accueil, issus du brief. --> |
 | `src/content/accueil/fr.md:59` | <!-- TODO(amaelle): fournir téléphone et e-mail pour rendre la demande de séjour possible avant le module de réservation. --> |
 | `src/content/accueil/fr.md:60` | <!-- TODO(amaelle): confirmer les distances depuis Lyon, Grenoble et Valence ; aucune durée publiée en attendant. --> |
 | `src/content/accueil/fr.md:61` | <!-- TODO(amaelle): confirmer la portée de « paddock et foin compris » ; le tarif cheval est distinct de l’hébergement humain dans le brief. --> |
+| `src/content/gite/fr.md:45` | pending: 'TODO(amaelle) : valider le tarif, petit-déjeuner compris.' |
+| `src/content/gite/fr.md:48` | pending: 'TODO(amaelle) : valider le tarif et préciser s’il s’applique par lit et par séjour, ou par nuit.' |
+| `src/content/gite/fr.md:51` | pending: 'TODO(amaelle) : valider le tarif par nuit, petit-déjeuner compris. Préciser par chambre ou par personne, et le prix pour une personne seule.' |
+| `src/content/gite/fr.md:54` | pending: 'TODO(amaelle) : valider le tarif par nuit, petit-déjeuner compris. Préciser par chambre ou par personne, et le prix pour une personne seule.' |
+| `src/content/gite/fr.md:57` | pending: 'TODO(amaelle) : confirmer qu’il est compris dans tous les hébergements.' |
+| `src/content/gite/fr.md:60` | pending: 'TODO(amaelle) : valider le tarif du repas.' |
+| `src/content/gite/fr.md:63` | pending: 'TODO(amaelle) : valider le tarif du repas.' |
+| `src/content/gite/fr.md:66` | pending: 'TODO(amaelle) : valider le tarif de l’hébergement du cheval, distinct du couchage du cavalier.' |
+| `src/content/gite/fr.md:69` | pending: 'TODO(amaelle) : valider le tarif et définir les prestations comprises. Ce forfait ne sera pas proposé à la réservation tant que son contenu n’est pas défini.' |
+| `src/content/gite/fr.md:72` | pending: 'TODO(amaelle) : fournir le montant applicable. Il n’est pas encore compris dans les tarifs présentés.' |
+| `src/content/gite/fr.md:86` | pending: 'TODO(amaelle) : préciser les horaires d’arrivée et de départ ainsi que la date exacte d’ouverture.' |
+| `src/content/gite/fr.md:88` | pending: 'TODO(amaelle) : fournir les indications d’accès et les modalités d’arrivée avec un véhicule transportant un cheval.' |
+| `src/content/gite/fr.md:90` | pending: 'TODO(amaelle) : préciser le linge fourni dans les chambres et les modalités pour le dortoir.' |
+| `src/content/gite/fr.md:92` | pending: 'TODO(amaelle) : préciser les conditions d’accueil des animaux de compagnie.' |
+| `src/content/gite/fr.md:94` | pending: 'TODO(amaelle) : préciser les documents à présenter pour les vaccins à jour.' |
+| `src/content/gite/fr.md:96` | pending: 'TODO(amaelle) : confirmer le montant de l’acompte, son délai de paiement et les conditions d’annulation. L’acompte sera réglé par virement.' |
+| `src/content/gite/fr.md:103` | <!-- TODO(amaelle): valider les textes de la page du gîte et fournir les photos des chambres, du dortoir et des espaces communs après rénovation. --> |
+| `src/content/gite/fr.md:104` | <!-- TODO(amaelle): confirmer la cohérence de l’inscription « Chez Amaëlle » visible sur le portail avec la marque Chambalade. --> |
 | `src/content/interface/en.md:9` | contactPending: 'TODO(amaelle): provide the contact phone number and email address.' |
 | `src/content/interface/en.md:10` | logoPending: 'TODO(amaelle): provide a transparent logo; temporary typographic name.' |
 | `src/content/interface/fr.md:9` | contactPending: 'TODO(amaelle): fournir le téléphone et l’adresse e-mail de contact.' |
 | `src/content/interface/fr.md:10` | logoPending: 'TODO(amaelle): fournir le logo transparent ; nom typographique provisoire.' |
+| `src/data/reservation.yaml:5` | # TODO(amaelle): valider l’ensemble des tarifs proposés avant publication. |
+| `src/data/reservation.yaml:13` | unit: null # TODO(amaelle): par lit et par séjour ou par nuit ? |
+| `src/data/reservation.yaml:17` | unit: null # TODO(amaelle): par chambre ou par personne et par nuit ; prix en occupation seule ? |
+| `src/data/reservation.yaml:21` | unit: null # TODO(amaelle): par chambre ou par personne et par nuit ; prix en occupation seule ? |
+| `src/data/reservation.yaml:41` | unit: null # TODO(amaelle): définir le contenu exact ; forfait exclu du futur devis tant qu’il reste indéfini. |
+| `src/data/reservation.yaml:44` | amount_cents: null # TODO(amaelle): montant par adulte et par nuit ; ne pas assimiler une valeur absente à zéro. |

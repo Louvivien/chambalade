@@ -1,0 +1,151 @@
+---
+import { getEntry } from 'astro:content';
+import { Picture } from 'astro:assets';
+import { parse } from 'yaml';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import rawReservation from '../data/reservation.yaml?raw';
+import { reservationPresentationSchema, formatEuros, priceIds } from '../lib/tarifs';
+const reservation = reservationPresentationSchema.parse(parse(rawReservation));
+const entry = await getEntry('gite', 'fr');
+if (!entry) throw new Error('Contenu gite/fr absent');
+const text = entry.data;
+for (const id of priceIds) {
+  if (!reservation.prices[id].validated && !text.rates.items[id].pending) {
+    throw new Error(`Mention de validation manquante pour le tarif ${id}`);
+  }
+}
+const availablePages = { home: '/', gite: '/gite/', lieu: '/#le-lieu', reserver: '/#sejour' };
+---
+<BaseLayout locale="fr" title={text.title} description={text.description} currentPage="gite" {availablePages}>
+  <section class="hero" aria-labelledby="gite-titre">
+    <div class="container hero-copy">
+      <h1 id="gite-titre">{text.hero.title}</h1>
+      <div>
+        <p class="introduction">{text.hero.text}</p>
+        <p>{text.hero.opening}</p>
+        <div class="actions">
+          <a class="button" href="#tarifs">{text.hero.ratesLink}</a>
+          <a class="text-link" href="#demande">{text.hero.requestLink}</a>
+        </div>
+      </div>
+    </div>
+    <figure class="hero-photo">
+      <div class="pool-crop"><Picture src={text.hero.photo.src} alt={text.hero.photo.alt} formats={['avif', 'webp']} widths={[480, 960, 1440, 1920]} sizes="100vw" quality={60} loading="eager" fetchpriority="high" /></div>
+      <figcaption class="container">{text.hero.photo.caption}</figcaption>
+    </figure>
+  </section>
+
+  <section class="container section rooms" aria-labelledby="chambres-titre">
+    <div>
+      <h2 id="chambres-titre">{text.rooms.title}</h2>
+      <p><strong>{reservation.capacity}</strong> {text.rooms.capacityLabel}</p>
+    </div>
+    <div>
+      <ul class="room-list">
+        {text.rooms.items.map(room => <li><h3>{room.title}</h3><p>{room.text}</p></li>)}
+      </ul>
+      <p class="photos-pending">{text.rooms.photosPending}</p>
+    </div>
+  </section>
+
+  <section class="horse section" aria-labelledby="cheval-titre">
+    <div class="container split">
+      <h2 id="cheval-titre">{text.horse.title}</h2>
+      <div><p>{text.horse.text}</p><p>{text.horse.vaccines}</p><p>{text.horse.future}</p></div>
+    </div>
+  </section>
+
+  <section class="container section rates" id="tarifs" aria-labelledby="tarifs-titre">
+    <div class="rates-heading"><h2 id="tarifs-titre">{text.rates.title}</h2><p>{text.rates.introduction}</p></div>
+    <dl class="price-list">
+      {priceIds.map(id => {
+        const price = reservation.prices[id];
+        const copy = text.rates.items[id];
+        return <div class="price-row" data-price-id={id}>
+          <dt>{copy.label}</dt>
+          <dd class="price">
+            <span class="amount">{price.amount_cents === null ? text.rates.unknown : price.unit === 'included' ? text.rates.included : formatEuros(price.amount_cents)}</span>
+            {price.unit && <span class="unit">{text.rates.units[price.unit]}</span>}
+          </dd>
+          {!price.validated && <dd class="pending">{copy.pending}</dd>}
+        </div>;
+      })}
+    </dl>
+  </section>
+
+  <section class="shared section" aria-labelledby="communs-titre">
+    <div class="container split">
+      <div><h2 id="communs-titre">{text.shared.title}</h2><p>{text.shared.text}</p></div>
+      <div><h3>{text.shared.mealsTitle}</h3><p>{text.shared.mealsText}</p></div>
+    </div>
+  </section>
+
+  <section class="container section practical" aria-labelledby="arrivee-titre">
+    <div>
+      <h2 id="arrivee-titre">{text.practical.title}</h2>
+      <dl class="practical-list">
+        {text.practical.items.map(item => <div><dt>{item.title}</dt><dd>{item.pending}</dd></div>)}
+      </dl>
+    </div>
+    <figure>
+      <Picture src={text.practical.photo.src} alt={text.practical.photo.alt} formats={['avif', 'webp']} widths={[480, 960, 1440]} sizes="(min-width: 64rem) 45vw, 100vw" quality={60} loading="lazy" />
+      <figcaption>{text.practical.photo.caption}</figcaption>
+    </figure>
+  </section>
+
+  <section class="request section" id="demande" aria-labelledby="demande-titre">
+    <div class="container">
+      <h2 id="demande-titre">{text.stay.title}</h2>
+      <p>{text.stay.text}</p>
+      <a class="button" href="/#sejour">{text.stay.link}</a>
+    </div>
+  </section>
+</BaseLayout>
+<style>
+  :global(.site-main) { padding-block: 0; }
+  h1, h2, h3, p, figure, dl, dd { margin: 0; }
+  p + p, h2 + p, h3 + p { margin-top: var(--espace-4); }
+  .section { padding-block: var(--espace-section); }
+  .hero-copy { display: grid; gap: var(--espace-8); padding-block: var(--espace-12); }
+  .hero h1 { max-width: 15ch; }
+  .introduction { font-size: clamp(1.25rem, 2vw, 1.5rem); }
+  .actions { display: flex; flex-wrap: wrap; gap: var(--espace-4) var(--espace-6); align-items: center; margin-top: var(--espace-8); }
+  .text-link { display: inline-flex; align-items: center; min-height: 48px; font-weight: 700; }
+  .pool-crop { aspect-ratio: 16 / 9; overflow: hidden; }
+  .pool-crop :global(picture), .pool-crop :global(img) { display: block; width: 100%; height: 100%; }
+  .pool-crop :global(img) { object-fit: cover; object-position: top; }
+  figcaption { margin-top: var(--espace-3); font-size: var(--texte-petit); }
+  .rooms, .split, .practical { display: grid; gap: var(--espace-8); }
+  .room-list { list-style: none; padding: 0; margin: 0; }
+  .room-list li { border-top: 1px solid var(--chene); padding-block: var(--espace-6); }
+  .room-list li:first-child { padding-top: 0; border-top: 0; }
+  .photos-pending { font-size: var(--texte-petit); }
+  .horse { background: var(--horizon); }
+  .rates { max-width: 64rem; }
+  .rates-heading { max-width: var(--largeur-lecture); margin-bottom: var(--espace-12); }
+  .price-row { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: var(--espace-3) var(--espace-6); padding-block: var(--espace-6); border-top: 1px solid var(--chene); }
+  .price-row dt { font-weight: 700; }
+  .price { text-align: right; }
+  .amount { display: block; font: 600 var(--titre-3)/1.3 var(--font-titres); font-variant-numeric: tabular-nums; }
+  .unit { display: block; font-size: var(--texte-petit); margin-top: var(--espace-1); }
+  .pending { grid-column: 1 / -1; font-size: var(--texte-petit); max-width: var(--largeur-lecture); }
+  .shared { border-block: 1px solid var(--chene); }
+  .practical-list { margin-top: var(--espace-8); }
+  .practical-list > div + div { margin-top: var(--espace-6); }
+  .practical-list dt { font-weight: 700; }
+  .practical-list dd { font-size: var(--texte-petit); margin-top: var(--espace-2); }
+  .practical :global(img) { display: block; width: 100%; }
+  .request { background: var(--foret); color: var(--creme); }
+  .request .button { margin-top: var(--espace-8); background: var(--creme); color: var(--foret); border-color: var(--creme); }
+  .request .button:hover { background: var(--horizon); border-color: var(--horizon); }
+  .request .button:focus-visible { outline-color: var(--creme); }
+  @media (min-width: 48rem) {
+    .hero-copy, .rooms, .split { grid-template-columns: 1fr 1.3fr; gap: var(--espace-16); }
+    .hero-copy { align-items: center; padding-block: var(--espace-section); }
+    .price-row { grid-template-columns: 1fr 1fr; }
+  }
+  @media (min-width: 64rem) {
+    .hero-photo { max-width: var(--largeur-page); margin-inline: auto; }
+    .practical { grid-template-columns: 1fr 1fr; gap: var(--espace-16); align-items: center; }
+  }
+</style>
