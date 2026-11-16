@@ -4,7 +4,36 @@ Le dernier état est en haut. À chaque reprise, lire ce fichier, `git log -5` e
 `git status`, puis reprendre la première tranche non cochée. Chaque tranche
 terminée donne lieu à un commit après un build sans erreur ni avertissement.
 
-## Étape en cours : 6 — Le lieu (FR) — 2026-11-16
+## Étape en cours : 7 — Réservation : données et règles — 2026-11-16
+
+Branche : `etape-7-reservation` · Base : `etape-6-lieu` (étape 6 prête, PR ouverte par Vivien).
+Statut : plan committé ; tranche 1 à faire. Une PR dédiée en fin d’étape, sans fusion.
+Périmètre (`docs/etapes.md`, étape 7) : configuration, migrations D1 et bibliothèque pure
+(sans réseau ni interface) pour disponibilités et devis, avec tests Vitest. Pas d’API
+(étape 8), pas d’interface (étape 9).
+
+Principe sur les inconnues : toute valeur `TODO(amaelle)` reste `null` dans le YAML. La
+bibliothèque ne la remplace jamais par une valeur inventée ; la ligne de devis concernée
+est marquée « à confirmer » et le devis « incomplet ». Les tests utilisent une
+configuration de test complète, distincte de la configuration réelle.
+
+- [ ] Tranche 1 (15–30 min) — Configuration et schéma : unités, capacités, règles de séjour,
+  délais, acompte et taxe dans `src/data/reservation.yaml` (inconnues à `null`), schéma
+  Zod dans `src/lib/reservation/config.ts`, tests ; page du gîte inchangée.
+- [ ] Tranche 2 (15–30 min) — Migrations D1 : `migrations/0001_*.sql` (`demandes`,
+  `occupations`, `blocages`, `journal`, index, contraintes), vérifiées par un test sur une
+  base SQLite en mémoire.
+- [ ] Tranche 3 (15–30 min) — Disponibilités : nuits d’un séjour, occupations actives
+  (statuts, expiration à la lecture), blocages, capacité par unité et par nuit, contraintes
+  de séjour, messages d’erreur précis ; tests (dortoir presque plein, chevaux au-delà de la
+  capacité, séjour sur un blocage, expiration).
+- [ ] Tranche 4 (15–30 min) — Devis et prise de place : devis en centimes depuis la
+  configuration seule, lignes inconnues « à confirmer », devis figé ; fonction qui décide
+  des occupations à insérer ; tests dont deux demandes sur la dernière place.
+- [ ] Tranche 5 (15–30 min) — Audit et livraison : build, types, tests, liens, inventaire
+  des `TODO(amaelle)`, rapport dans `docs/journal-audit.md`, PR.
+
+## Étape 6 — Le lieu (FR), prête pour revue — 2026-11-16
 
 Branche : `etape-6-lieu` · Base : `etape-5-gite` (PR #4).
 Statut : tranches 1 à 3 terminées ; étape prête pour revue, sans fusion.
