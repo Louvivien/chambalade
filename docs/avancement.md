@@ -7,8 +7,8 @@ terminée donne lieu à un commit après un build sans erreur ni avertissement.
 ## Étape en cours : 6 — Le lieu (FR) — 2026-11-16
 
 Branche : `etape-6-lieu` · Base : `etape-5-gite` (PR #4).
-Statut : tranches 1 et 2 terminées ; tranche 3 à faire.
-Une PR dédiée sera créée en fin d’étape.
+Statut : tranches 1 à 3 terminées ; étape prête pour revue, sans fusion.
+PR à créer sur GitHub (base `etape-5-gite`) : l’outil `gh` n’est pas installé ici.
 
 - [x] Tranche 1 (15–30 min) — Contenus et repères : textes Markdown à partir du
   brief et du tableau des photos, données des repères de la vue aérienne,
@@ -19,13 +19,15 @@ Une PR dédiée sera créée en fin d’étape.
   trois pages vers `/le-lieu/`, vérification des liens. Fait : page `/le-lieu/`, composant
   `VueDuCiel`, liens depuis l’accueil et le gîte ; build sans avertissement, 0 diagnostic
   Astro, 17 tests, 170 références internes sans lien cassé. Suite : tranche 3.
-- [ ] Tranche 3 (15–30 min) — Audit et livraison : contrôles automatiques, clavier,
+- [x] Tranche 3 (15–30 min) — Audit et livraison : contrôles automatiques, clavier,
   rendus 375/768/1280, Lighthouse des pages touchées, inventaire, rapport et PR.
-  Statut : à faire.
+  Fait : `npm run audit:lieu` OK aux trois largeurs, Lighthouse 91/100/100/100 sur
+  `/le-lieu/` (variable : 88 à 100 en performance), rapport en tête de
+  `docs/journal-audit.md`. Reste : ouverture de la PR.
 
-Dernière action : tranche 2 terminée (page Le lieu, repères, navigation).
-Prochaine action : tranche 3, audit et livraison (clavier, rendus 375/768/1280,
-Lighthouse, inventaire, rapport dans `docs/journal-audit.md`, PR).
+Dernière action : tranche 3 terminée (audit, rapport, résumé `docs/rapports/etape-6.json`).
+Prochaine action : ouvrir la PR (base `etape-5-gite`), puis relecture par Vivien. Aucune
+fusion automatique. Étape 7 non commencée.
 
 Repères confirmés par Vivien : gîte sur le grand bâtiment central, carrière sur
 le rectangle clair à droite, prés au premier plan. Distances, accès en van/camion

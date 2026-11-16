@@ -1,5 +1,59 @@
 # Journal d’audit
 
+## Étape 6 — Le lieu (FR) — 2026-11-16
+
+Branche : `etape-6-lieu` · Base : `etape-5-gite` ([PR #4](https://github.com/Louvivien/chambalade/pull/4)) · Pull request : à créer (voir `docs/avancement.md`).
+
+Fait :
+- Page `/le-lieu/` : vue aérienne avec trois repères cliquables (gîte, carrière, prés)
+  doublés d’une légende textuelle, équipements, chevaux, alentours, accès, appel au séjour.
+- Textes dans `src/content/lieu/fr.md`, positions des repères dans `src/data/lieu.yaml`
+  (attribution confirmée par Vivien). Aucun texte ni position en dur dans le composant.
+- Lien « Le lieu » de l’accueil et du gîte raccordé à `/le-lieu/`.
+- Script `npm run audit:lieu` (navigateur, JavaScript désactivé comme en production) :
+  titre, h1, page courante, image prioritaire unique, repères placés d’après le YAML,
+  cibles tactiles ≥ 44 px, ancres, parcours clavier complet avec focus visible,
+  absence de défilement horizontal, polices, aucune requête externe ni en échec.
+
+Contrôles automatiques : build OK, 3 pages, sans erreur ni avertissement · 17 tests OK ·
+types : 0 erreur, 0 avertissement, 0 indication · liens : 170 références internes, 0 cassée ·
+inventaire des `TODO(amaelle)` à jour (75 lignes) · secrets : aucune valeur réelle
+(occurrences de documentation, tokens CSS) · rien d’ignoré ajouté (`photos-originales/`, `dist/`).
+
+Lighthouse mobile (perf / a11y / BP / SEO), serveur statique local sur le build :
+
+| Page | Performance | Accessibilité | Bonnes pratiques | SEO |
+| --- | --- | --- | --- | --- |
+| `/le-lieu/` | 91 | 100 | 100 | 100 |
+| `/gite/` | 100 | 100 | 100 | 100 |
+| `/` | 100 | 100 | 100 | 100 |
+
+Écart signalé : la performance de `/le-lieu/` varie d’une mesure à l’autre
+(91, 100, 88 sur trois essais, LCP ≈ 1,05 s, CLS 0). Seul le temps de blocage total
+change (0 à 480 ms) ; la page n’a pas de JavaScript. Une mesure sur trois est sous 90.
+Piste si cela persiste : réduire la plus grande largeur de la vue aérienne (1920) ou
+sa qualité. Non traité pour ne pas optimiser sur du bruit ; à reconfirmer sur le
+déploiement Cloudflare.
+
+Contenu : conforme. Seules les photos « À utiliser » sont employées ; la photo de la
+carrière reste exclue. Aucune distance, aucun accès van/camion, aucun portrait de
+Quinoa, Guiness ou Saphir inventés : tout est signalé à l’écran.
+Version anglaise : hors périmètre (pages FR uniquement à cette étape).
+Nouveaux TODO(amaelle) (6, déjà dans `docs/todo-contenus.md`) : validation des textes ;
+conditions carrière, PTV et paddocks ; portraits des trois autres chevaux ; distance et
+accès à cheval pour la cascade, itinéraires de Dionay ; distances depuis Lyon, Grenoble
+et Valence ; accès en voiture, van et camion.
+
+À vérifier visuellement par Vivien :
+- Les trois repères sont bien sur le gîte, la carrière et les prés (positions confirmées
+  sur la photo, pas sur un rendu final).
+- À 375 px, les repères G, C et P sont proches les uns des autres ; lisibles et assez
+  grands au toucher, mais à confirmer sur un vrai téléphone.
+- Le recadrage du portrait de Baraka et l’équilibre général de la page.
+
+Captures : `.audit/screenshots/lieu-375.png`, `-768.png`, `-1280.png` (non versionnées).
+Résumé machine : `docs/rapports/etape-6.json`.
+
 ## Étape 5 — Reprise par tranches après réorganisation — 2026-11-16
 
 Branche : `etape-5-gite` · Pull request : [#4](https://github.com/Louvivien/chambalade/pull/4).
