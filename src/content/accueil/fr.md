@@ -52,11 +52,11 @@ region:
 stay:
   title: Votre séjour au printemps 2027
   text: Le gîte est en rénovation et ouvrira au printemps 2027. Vous souhaitez venir avec votre cheval, ou en savoir plus sur les futures balades et la pension ?
-  pending: Les coordonnées pour nous joindre et le formulaire de demande seront bientôt disponibles ici.
+  requestLink: Demander un séjour
 ---
 
 <!-- TODO(amaelle): valider les textes proposés de l’accueil, issus du brief. -->
-<!-- TODO(amaelle): fournir téléphone et e-mail pour rendre la demande de séjour possible avant le module de réservation. -->
+<!-- TODO(amaelle): fournir téléphone et e-mail de contact pour joindre Chambalade en dehors du formulaire de réservation. -->
 <!-- TODO(amaelle): confirmer les distances depuis Lyon, Grenoble et Valence ; aucune durée publiée en attendant. -->
 <!-- TODO(amaelle): confirmer la portée de « paddock et foin compris » ; le tarif cheval est distinct de l’hébergement humain dans le brief. -->
 

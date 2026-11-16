@@ -78,8 +78,14 @@ try {
     assert.equal((await page.locator('h1').textContent()).length > 0, true);
     await page.goto(origin, { waitUntil: 'networkidle' });
     await page.getByRole('link', { name: content.hero.request, exact: true }).click();
+    assert.equal(new URL(page.url()).pathname, '/reserver/');
+    await page.goto(origin, { waitUntil: 'networkidle' });
+    await page.getByRole('link', { name: content.activities.interestLink, exact: true }).click();
     assert.equal(new URL(page.url()).hash, '#sejour');
     assert(await page.locator('#sejour').isVisible());
+    await page.getByRole('link', { name: content.stay.requestLink, exact: true }).click();
+    assert.equal(new URL(page.url()).pathname, '/reserver/');
+    await page.goto(origin, { waitUntil: 'networkidle' });
     await page.evaluate(() => window.scrollTo(0, 0));
     await page.screenshot({ path: `.audit/screenshots/accueil-${width}.png`, fullPage: true });
     // La description doit suivre le changement de photo sans script client.

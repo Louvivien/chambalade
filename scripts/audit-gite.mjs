@@ -80,8 +80,7 @@ try {
     await page.getByRole('link', { name: content.hero.requestLink, exact: true }).click();
     assert.equal(new URL(page.url()).hash, '#demande');
     await page.getByRole('link', { name: content.stay.link, exact: true }).click();
-    assert.equal(new URL(page.url()).pathname, '/');
-    assert.equal(new URL(page.url()).hash, '#sejour');
+    assert.equal(new URL(page.url()).pathname, '/reserver/');
     await page.goto(origin + '/gite/', { waitUntil: 'networkidle' });
     // Charger la photo différée avant la capture intégrale.
     await page.locator('.practical').scrollIntoViewIfNeeded();

@@ -7,7 +7,7 @@ terminée donne lieu à un commit après un build sans erreur ni avertissement.
 ## Étape en cours : 9 — Réservation : parcours client — 2026-11-16
 
 Branche : `etape-9-reserver` · Base : `etape-8-api` (PR en attente de création par Vivien).
-Statut : plan committé ; tranche 1 à faire. Une PR dédiée en fin d’étape, sans fusion.
+Statut : tranche 1 terminée ; tranche 2 à faire. Une PR dédiée en fin d’étape, sans fusion.
 Périmètre (`docs/etapes.md` étape 9, `docs/reservation.md` section 7) : page `/reserver/`
 en français : calendrier, composition du séjour, devis en direct, coordonnées, confirmation.
 Pas d’administration ni d’e-mails (étape 10), pas de version anglaise (étape 12).
@@ -20,9 +20,13 @@ un message et les coordonnées. Prix, disponibilités et devis ne viennent jamai
 navigateur : tout passe par l’API de l’étape 8. Informations inconnues = `TODO(amaelle)`
 visibles. Turnstile : clé publique en variable `PUBLIC_TURNSTILE_SITE_KEY`.
 
-- [ ] Tranche 1 (15–30 min) — Contenus et page : collection `reserver`, page `/reserver/`
+- [x] Tranche 1 (15–30 min) — Contenus et page : collection `reserver`, page `/reserver/`
   (structure HTML complète des champs, accessible, sans script), liens « Réserver » de
   l’accueil, du gîte et du lieu raccordés, `.env.example`, `TODO(amaelle)`.
+  Fait : `src/content/reserver/fr.md` + schéma, `src/pages/reserver.astro` (champs complets, aide,
+  erreurs, devis, confirmation, message sans JavaScript), liens de l’accueil, du gîte et du lieu
+  raccordés à `/reserver/`, audits d’accueil et du gîte adaptés, `.env.example`, jeton `--erreur`.
+  Le script `src/scripts/reserver.ts` est provisoire (affiche le formulaire). Suite : logique pure.
 - [ ] Tranche 2 (15–30 min) — Logique pure : état du formulaire, requête `sejour`
   (dont personnes par chambre dérivées), statut des nuits, formatage, messages ; tests.
 - [ ] Tranche 3 (15–30 min) — Calendrier accessible : grille mensuelle au clavier, choix

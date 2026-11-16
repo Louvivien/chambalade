@@ -20,9 +20,11 @@ conditions pratiques, identité légale. Les sources ci-dessous font autorité.
 | `docs/audit.md:29` | `docs/brief.md` ou `src/data/reservation.yaml`. Sinon : `TODO(amaelle)`, jamais une invention. |
 | `docs/audit.md:71` | - [ ] Liste finale des `TODO(amaelle)` restants, classés : bloquant / non bloquant. |
 | `docs/audit.md:87` | Nouveaux TODO(amaelle) : … |
-| `docs/avancement.md:56` | inventaire des `TODO(amaelle)`, rapport dans `docs/journal-audit.md`, PR. |
-| `docs/avancement.md:73` | Principe sur les inconnues : toute valeur `TODO(amaelle)` reste `null` dans le YAML. La |
-| `docs/avancement.md:102` | des `TODO(amaelle)`, rapport dans `docs/journal-audit.md`, PR. |
+| `docs/avancement.md:20` | navigateur : tout passe par l’API de l’étape 8. Informations inconnues = `TODO(amaelle)` |
+| `docs/avancement.md:25` | l’accueil, du gîte et du lieu raccordés, `.env.example`, `TODO(amaelle)`. |
+| `docs/avancement.md:89` | inventaire des `TODO(amaelle)`, rapport dans `docs/journal-audit.md`, PR. |
+| `docs/avancement.md:106` | Principe sur les inconnues : toute valeur `TODO(amaelle)` reste `null` dans le YAML. La |
+| `docs/avancement.md:135` | des `TODO(amaelle)`, rapport dans `docs/journal-audit.md`, PR. |
 | `docs/brief.md:5` | pas définitifs : les mettre en ligne avec un `TODO(amaelle)`. |
 | `docs/brief.md:22` | - Téléphone : TODO(amaelle). E-mail de contact : TODO(amaelle). |
 | `docs/brief.md:53` | TODO(amaelle) (environ 1 h, à vérifier). |
@@ -61,8 +63,10 @@ conditions pratiques, identité légale. Les sources ci-dessous font autorité.
 | `docs/reservation.md:142` | l'acompte, coordonnées bancaires TODO(amaelle) et date limite ; réservation confirmée ; |
 | `docs/reservation.md:153` | (TODO(amaelle), proposition : anonymisation 3 ans après le séjour), droits d'accès et |
 | `src/content.config.ts:51` | items: z.record(z.enum(priceIds), z.object({ label: z.string(), pending: z.string().startsWith('TODO(amaelle)').optional() })), |
+| `src/content.config.ts:91` | group: z.object({ legend: z.string(), adults: z.string(), children: z.string(), childrenHint: z.string().startsWith('TODO(amaelle)'), horses: z.string(), horsesHint: z.string().startsWith('TODO(amaelle)') }), |
+| `src/content.config.ts:100` | messageHint: z.string(), consent: z.string(), consentPrivacy: z.string().startsWith('TODO(amaelle)'), antiRobot: z.string(), |
 | `src/content/accueil/fr.md:58` | <!-- TODO(amaelle): valider les textes proposés de l’accueil, issus du brief. --> |
-| `src/content/accueil/fr.md:59` | <!-- TODO(amaelle): fournir téléphone et e-mail pour rendre la demande de séjour possible avant le module de réservation. --> |
+| `src/content/accueil/fr.md:59` | <!-- TODO(amaelle): fournir téléphone et e-mail de contact pour joindre Chambalade en dehors du formulaire de réservation. --> |
 | `src/content/accueil/fr.md:60` | <!-- TODO(amaelle): confirmer les distances depuis Lyon, Grenoble et Valence ; aucune durée publiée en attendant. --> |
 | `src/content/accueil/fr.md:61` | <!-- TODO(amaelle): confirmer la portée de « paddock et foin compris » ; le tarif cheval est distinct de l’hébergement humain dans le brief. --> |
 | `src/content/gite/fr.md:45` | pending: 'TODO(amaelle) : valider le tarif, petit-déjeuner compris.' |

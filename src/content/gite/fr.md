@@ -96,8 +96,8 @@ practical:
       pending: 'TODO(amaelle) : confirmer le montant de l’acompte, son délai de paiement et les conditions d’annulation. L’acompte sera réglé par virement.'
 stay:
   title: Envie de venir au printemps 2027 ?
-  text: Les coordonnées et le formulaire de demande seront bientôt disponibles. Vous pourrez alors nous parler de votre séjour et de votre cheval.
-  link: Voir les informations de demande
+  text: Choisissez vos dates, composez votre séjour avec votre cheval et recevez un devis indicatif. Amaëlle vous répond ensuite.
+  link: Demander un séjour
 ---
 
 <!-- TODO(amaelle): valider les textes de la page du gîte et fournir les photos des chambres, du dortoir et des espaces communs après rénovation. -->

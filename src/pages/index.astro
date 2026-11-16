@@ -6,7 +6,7 @@ import AccueilBandeau from '../components/AccueilBandeau.astro';
 const entry = await getEntry('accueil', 'fr');
 if (!entry) throw new Error('Contenu accueil/fr absent');
 const text = entry.data;
-const availablePages = { home: '/', gite: '/gite/', lieu: '/le-lieu/', reserver: '/#sejour' };
+const availablePages = { home: '/', gite: '/gite/', lieu: '/le-lieu/', reserver: '/reserver/' };
 ---
 <BaseLayout locale="fr" title={text.title} description={text.description} currentPage="home" {availablePages}>
   <section class="hero" aria-labelledby="accueil-titre">
@@ -15,7 +15,7 @@ const availablePages = { home: '/', gite: '/gite/', lieu: '/le-lieu/', reserver:
       <p>{text.hero.introduction}</p>
       <div class="hero-actions">
         <a class="button" href="/gite/">{text.hero.discover}</a>
-        <a class="text-link" href="#sejour">{text.hero.request}</a>
+        <a class="text-link" href="/reserver/">{text.hero.request}</a>
       </div>
     </div>
     <AccueilBandeau desktop={text.hero.desktop} mobile={text.hero.mobile} />
@@ -39,7 +39,7 @@ const availablePages = { home: '/', gite: '/gite/', lieu: '/le-lieu/', reserver:
         <h3>{text.activities.lodgeTitle}</h3>
         <div>
           <p>{text.activities.lodgeText}</p>
-          <a class="button" href="#sejour">{text.activities.lodgeLink}</a>
+          <a class="button" href="/reserver/">{text.activities.lodgeLink}</a>
         </div>
       </article>
       <div class="upcoming">
@@ -74,7 +74,7 @@ const availablePages = { home: '/', gite: '/gite/', lieu: '/le-lieu/', reserver:
     <div class="container">
       <h2 id="sejour-titre">{text.stay.title}</h2>
       <p>{text.stay.text}</p>
-      <p class="stay-pending">{text.stay.pending}</p>
+      <a class="button stay-request" href="/reserver/">{text.stay.requestLink}</a>
     </div>
   </section>
 </BaseLayout>
@@ -109,7 +109,9 @@ const availablePages = { home: '/', gite: '/gite/', lieu: '/le-lieu/', reserver:
   .location { font-weight: 700; }
   .stay { background: var(--foret); color: var(--creme); }
   .stay h2 { max-width: 22ch; }
-  .stay-pending { border-top: 1px solid var(--chene); padding-top: var(--espace-6); margin-top: var(--espace-8); }
+  .stay-request { margin-top: var(--espace-8); background: var(--creme); color: var(--foret); border-color: var(--creme); }
+  .stay-request:hover { background: var(--horizon); border-color: var(--horizon); color: var(--foret); }
+  .stay a:focus-visible { outline-color: var(--creme); }
   @media (min-width: 48rem) {
     .hero-copy { max-width: 54rem; margin-inline: auto; }
     .introduction { grid-template-columns: 2fr 3fr; gap: var(--espace-16); }
