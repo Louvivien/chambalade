@@ -23,5 +23,7 @@ export const reservationPresentationSchema = z.object({
 });
 
 export function formatEuros(cents: number) {
-  return new Intl.NumberFormat('fr-FR', { style: 'currency', currency: 'EUR', minimumFractionDigits: 0, maximumFractionDigits: 2 }).format(cents / 100);
+  // Deux décimales ou aucune : « 76,50 € », jamais « 76,5 € ».
+  const decimales = cents % 100 === 0 ? 0 : 2;
+  return new Intl.NumberFormat('fr-FR', { style: 'currency', currency: 'EUR', minimumFractionDigits: decimales, maximumFractionDigits: decimales }).format(cents / 100);
 }

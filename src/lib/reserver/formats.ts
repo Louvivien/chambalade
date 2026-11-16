@@ -17,7 +17,9 @@ export function dateComplete(date: string): string {
 export const dateCourte = dateLongue;
 
 export function euros(centimes: number): string {
-  return new Intl.NumberFormat('fr-FR', { style: 'currency', currency: 'EUR', minimumFractionDigits: 0, maximumFractionDigits: 2 }).format(centimes / 100);
+  // Deux décimales ou aucune : « 76,50 € », jamais « 76,5 € ».
+  const decimales = centimes % 100 === 0 ? 0 : 2;
+  return new Intl.NumberFormat('fr-FR', { style: 'currency', currency: 'EUR', minimumFractionDigits: decimales, maximumFractionDigits: decimales }).format(centimes / 100);
 }
 
 export const libelleNuits = (n: number, un: string, plusieurs: string) => remplir(n > 1 ? plusieurs : un, { n });

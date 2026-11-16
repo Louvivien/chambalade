@@ -33,3 +33,8 @@ it('affiche les centimes sans perdre une fraction d’euro', () => {
   expect(formatEuros(3575)).toBe('35,75\u00a0€');
   expect(formatEuros(3500)).toBe('35\u00a0€');
 });
+
+it('écrit les montants avec centimes sur deux décimales', () => {
+  expect(formatEuros(7650)).toBe('76,50 €');
+  expect(formatEuros(7600)).toBe('76 €');
+});

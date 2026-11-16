@@ -1,0 +1,162 @@
+# Textes des e-mails du module de réservation (docs/reservation.md, section 9).
+# Deux langues pour les clientes (langue de la demande) ; les notifications à Amaëlle sont en français.
+# Variables : {prenom} {nom} {reference} {arrivee} {depart} {nuits} {acompte} {limite} {heures} {lien} {infos} {message}.
+# Ces textes sont des propositions à faire valider : TODO(amaelle) relire le ton et les formulations.
+fr:
+  salutation: "Bonjour {prenom},"
+  cloture: "À très bientôt,"
+  signature: "Amaëlle, Chambalade"
+  pied: "Chambalade, gîte équestre à Roybon (Isère), au cœur des Chambarans."
+  messageAmaelle: "Le mot d’Amaëlle :"
+  recap:
+    titre: "Récapitulatif de votre demande"
+    reference: "Référence"
+    arrivee: "Arrivée"
+    depart: "Départ"
+    nuits: "{n} nuit"
+    nuitsPlusieurs: "{n} nuits"
+    adultes: "Adultes"
+    enfants: "Enfants"
+    chevaux: "Chevaux"
+    hebergement: "Hébergement"
+    dortoir: "Lits en dortoir"
+    devis: "Devis indicatif"
+    total: "Total indicatif"
+    acompte: "Acompte"
+    aConfirmer: "à confirmer"
+    compris: "compris"
+    mention: "Devis indicatif, confirmé par Chambalade à l’acceptation."
+    provisoire: "Les tarifs sont en cours de validation : ce devis peut encore changer."
+    incomplet: "Certaines lignes restent à confirmer par Chambalade ; le total ne les compte pas encore."
+  chambres:
+    chambre_privee: "Chambre avec salle de bain privée"
+    chambre_2: "Chambre 2"
+    chambre_3: "Chambre 3"
+  lignes:
+    chambre_privee: "Chambre avec salle de bain privée"
+    chambre_partagee: "Chambre, sanitaires partagés"
+    dortoir: "Lits en dortoir"
+    draps_dortoir: "Draps (dortoir)"
+    petit_dejeuner: "Petit-déjeuner"
+    dejeuner: "Déjeuners et pique-niques"
+    diner: "Dîners"
+    cheval: "Cheval en paddock, foin compris"
+    forfait_cavalier: "Forfait cavalier"
+    taxe_sejour: "Taxe de séjour"
+  recue:
+    sujet: "Chambalade, votre demande de séjour est reçue ({reference})"
+    paragraphes:
+      - "Nous avons bien reçu votre demande de séjour du {arrivee} au {depart}."
+      - "Ce n’est pas encore une réservation : Amaëlle l’examine et vous répond sous {heures} h. Vos dates sont retenues jusqu’à sa réponse."
+  acceptee:
+    sujet: "Chambalade, votre demande est acceptée ({reference})"
+    paragraphes:
+      - "Bonne nouvelle, Amaëlle a accepté votre demande de séjour du {arrivee} au {depart}."
+    acompteConnu: "Pour confirmer votre réservation, merci de verser un acompte de {acompte} par virement avant le {limite}."
+    acompteInconnu: "Pour confirmer votre réservation, un acompte par virement est demandé avant le {limite}. Amaëlle vous en précise le montant."
+    virement: "Coordonnées pour le virement :"
+    virementInconnu: "Amaëlle vous communique les coordonnées bancaires pour le virement."
+    referenceVirement: "Merci d’indiquer la référence {reference} avec votre virement."
+    liberation: "Sans paiement avant cette date, vos dates seront libérées."
+  confirmee:
+    sujet: "Chambalade, votre réservation est confirmée ({reference})"
+    paragraphes:
+      - "Votre acompte est bien arrivé : votre séjour du {arrivee} au {depart} est confirmé."
+      - "Nous avons hâte de vous accueillir. Pour toute question avant votre arrivée, répondez simplement à ce message."
+  refusee:
+    sujet: "Chambalade, votre demande n’a pas pu être acceptée ({reference})"
+    paragraphes:
+      - "Nous sommes désolés : nous ne pouvons pas accepter votre demande de séjour du {arrivee} au {depart}."
+      - "Vos dates ont été libérées. Vous pouvez faire une nouvelle demande pour d’autres dates sur le site."
+  annulee:
+    sujet: "Chambalade, votre réservation est annulée ({reference})"
+    paragraphes:
+      - "Votre réservation du {arrivee} au {depart} est annulée et vos dates sont libérées."
+      - "Si cette annulation ne correspond pas à ce que vous attendiez, répondez à ce message."
+  nouvelle:
+    sujet: "Nouvelle demande {reference}, {prenom} {nom}, du {arrivee} au {depart}"
+    paragraphes:
+      - "{prenom} {nom} vient d’envoyer une demande de séjour du {arrivee} au {depart}."
+      - "Elle bloque les dates pendant {heures} h. Sans réponse, elles seront libérées."
+    contact: "Coordonnées"
+    telephone: "Téléphone"
+    email: "E-mail"
+    message: "Message de la cliente"
+    traiter: "Répondre à la demande"
+  expiration:
+    sujet: "Demande {reference} bientôt expirée, {prenom} {nom}"
+    paragraphes:
+      - "La demande de {prenom} {nom} pour le séjour du {arrivee} au {depart} expire le {limite}."
+      - "Sans réponse d’ici là, les dates seront libérées."
+    traiter: "Répondre à la demande"
+en:
+  salutation: "Hello {prenom},"
+  cloture: "See you soon,"
+  signature: "Amaëlle, Chambalade"
+  pied: "Chambalade, an equestrian guesthouse in Roybon (Isère, France), in the heart of the Chambarans forest."
+  messageAmaelle: "A note from Amaëlle:"
+  recap:
+    titre: "Summary of your request"
+    reference: "Reference"
+    arrivee: "Arrival"
+    depart: "Departure"
+    nuits: "{n} night"
+    nuitsPlusieurs: "{n} nights"
+    adultes: "Adults"
+    enfants: "Children"
+    chevaux: "Horses"
+    hebergement: "Accommodation"
+    dortoir: "Dormitory beds"
+    devis: "Estimated quote"
+    total: "Estimated total"
+    acompte: "Deposit"
+    aConfirmer: "to be confirmed"
+    compris: "included"
+    mention: "Estimated quote, confirmed by Chambalade when your request is accepted."
+    provisoire: "Prices are still being validated, so this quote may change."
+    incomplet: "Some lines are still to be confirmed by Chambalade; the total does not include them yet."
+  chambres:
+    chambre_privee: "Room with private bathroom"
+    chambre_2: "Room 2"
+    chambre_3: "Room 3"
+  lignes:
+    chambre_privee: "Room with private bathroom"
+    chambre_partagee: "Room, shared bathroom"
+    dortoir: "Dormitory beds"
+    draps_dortoir: "Bed linen (dormitory)"
+    petit_dejeuner: "Breakfast"
+    dejeuner: "Lunches and packed lunches"
+    diner: "Dinners"
+    cheval: "Horse in paddock, hay included"
+    forfait_cavalier: "Rider package"
+    taxe_sejour: "Tourist tax"
+  recue:
+    sujet: "Chambalade, we have received your stay request ({reference})"
+    paragraphes:
+      - "We have received your request to stay from {arrivee} to {depart}."
+      - "This is not a booking yet: Amaëlle is reviewing it and will reply within {heures} hours. Your dates are held until she does."
+  acceptee:
+    sujet: "Chambalade, your request is accepted ({reference})"
+    paragraphes:
+      - "Good news, Amaëlle has accepted your request to stay from {arrivee} to {depart}."
+    acompteConnu: "To confirm your booking, please pay a deposit of {acompte} by bank transfer before {limite}."
+    acompteInconnu: "To confirm your booking, a deposit by bank transfer is requested before {limite}. Amaëlle will tell you the amount."
+    virement: "Bank transfer details:"
+    virementInconnu: "Amaëlle will send you the bank details for the transfer."
+    referenceVirement: "Please quote the reference {reference} with your transfer."
+    liberation: "If we do not receive the payment by then, your dates will be released."
+  confirmee:
+    sujet: "Chambalade, your booking is confirmed ({reference})"
+    paragraphes:
+      - "Your deposit has arrived: your stay from {arrivee} to {depart} is confirmed."
+      - "We look forward to welcoming you. If you have any question before you arrive, simply reply to this message."
+  refusee:
+    sujet: "Chambalade, we could not accept your request ({reference})"
+    paragraphes:
+      - "We are sorry: we cannot accept your request to stay from {arrivee} to {depart}."
+      - "Your dates have been released. You are welcome to make a new request for other dates on the website."
+  annulee:
+    sujet: "Chambalade, your booking is cancelled ({reference})"
+    paragraphes:
+      - "Your booking from {arrivee} to {depart} is cancelled and your dates have been released."
+      - "If this is not what you expected, please reply to this message."

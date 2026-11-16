@@ -112,3 +112,11 @@ describe('messages d’erreur', () => {
   });
   it('réponse illisible : message général', () => expect(messagesDErreur(409, null, null, t)).toEqual(['Erreur du serveur.']));
 });
+
+describe('euros : deux décimales ou aucune', () => {
+  it('écrit 76,50 € et non 76,5 €', () => {
+    expect(euros(7650)).toBe('76,50 €');
+    expect(euros(150)).toBe('1,50 €');
+    expect(euros(7600)).toBe('76 €');
+  });
+});
