@@ -1,0 +1,52 @@
+---
+import { getInterface, type Locale, type PageKey, type AvailablePages } from '../lib/interface';
+interface Props { locale: Locale; currentPage?: PageKey; availablePages?: AvailablePages; translations?: Partial<Record<Locale, string>>; }
+const { locale, currentPage, availablePages = {}, translations = {} } = Astro.props;
+const text = await getInterface(locale);
+const languages = text.languages;
+---
+<header class="site-header">
+  <div class="container header-inner">
+    <div class="brand">
+      {availablePages.home ? <a class="brand-name" href={availablePages.home} aria-label={text.homeLabel}>{text.name}</a> : <span class="brand-name">{text.name}</span>}
+      <p class="brand-signature">{text.signature}</p>
+    </div>
+    <div class="header-navigation">
+      <nav aria-label={text.navigationLabel}>
+        <ul class="main-navigation">
+          {text.nav.map(({ key, label }) => <li>
+            {availablePages[key] ? <a href={availablePages[key]} aria-current={currentPage === key ? 'page' : undefined}>{label}</a> : <span aria-disabled="true">{label}</span>}
+          </li>)}
+        </ul>
+      </nav>
+      <nav aria-label={text.languagesLabel} class="languages">
+        {languages.map(({ code, label }) => code === locale
+          ? <span lang={code} aria-current="true">{label}</span>
+          : translations[code]
+            ? <a href={translations[code]} lang={code} hreflang={code}>{label}</a>
+            : <span lang={code} aria-disabled="true">{label}</span>)}
+      </nav>
+    </div>
+  </div>
+</header>
+<style>
+  .site-header { border-bottom: 1px solid var(--chene); }
+  .header-inner { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: var(--espace-6) var(--espace-12); padding-block: var(--espace-8); }
+  .brand { flex: 0 1 25rem; }
+  .brand-name { font-family: var(--font-titres); font-weight: 600; font-size: clamp(2rem, 3vw, 2.5rem); line-height: 1.2; text-decoration: none; }
+  .brand-signature { margin: var(--espace-2) 0 0; font-size: var(--texte-petit); }
+  .header-navigation { display: flex; flex-direction: column-reverse; align-items: flex-end; gap: var(--espace-3); }
+  .main-navigation { display: flex; flex-wrap: wrap; gap: var(--espace-2) var(--espace-6); list-style: none; padding: 0; margin: 0; }
+  .main-navigation a, .main-navigation span { display: inline-flex; align-items: center; min-height: 44px; font-weight: 700; }
+  .main-navigation a { text-decoration: none; }
+  .main-navigation a:hover, .main-navigation a[aria-current] { text-decoration: underline; text-decoration-thickness: 2px; }
+  .languages { display: flex; flex-wrap: wrap; gap: var(--espace-4); font-size: var(--texte-petit); }
+  .languages a, .languages span { display: inline-flex; align-items: center; min-height: 44px; }
+  .languages [aria-current] { font-weight: 700; }
+  @media (max-width: 60rem) {
+    .header-navigation { align-items: flex-start; flex-direction: column; width: 100%; }
+  }
+  @media (max-width: 30rem) {
+    .main-navigation { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  }
+</style>

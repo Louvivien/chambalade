@@ -1,0 +1,35 @@
+---
+import { getInterface, site, type Locale, type AvailablePages } from '../lib/interface';
+interface Props { locale: Locale; availablePages?: AvailablePages; }
+const { locale, availablePages = {} } = Astro.props;
+const text = await getInterface(locale);
+---
+<footer class="site-footer" aria-label={text.footerLabel}>
+  <div class="container footer-inner">
+    <div>
+      <p class="footer-name">{text.name}</p>
+      <address>
+        {site.address}<br />{site.locality}
+        {site.phone && <><br /><a href={`tel:${site.phone.replace(/\s/g, '')}`}>{site.phone}</a></>}
+        {site.email && <><br /><a href={`mailto:${site.email}`}>{site.email}</a></>}
+      </address>
+    </div>
+    <div class="footer-links">
+      <a href={site.directoryUrl}>{text.directoryLabel}</a>
+      <ul>
+        {text.legal.map(({ key, label }) => <li>
+          {availablePages[key] ? <a href={availablePages[key]}>{label}</a> : <span aria-disabled="true">{label}</span>}
+        </li>)}
+      </ul>
+    </div>
+  </div>
+</footer>
+<style>
+  .site-footer { border-top: 1px solid var(--chene); padding-block: var(--espace-12); }
+  .footer-inner { display: flex; flex-wrap: wrap; justify-content: space-between; gap: var(--espace-8); }
+  .footer-name { font: 600 var(--titre-3)/1.2 var(--font-titres); margin: 0 0 var(--espace-4); }
+  address { font-style: normal; font-size: var(--texte-petit); }
+  .footer-links { display: flex; flex-direction: column; align-items: flex-start; gap: var(--espace-4); font-size: var(--texte-petit); }
+  .footer-links ul { display: flex; flex-wrap: wrap; gap: var(--espace-4); list-style: none; margin: 0; padding: 0; }
+  .footer-links a, .footer-links span { display: inline-flex; min-height: 44px; align-items: center; }
+</style>

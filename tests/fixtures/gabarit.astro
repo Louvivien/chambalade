@@ -1,0 +1,35 @@
+---
+import BaseLayout from '../../src/layouts/BaseLayout.astro';
+import { Picture } from 'astro:assets';
+import forest from '../../src/assets/photos/foret-chambaran.jpg';
+import * as fr from './gabarit-fr.md';
+import * as en from './gabarit-en.md';
+import { getInterface, type Locale, type AvailablePages } from '../../src/lib/interface';
+const locale: Locale = Astro.url.pathname.startsWith('/en/') ? 'en' : 'fr';
+const { Content, frontmatter } = locale === 'fr' ? fr : en;
+const text = await getInterface(locale);
+const base = locale === 'fr' ? '/audit/fr/' : '/en/audit/';
+const pages: AvailablePages = { home: base, gite: `${base}#gite`, lieu: `${base}#lieu`, reserver: `${base}#reserver`, mentions: `${base}#mentions`, confidentialite: `${base}#confidentialite` };
+---
+<BaseLayout {locale} title={frontmatter.title} description={frontmatter.description} availablePages={pages} currentPage="home" translations={{ fr: '/audit/fr/', en: '/en/audit/' }}>
+  <div class="container sample">
+    <div class="sample-copy">
+      <Content />
+      <a class="button" href="#gite">{frontmatter.button}</a>
+    </div>
+    <Picture src={forest} alt={frontmatter.imageAlt} widths={[375, 768, 1200]} width={1200} sizes="(max-width: 768px) calc(100vw - 40px), 45vw" loading="eager" fetchpriority="high" formats={['avif', 'webp']} quality={65} />
+  </div>
+  <div class="container samples">
+    {text.nav.filter(item => item.key !== 'home').map(item => <section id={item.key}><h2>{item.label}</h2></section>)}
+    {text.legal.map(item => <section id={item.key}><h2>{item.label}</h2></section>)}
+  </div>
+</BaseLayout>
+<style>
+  .sample { display: grid; grid-template-columns: 1.1fr 0.9fr; gap: var(--espace-12); align-items: center; }
+  .sample :global(h1) { margin-top: 0; }
+  .sample :global(img) { width: 100%; aspect-ratio: 4 / 5; object-fit: cover; }
+  .sample-copy { padding-block: var(--espace-4); }
+  .samples { padding-top: var(--espace-12); }
+  .samples section { border-top: 1px solid var(--chene); padding-block: var(--espace-4); }
+  @media (max-width: 48rem) { .sample { grid-template-columns: 1fr; } .sample :global(img) { aspect-ratio: 4 / 3; } }
+</style>

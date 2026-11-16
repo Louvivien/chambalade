@@ -18,6 +18,7 @@ Cloudflare Pages. Les instructions pour l'agent de développement sont dans `AGE
 - `docs/etapes.md` : ordre de construction.
 - `docs/audit.md` : grille de contrôle à chaque fin d'étape.
 - `docs/journal-audit.md` : résultats et limites des contrôles par étape.
+- `docs/gabarit.md` : gabarit FR/EN, prévisualisation isolée et contrôles navigateur.
 - `docs/todo-contenus.md` : informations attendues d'Amaëlle (créé pendant la construction).
 
 ## Vérifications
