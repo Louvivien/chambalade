@@ -1,0 +1,17 @@
+{
+  "step": 13,
+  "date": "2026-11-16",
+  "branch": "etape-13-seo",
+  "build": { "pages": 15, "errors": 0, "warnings": 0 },
+  "astroCheck": { "errors": 0, "warnings": 0, "hints": 1 },
+  "unitTests": { "passed": 581, "new": 33 },
+  "internalLinks": { "checked": 475, "broken": 0 },
+  "lighthouse": {
+    "/": [100, 100, 100, 100], "/gite/": [100, 100, 100, 100], "/le-lieu/": [100, 100, 100, 100], "/reserver/": [100, 100, 96, 100],
+    "/mentions-legales/": [100, 100, 100, 66], "/confidentialite/": [100, 100, 100, 66], "/conditions-de-reservation/": [100, 100, 100, 66],
+    "/en/": [100, 100, 100, 100], "/en/guesthouse/": [100, 100, 100, 100], "/en/the-place/": [100, 100, 100, 100], "/en/book/": [100, 100, 96, 100],
+    "/en/legal/": [100, 100, 100, 66], "/en/privacy/": [100, 100, 100, 66], "/en/booking-terms/": [100, 100, 100, 66],
+    "order": "performance, accessibility, best-practices, seo",
+    "note": "SEO 66 voulu : noindex des pages légales tant que src/data/legal.yaml a valide: false."
+  }
+}

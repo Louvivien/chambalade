@@ -18,7 +18,7 @@ for (const id of priceIds) {
   }
 }
 ---
-<BaseLayout {locale} title={text.title} description={text.description} currentPage="gite">
+<BaseLayout {locale} title={text.title} description={text.description} image={{ src: text.hero.photo.src, alt: text.hero.photo.alt }} currentPage="gite">
   <section class="hero" aria-labelledby="gite-titre">
     <div class="container hero-copy">
       <h1 id="gite-titre">{text.hero.title}</h1>

@@ -1,5 +1,51 @@
 # Journal d’audit
 
+## Étape 13 — SEO, accessibilité, performance — 2026-11-16
+
+Branche : `etape-13-seo` · Base : `etape-12-en` · Pull request : à créer (voir `docs/avancement.md`).
+
+Fait :
+- **Balises de tête** sur toutes les pages publiques (`src/lib/seo.ts`, `BaseLayout`) : canonical absolu, Open Graph (titre, description, URL,
+  langue et langue alternative, nom du site), Twitter, image de partage 1200×630 recadrée depuis la photo d’en-tête de l’accueil, du gîte et
+  du lieu. Titres ≤ 70 signes, descriptions de 60 à 170 signes, uniques par langue (testé). `hreflang` déjà posés à l’étape 12.
+- **`sitemap.xml`** généré depuis la table de routes : 8 pages (4 × 2 langues) avec leurs alternatives de langue et x-default ; les pages
+  légales n’y entrent qu’une fois validées (`valide: true`), comme leur `noindex`.
+- **`robots.txt`** : tout ouvert sauf `/admin/` et `/api/`, avec l’adresse du sitemap. (Il n’est pas une protection : `/admin/` l’est par
+  Cloudflare Access.)
+- **Données structurées `LodgingBusiness`** sur l’accueil (FR et EN) : nom, adresse postale, description, image, langue. **Rien d’inventé** :
+  ni téléphone, e-mail, prix, note, GPS, horaires ni équipements tant que ces informations sont inconnues (testé).
+- **En-têtes** (`public/_headers`) : `nosniff`, politique de référent, permissions, cache d’un an « immuable » pour `/_astro/` (fichiers à
+  empreinte). Pas de politique CSP : elle risquerait de bloquer la vérification anti-robot ; à étudier à l’étape 14.
+- **Contrastes** : couples mesurés (foret/crème 10,2 ; crème/kaki foncé 5,7 ; erreur/crème 7,1 ; foret/horizon 6,2 ; foret/chêne 5,3) et
+  garde-fou testé : aucune règle ne met du texte en kaki clair (4,0:1). Hover/focus couverts par les mêmes couples.
+- Audit d’accueil adapté : le JSON-LD est compté comme donnée, la page reste sans script exécutable.
+
+Contrôles automatiques : build OK, 15 pages, sans erreur ni avertissement · 581 tests OK (33 nouveaux) · types : 0 erreur, 0 avertissement,
+1 indication (`erreurEnvoi`, étape 9) · liens : 475 références internes, 0 cassée · inventaire des points à confirmer à jour · secrets : rien.
+Audits navigateur rejoués : langues, accueil, gîte, lieu, légal : OK (clavier, 375/768/1280 px, réseau).
+
+Lighthouse mobile (perf / a11y / BP / SEO), serveur statique local, 14 pages :
+`/` 100/100/100/100 · `/gite/` 100/100/100/100 · `/le-lieu/` 100/100/100/100 · `/reserver/` 100/100/96/100 · légal FR (3 pages)
+100/100/100/**66** · `/en/` 100/100/100/100 · `/en/guesthouse/` 100/100/100/100 · `/en/the-place/` 100/100/100/100 · `/en/book/` 100/100/96/100 ·
+légal EN (3 pages) 100/100/100/**66**. LCP 0,8 à 1,0 s, TBT ≤ 80 ms, CLS ≤ 0,017.
+**SEO 66 voulu** sur les six pages légales : seul « page bloquée à l’indexation » échoue (`noindex` des brouillons) ; elles passeront à 100
+quand `valide` passera à `true`. **96 en bonnes pratiques** sur les deux pages de réservation : le script externe de la vérification anti-robot.
+Contenu : conforme · écarts : aucun.
+
+Ce qui reste à corriger ou à faire (non bloquant sauf mention) :
+1. **Bloquant avant ouverture** : faire valider les pages légales (puis `valide: true`, ce qui lève le `noindex` et ajoute les pages au sitemap).
+2. Compléter les données structurées quand Amaëlle répond : téléphone, e-mail, horaires, fourchette de prix, équipements (piscine, cuisine…),
+   coordonnées GPS ; le logo transparent comme `logo`.
+3. Image de partage absente pour `/reserver/` et le légal (prévue : photo d’en-tête ; carte Twitter « summary » en attendant).
+4. Sitemap sans `lastmod` (aucune date fiable à la construction) ; à reconsidérer.
+5. Étape 14 : soumettre le sitemap à Google Search Console, activer Cloudflare Web Analytics, valider les en-têtes en production, étudier une CSP
+   compatible Turnstile, refaire Lighthouse sur l’URL réelle (CDN, compression) et sur la prévisualisation Cloudflare.
+6. Lecteur d’écran réel (VoiceOver, NVDA) non testé, notamment le calendrier de réservation (clavier et annonces vérifiés par script seulement).
+7. Photos : les alternatives du bandeau d’accueil, des chambres et des photos intérieures dépendent des livraisons d’Amaëlle.
+
+Nouveaux TODO(amaelle) : aucun.
+À vérifier visuellement par Vivien : l’aperçu d’un lien partagé (carte Open Graph) une fois en ligne ; en local, ouvrir `dist/sitemap.xml` et `dist/robots.txt`.
+
 ## Étape 12 — Version anglaise — 2026-11-16
 
 Branche : `etape-12-en` · Base : `etape-11-legal` · Pull request : à créer (voir `docs/avancement.md`).

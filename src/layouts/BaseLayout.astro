@@ -3,12 +3,20 @@ import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import { getInterface } from '../lib/interface';
 import { routes, translationsOf, locales, type Locale, type PageKey } from '../lib/routes';
+import { getImage } from 'astro:assets';
+import { construireMeta } from '../lib/seo';
 import '../styles/global.css';
-interface Props { locale?: Locale; title: string; description: string; currentPage: PageKey; availablePages?: Partial<Record<PageKey, string>>; translations?: Partial<Record<Locale, string>>; }
+interface Props { locale?: Locale; title: string; description: string; currentPage: PageKey; availablePages?: Partial<Record<PageKey, string>>; translations?: Partial<Record<Locale, string>>; image?: { src: ImageMetadata; alt: string }; }
 const { locale = 'fr', title, description, currentPage, availablePages = routes[locale] } = Astro.props;
 const text = await getInterface(locale);
 const translations = Astro.props.translations ?? translationsOf(currentPage);
 const absolue = (chemin: string) => new URL(chemin, Astro.site).href;
+// Image de partage 1200×630 recadrée depuis une photo du site (jamais une adresse externe).
+const partage = Astro.props.image ? await getImage({ src: Astro.props.image.src, width: 1200, height: 630, fit: 'cover', format: 'jpg', quality: 70 }) : null;
+const meta = construireMeta({
+  langue: locale, titre: title, description, url: absolue(translations[locale] ?? Astro.url.pathname), nomDuSite: text.name,
+  image: partage ? { url: absolue(partage.src), largeur: 1200, hauteur: 630, alt: Astro.props.image!.alt } : undefined,
+});
 ---
 <!doctype html>
 <html lang={locale}>
@@ -20,6 +28,7 @@ const absolue = (chemin: string) => new URL(chemin, Astro.site).href;
     <title>{title}</title>
     {locales.map(code => translations[code] && <link rel="alternate" hreflang={code} href={absolue(translations[code]!)} />)}
     {translations.fr && <link rel="alternate" hreflang="x-default" href={absolue(translations.fr)} />}
+    {meta.map(({ balise, attributs }) => balise === 'link' ? <link {...attributs} /> : <meta {...attributs} />)}
     <slot name="head" />
   </head>
   <body>

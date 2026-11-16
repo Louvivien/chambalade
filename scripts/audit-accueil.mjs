@@ -28,7 +28,9 @@ try {
     assert.equal(await page.locator('html').getAttribute('lang'), 'fr');
     assert.equal(await page.locator('h1').count(), 1);
     assert.equal(await page.locator('h1').textContent(), content.hero.title);
-    assert.equal(await page.locator('script').count(), 0);
+    // Aucun script exécutable ; le JSON-LD des données structurées est une donnée, pas du code.
+    assert.equal(await page.locator('script:not([type="application/ld+json"])').count(), 0);
+    assert.equal(await page.locator('script[type="application/ld+json"]').count(), 1);
     const desktop = width >= 768;
     const heroName = desktop ? 'pres-de-la-trappe' : 'foret-chambaran';
     const alt = desktop ? content.hero.desktop.alt : content.hero.mobile.alt;
